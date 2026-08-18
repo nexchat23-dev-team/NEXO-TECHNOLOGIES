@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>NEXO Terminal — Interactive Browser Console</title>
+    <meta name="description" content="Interactive browser terminal experience by NEXO-TECHNOLOGIES. Type commands to explore the NEXO system, projects, skills, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--nexo-black:#020812;--neon-cyan:#00f5ff;--neon-green:#00ff88;--neon-magenta:#ff006e;--neon-gold:#ffd700;--text-primary:#e8f4fd;--text-muted:#4a6680;--glow-green:0 0 20px rgba(0,255,136,.6);}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html,body{height:100%;height:calc(var(--vh, 1vh) * 100);overflow:hidden;-webkit-text-size-adjust:100%}
+        body{background:var(--nexo-black);color:var(--neon-green);font-family:'JetBrains Mono',monospace}
+        
+        @media (hover: hover) and (pointer: fine) {
+            body { cursor: none; }
+            #custom-cursor{position:fixed;width:2px;height:20px;background:var(--neon-green);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:var(--glow-green);animation:cBlink .8s step-end infinite}
+            @keyframes cBlink{0%,100%{opacity:1}50%{opacity:0}}
+        }
+        @media (hover: none), (pointer: coarse) {
+            #custom-cursor { display: none !important; }
+        }
+
+        #matrix-rain{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.08;pointer-events:none}
+        .top-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(2,8,18,.97);border-bottom:1px solid rgba(0,255,136,.1);display:flex;align-items:center;justify-content:space-between;padding:.5rem 1.5rem;height:42px}
+        .top-bar-left{display:flex;align-items:center;gap:.6rem}
+        .tb-dot{width:12px;height:12px;border-radius:50%}
+        .tb-dot-r{background:#ff5f57}.tb-dot-y{background:#febc2e}.tb-dot-g{background:#28c840}
+        .tb-title{font-size:.72rem;color:var(--text-muted);letter-spacing:.12em;margin-left:.4rem}
+        .tb-title span{color:var(--neon-green)}
+        .top-bar-right{display:flex;align-items:center;gap:1.5rem}
+        .tb-nav{display:flex;gap:.8rem}
+        .tb-nav a{font-size:.65rem;color:var(--text-muted);text-decoration:none;letter-spacing:.1em;transition:.2s}
+        .tb-nav a:hover{color:var(--neon-green)}
+        .tb-status{font-size:.62rem;color:var(--neon-green);letter-spacing:.1em;display:flex;align-items:center;gap:.4rem}
+        .tb-status-dot{width:5px;height:5px;border-radius:50%;background:var(--neon-green);animation:pls 1.5s infinite}
+        @keyframes pls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+        .terminal-wrapper{position:relative;z-index:10;height:100vh;height:calc(var(--vh, 1vh) * 100);padding-top:42px;display:flex;flex-direction:column}
+        .terminal-body{flex:1;overflow-y:auto;padding:1.5rem 2rem;scrollbar-width:thin;scrollbar-color:rgba(0,255,136,.2) transparent}
+        .terminal-body::-webkit-scrollbar{width:3px}
+        .terminal-body::-webkit-scrollbar-thumb{background:rgba(0,255,136,.2);border-radius:2px}
+        .boot-line{font-size:.78rem;line-height:1.9;opacity:0;transform:translateX(-8px);transition:opacity .3s ease,transform .3s ease;white-space:pre-wrap}
+        .boot-line.visible{opacity:1;transform:none}
+        .boot-line.dim{color:var(--text-muted)}
+        .boot-line.success{color:var(--neon-green)}
+        .boot-line.warn{color:var(--neon-gold)}
+        .boot-line.err{color:#ff1744}
+        .boot-line.cmd{color:var(--neon-cyan)}
+        .boot-line.out{color:var(--text-primary);font-size:.8rem}
+        .boot-line.art{color:var(--neon-cyan);font-size:.55rem;line-height:1.2;letter-spacing:0}
+        .input-line{display:flex;align-items:center;gap:.5rem;padding:.8rem 2rem;background:rgba(2,8,18,.7);border-top:1px solid rgba(0,255,136,.06);flex-shrink:0}
+        .prompt-text{color:var(--neon-cyan);font-size:.82rem;white-space:nowrap;user-select:none}
+        .prompt-arr{color:var(--neon-green)}
+        .term-input{background:transparent;border:none;outline:none;color:var(--neon-green);font-family:'JetBrains Mono',monospace;font-size:.82rem;flex:1;caret-color:transparent}
+        .help-grid{display:grid;grid-template-columns:110px 1fr;gap:.3rem 1.5rem;font-size:.75rem;line-height:1.7}
+        .hc{color:var(--neon-cyan)}.hd{color:var(--text-muted)}
+        @media(max-width:600px){.terminal-body{padding:.8rem 1rem}.input-line{padding:.7rem 1rem}.boot-line.art{font-size:.38rem}.tb-nav{display:none}}
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <canvas id="matrix-rain"></canvas>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="tb-dot tb-dot-r"></div>
+            <div class="tb-dot tb-dot-y"></div>
+            <div class="tb-dot tb-dot-g"></div>
+            <div class="tb-title"><span>NEXO-TECHNOLOGIES</span> // SECURE TERMINAL v4.2</div>
+        </div>
+        <div class="top-bar-right">
+            <div class="tb-nav">
+                <a href="index.html">HOME</a>
+                <a href="tools.html">ARSENAL</a>
+                <a href="lab.html">LAB</a>
+                <a href="hacking.html">HACKING</a>
+            </div>
+            <div class="tb-status"><div class="tb-status-dot"></div>ONLINE</div>
+        </div>
+    </div>
+    <div class="terminal-wrapper">
+        <div class="terminal-body" id="termBody"></div>
+        <div class="input-line">
+            <span class="prompt-text">nexo@technologies<span class="prompt-arr"> ➜ </span>~</span>
+            <span style="color:var(--neon-green);margin-right:.3rem">$</span>
+            <input type="text" class="term-input" id="termInput" autocomplete="off" spellcheck="false" placeholder="type 'help'...">
+        </div>
+    </div>
+    <script>
+    // Cursor
+    const cur=document.getElementById('custom-cursor');
+    document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+
+    // Matrix rain
+    const canvas=document.getElementById('matrix-rain');
+    const ctx=canvas.getContext('2d');
+    canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+    const cols=Math.floor(canvas.width/16);
+    const drops=Array(cols).fill(1);
+    const chars='NEXO0123456789ABCDEF!@#$%^&*アイウエオカキクケコ';
+    function drawMatrix(){
+        ctx.fillStyle='rgba(2,8,18,0.05)';ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle='#00ff88';ctx.font='13px JetBrains Mono';
+        drops.forEach((y,i)=>{
+            const c=chars[Math.floor(Math.random()*chars.length)];
+            ctx.fillText(c,i*16,y*16);
+            if(y*16>canvas.height&&Math.random()>.975)drops[i]=0;
+            drops[i]++;
+        });
+    }
+    setInterval(drawMatrix,50);
+    window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+
+    // Terminal Engine
+    const termBody=document.getElementById('termBody');
+    const termInput=document.getElementById('termInput');
+    let cmdHistory=[],histIdx=-1;
+
+    const COMMANDS={
+        help:()=>`<div class="help-grid"><span class="hc">help</span><span class="hd">Show available commands</span><span class="hc">whoami</span><span class="hd">Display system identity</span><span class="hc">ls</span><span class="hd">List available modules</span><span class="hc">projects</span><span class="hd">View NEXO-TECH projects</span><span class="hc">skills</span><span class="hd">Technical proficiencies</span><span class="hc">contact</span><span class="hd">Get contact info</span><span class="hc">services</span><span class="hd">Services & pricing</span><span class="hc">hack</span><span class="hd">Run intrusion simulation</span><span class="hc">matrix</span><span class="hd">Toggle matrix intensity</span><span class="hc">clear</span><span class="hd">Clear terminal</span><span class="hc">exit</span><span class="hd">Return to main site</span></div>`,
+        whoami:()=>`<span style="color:var(--neon-cyan)">NEXO-TECHNOLOGIES</span> // Grey Hat Developer & Cybersecurity Corp\n├── Founded: 2021 | Lagos, Nigeria\n├── Specialization: Full-Stack Dev, Linux, Network Security\n├── Languages: Python, Rust, JavaScript, Java, C++, Golang, Dart...\n├── Projects: 50+ | Tools: 3+ Active | Experience: 5+ Years\n└── Status: <span style="color:var(--neon-green)">OPERATIONAL</span>`,
+        ls:()=>`<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  index.html         <span style="color:var(--text-muted)">// Main portfolio</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  hacking.html       <span style="color:var(--text-muted)">// Cybersecurity hub</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  programming.html   <span style="color:var(--text-muted)">// Language expertise</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  learn-hacking.html <span style="color:var(--text-muted)">// Hacking academy</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  tools.html         <span style="color:var(--text-muted)">// Tool arsenal</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  terminal.html      <span style="color:var(--text-muted)">// You are here</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  lab.html           <span style="color:var(--text-muted)">// Innovation lab</span>`,
+        projects:()=>`<span style="color:var(--neon-gold)">[ NEXO-TECHNOLOGIES PROJECT INDEX ]</span>\n\n<span style="color:var(--neon-green)">01.</span> <span style="color:var(--neon-cyan)">DEMONIC-BOT</span>\n    WhatsApp automation bot | Node.js + Baileys\n    Status: <span style="color:var(--neon-green)">ACTIVE</span>\n\n<span style="color:var(--neon-green)">02.</span> <span style="color:var(--neon-cyan)">DEMONIC_TOOLS</span>\n    Linux security & admin toolkit | Python + Shell\n    Status: <span style="color:var(--neon-green)">ACTIVE</span>\n\n<span style="color:var(--neon-green)">03.</span> <span style="color:var(--neon-cyan)">NEXO IP FLOODER</span>\n    Network stress tool | Rust (multi-threaded)\n    Status: <span style="color:var(--neon-green)">ACTIVE</span> // Authorized use only`,
+        skills:()=>`<span style="color:var(--neon-gold)">[ SYSTEM SKILL MATRIX ]</span>\n\nPython      ████████████████████ 95%  <span style="color:var(--neon-cyan)">PRIMARY</span>\nShell/Bash  ███████████████████░ 92%\nJava        ██████████████████░░ 88%\nJavaScript  █████████████████░░░ 85%\nC++         ████████████████░░░░ 82%\nRust        ███████████████░░░░░ 78%\nGolang      ██████████████░░░░░░ 74%`,
+        contact:()=>`<span style="color:var(--neon-gold)">[ NEXO-TECHNOLOGIES CONTACT MATRIX ]</span>\n\nEmail:    demonalexander526@gmail.com\nWhatsApp: +234 704 4339 491\nTelegram: @Vershdit\nGitHub:   github.com/demonalexander526-alt\n\nType <span style="color:var(--neon-cyan)">services</span> to see pricing.`,
+        services:()=>`<span style="color:var(--neon-gold)">[ SERVICE CATALOG // NEXO-TECHNOLOGIES ]</span>\n\n<span style="color:var(--neon-cyan)">WEB DEVELOPMENT</span>\n  Standard Site    $200   · 1 page, responsive\n  Commercial Site  $500   · 2-3 pages, SEO\n  Premium Package  $1000+ · Unlimited pages\n\n<span style="color:var(--neon-cyan)">APP DEVELOPMENT</span>\n  MVP Build        $800   · Fast prototyping\n  Native App       $1500  · iOS or Android\n  Cross-Platform   $2500  · iOS + Android + Web\n  Enterprise       $5000+ · Full custom platform\n\nContact: WhatsApp +234 704 4339 491`,
+        matrix:()=>{canvas.style.opacity=canvas.style.opacity==='0.25'?'0.08':'0.25';return`Matrix intensity → <span style="color:var(--neon-green)">${canvas.style.opacity==='0.25'?'HIGH':'LOW'}</span>`;},
+        clear:()=>{termBody.innerHTML='';return null;},
+        exit:()=>{window.location.href='index.html';return'Redirecting...';},
+        hack:()=>runHack(),
+    };
+
+    function runHack(){
+        const steps=[
+            {t:0,text:'<span style="color:#ff1744">[ INITIATING INTRUSION SIMULATION ]</span>',c:'warn'},
+            {t:400,text:'Scanning target network: 192.168.1.0/24...',c:'dim'},
+            {t:900,text:'Open ports: 22 (SSH), 80 (HTTP), 443 (HTTPS), 8080 (ALT)',c:'out'},
+            {t:1400,text:'Service fingerprinting complete...',c:'dim'},
+            {t:1900,text:'CVE-2024-1337 detected on port 8080 — nginx 1.18.0',c:'warn'},
+            {t:2400,text:'Attempting exploit... ██████████ 100%',c:'out'},
+            {t:3000,text:'<span style="color:var(--neon-green)">ACCESS GRANTED // ROOT SHELL OBTAINED</span>',c:'success'},
+            {t:3600,text:'root@target:~# whoami',c:'cmd'},
+            {t:4000,text:'root',c:'out'},
+            {t:4500,text:'<span style="color:var(--neon-gold)">[ SIMULATION COMPLETE — AUTHORIZED DEMO ONLY ]</span>',c:'warn'},
+        ];
+        steps.forEach(s=>setTimeout(()=>appendLine(s.text,s.c),s.t));
+        return null;
+    }
+
+    function appendLine(html,cls='out'){
+        const div=document.createElement('div');
+        div.className=`boot-line ${cls}`;
+        div.innerHTML=html||'&nbsp;';
+        termBody.appendChild(div);
+        setTimeout(()=>div.classList.add('visible'),10);
+        termBody.scrollTop=termBody.scrollHeight;
+    }
+
+    function handleCommand(raw){
+        const cmd=raw.trim().toLowerCase();
+        if(!cmd)return;
+        cmdHistory.unshift(cmd);histIdx=-1;
+        appendLine(`<span style="color:var(--neon-cyan)">nexo@technologies:~$</span> ${raw}`,'cmd');
+        if(COMMANDS[cmd]){
+            const result=COMMANDS[cmd]();
+            if(result!==null&&result!==undefined)appendLine(result,'out');
+        }else{
+            appendLine(`Command not found: <span style="color:var(--neon-magenta)">${cmd}</span> — type <span style="color:var(--neon-cyan)">help</span>`,'err');
+        }
+    }
+
+    termInput.addEventListener('keydown',e=>{
+        if(e.key==='Enter'){handleCommand(termInput.value);termInput.value='';}
+        else if(e.key==='ArrowUp'){if(histIdx<cmdHistory.length-1){histIdx++;termInput.value=cmdHistory[histIdx];}e.preventDefault();}
+        else if(e.key==='ArrowDown'){if(histIdx>0){histIdx--;termInput.value=cmdHistory[histIdx];}else{histIdx=-1;termInput.value='';}e.preventDefault();}
+        else if(e.key==='Tab'){e.preventDefault();const m=Object.keys(COMMANDS).find(k=>k.startsWith(termInput.value));if(m)termInput.value=m;}
+    });
+
+    // Boot sequence
+    const boots=[
+        {text:'  ███╗   ██╗███████╗██╗  ██╗ ██████╗ ',delay:0,c:'art'},
+        {text:'  ████╗  ██║██╔════╝╚██╗██╔╝██╔═══██╗',delay:100,c:'art'},
+        {text:'  ██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║',delay:200,c:'art'},
+        {text:'  ██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║',delay:300,c:'art'},
+        {text:'  ██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝',delay:400,c:'art'},
+        {text:'  ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ',delay:500,c:'art'},
+        {text:'',delay:600},
+        {text:'  NEXO-TECHNOLOGIES // SECURE TERMINAL SYSTEM v4.2',delay:700,c:'dim'},
+        {text:'  ─────────────────────────────────────────────────',delay:800,c:'dim'},
+        {text:'',delay:900},
+        {text:'[  OK  ] Initializing NEXO kernel modules...',delay:1000,c:'success'},
+        {text:'[  OK  ] Loading cybersecurity protocols...',delay:1200,c:'success'},
+        {text:'[  OK  ] Establishing encrypted channels...',delay:1400,c:'success'},
+        {text:'[ WARN ] Unauthorized access attempts will be traced.',delay:1600,c:'warn'},
+        {text:'[  OK  ] System integrity verified. All nominal.',delay:1800,c:'success'},
+        {text:'',delay:2000},
+        {text:'Welcome to <span style="color:var(--neon-cyan)">NEXO-TECHNOLOGIES</span> interactive terminal.',delay:2200,c:'out'},
+        {text:'Type <span style="color:var(--neon-cyan)">help</span> for available commands.',delay:2400,c:'out'},
+        {text:'',delay:2500},
+    ];
+    boots.forEach(l=>setTimeout(()=>appendLine(l.text||'',l.c||''),l.delay));
+    setTimeout(()=>termInput.focus(),2600);
+    termBody.addEventListener('click',()=>termInput.focus());
+    </script>
+</body>
+</html>

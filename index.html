@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXO-TECHNOLOGIES — Digital Command Center | Developer & Cybersecurity</title>
+    <meta name="description" content="NEXO-TECHNOLOGIES — Alexander. Full-Stack Developer, Grey Hat Hacker & Linux Expert. 15+ programming languages, 50+ projects, cutting-edge cybersecurity solutions. AI-powered portfolio.">
+    <meta name="theme-color" content="#020812">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="services.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ── INDEX PAGE SPECIFIC ── */
+        :root {
+            --nexo-black:#020812; --nexo-dark:#050d1a; --nexo-darker:#0a1628;
+            --neon-cyan:#00f5ff; --neon-magenta:#ff006e; --neon-green:#00ff88;
+            --neon-gold:#ffd700; --neon-purple:#bf00ff; --neon-orange:#ff6b00;
+            --neon-pink:#ff006e; --neon-red:#ff1744;
+            --text-primary:#e8f4fd; --text-secondary:#8baac9; --text-muted:#4a6680;
+            --glow-cyan:0 0 20px rgba(0,245,255,.6),0 0 40px rgba(0,245,255,.3);
+            --glow-magenta:0 0 20px rgba(255,0,110,.6),0 0 40px rgba(255,0,110,.3);
+            --glow-green:0 0 20px rgba(0,255,136,.6),0 0 40px rgba(0,255,136,.3);
+            --border-card:1px solid rgba(0,245,255,.12);
+            --glass:rgba(5,13,26,.7);
+            --transition:all .35s cubic-bezier(.4,0,.2,1);
+            --border-radius:16px;
+        }
+
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth;font-size:16px}
+        body{background:var(--nexo-black);color:var(--text-primary);font-family:'Inter',sans-serif;overflow-x:hidden;cursor:none}
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar{width:4px}
+        ::-webkit-scrollbar-track{background:var(--nexo-dark)}
+        ::-webkit-scrollbar-thumb{background:var(--neon-cyan);border-radius:2px}
+        ::selection{background:rgba(0,245,255,.25);color:#fff}
+
+        /* CUSTOM CURSOR */
+        #custom-cursor{position:fixed;width:10px;height:10px;background:var(--neon-cyan);border-radius:50%;pointer-events:none;z-index:99999;transition:width .15s,height .15s,background .15s;box-shadow:var(--glow-cyan);transform:translate(-50%,-50%)}
+        #cursor-trail{position:fixed;width:32px;height:32px;border:1.5px solid rgba(0,245,255,.5);border-radius:50%;pointer-events:none;z-index:99998;transition:width .3s,height .3s,border-color .3s;transform:translate(-50%,-50%)}
+
+        /* MATRIX & CONSTELLATION BG */
+        #matrix-bg, #constellation-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.15;pointer-events:none}
+
+        /* LOADER */
+        #loader{position:fixed;inset:0;background:var(--nexo-black);z-index:99990;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s ease}
+        #loader.hidden{opacity:0;pointer-events:none}
+        .loader-logo{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,4vw,2.5rem);font-weight:700;letter-spacing:.3em;color:var(--neon-cyan);text-shadow:var(--glow-cyan);margin-bottom:2rem;animation:flicker 3s infinite}
+        .loader-ring{width:80px;height:80px;border:2px solid rgba(0,245,255,.2);border-top-color:var(--neon-cyan);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:1.5rem}
+        .loader-progress{width:240px;height:2px;background:rgba(0,245,255,.1);border-radius:1px;overflow:hidden;margin-bottom:1rem}
+        .loader-progress-fill{height:100%;background:var(--neon-cyan);box-shadow:var(--glow-cyan);animation:bootProgress 1.8s ease-out forwards}
+        .loader-text{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-muted);letter-spacing:.15em;animation:blink 1s step-end infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        @keyframes bootProgress{from{width:0}to{width:100%}}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+        @keyframes flicker{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.4}94%{opacity:1}96%{opacity:.7}97%{opacity:1}}
+
+        /* NAVBAR */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.9rem 0;transition:var(--transition)}
+        .navbar .container{display:flex;align-items:center;justify-content:space-between;max-width:1280px;margin:0 auto;padding:0 2rem}
+        .navbar.scrolled{background:rgba(2,8,18,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,245,255,.1);box-shadow:0 4px 30px rgba(0,0,0,.5)}
+        .logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:.1em;cursor:pointer;display:flex;align-items:center;gap:.5rem;color:var(--neon-cyan);text-shadow:var(--glow-cyan)}
+        .logo-hex{width:28px;height:28px;background:var(--neon-cyan);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hex-rotate 6s linear infinite;flex-shrink:0}
+        @keyframes hex-rotate{0%,100%{transform:rotate(0)}50%{transform:rotate(180deg)}}
+        .nav-menu{display:flex;align-items:center;gap:.25rem;list-style:none}
+        .nav-link{font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.06em;color:var(--text-secondary);text-decoration:none;padding:.5rem .8rem;border-radius:8px;transition:var(--transition);position:relative;text-transform:uppercase}
+        .nav-link::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:1.5px;background:var(--neon-cyan);transform:translateX(-50%);transition:width .3s ease}
+        .nav-link:hover{color:var(--neon-cyan)}
+        .nav-link:hover::after{width:80%}
+        .nav-actions{display:flex;align-items:center;gap:.6rem}
+        .theme-toggle,.mobile-menu-toggle{background:rgba(0,245,255,.06);border:1px solid rgba(0,245,255,.15);color:var(--text-secondary);width:38px;height:38px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);font-size:.9rem}
+        .theme-toggle:hover,.mobile-menu-toggle:hover{color:var(--neon-cyan);border-color:var(--neon-cyan);box-shadow:var(--glow-cyan)}
+        .mobile-menu-toggle{display:none}
+        @media(max-width:900px){.nav-menu{display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(2,8,18,.98);backdrop-filter:blur(30px);flex-direction:column;justify-content:center;gap:1.5rem;z-index:999}.nav-menu.active{display:flex}.nav-link{font-size:1.2rem;padding:1rem 2rem}.mobile-menu-toggle{display:flex}}
+
+        /* HERO */
+        .hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center}
+        .hero-scanline{position:absolute;inset:0;pointer-events:none;z-index:1;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,245,255,.02) 2px,rgba(0,245,255,.02) 4px);animation:scanlineMove 8s linear infinite}
+        @keyframes scanlineMove{0%{background-position:0 0}100%{background-position:0 100vh}}
+        .hero-hud-top,.hero-hud-bottom{position:absolute;left:0;right:0;padding:.6rem 2rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);letter-spacing:.12em;z-index:2;display:flex;justify-content:space-between}
+        .hero-hud-top{top:70px;border-bottom:1px solid rgba(0,245,255,.05)}
+        .hero-hud-bottom{bottom:60px;border-top:1px solid rgba(0,245,255,.05)}
+        .hud-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--neon-green);box-shadow:var(--glow-green);animation:pulse-dot 2s infinite;margin-right:.5rem}
+        @keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+        #hero-canvas{position:absolute;inset:0;z-index:1;pointer-events:none}
+        .hero-bg-orbs{position:absolute;inset:0;z-index:1;pointer-events:none}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);animation:floatOrb 8s ease-in-out infinite}
+        .orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(0,245,255,.12),transparent 70%);top:-10%;left:-10%;animation-delay:0s}
+        .orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(191,0,255,.1),transparent 70%);bottom:-5%;right:-5%;animation-delay:-3s}
+        .orb-3{width:300px;height:300px;background:radial-gradient(circle,rgba(0,255,136,.08),transparent 70%);top:40%;left:60%;animation-delay:-6s}
+        @keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+        .hero .container{position:relative;z-index:5;max-width:1280px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+        .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);border-radius:999px;padding:.35rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--neon-green);letter-spacing:.12em;margin-bottom:1.5rem;animation:fadeInUp .8s ease}
+        .badge-pulse{width:7px;height:7px;border-radius:50%;background:var(--neon-green);box-shadow:var(--glow-green);animation:pulse-dot 1.5s infinite}
+        .hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:700;line-height:1.05;margin-bottom:1rem}
+        .hero-title .line-1{display:block;color:var(--text-primary);letter-spacing:-.02em}
+        .hero-title .line-2{display:block;color:var(--neon-cyan);text-shadow:var(--glow-cyan);position:relative}
+        .hero-title .line-2.glitch::before,.hero-title .line-2.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%}
+        .hero-title .line-2.glitch::before{color:var(--neon-magenta);animation:glitchA 4s infinite;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%)}
+        .hero-title .line-2.glitch::after{color:var(--neon-green);animation:glitchB 4s infinite;clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%)}
+        @keyframes glitchA{0%,90%,100%{transform:translate(0)}91%{transform:translate(-3px,1px)}93%{transform:translate(3px,-1px)}95%{transform:translate(-2px,2px)}}
+        @keyframes glitchB{0%,88%,100%{transform:translate(0)}89%{transform:translate(3px,-1px)}91%{transform:translate(-3px,1px)}93%{transform:translate(2px,-2px)}}
+        .nexo-sub{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--neon-cyan);letter-spacing:.2em;margin-bottom:.5rem;opacity:.7}
+        .hero-typed-wrapper{display:flex;align-items:center;gap:.3rem;margin-bottom:1.5rem;font-family:'JetBrains Mono',monospace;font-size:clamp(.9rem,2vw,1.1rem)}
+        .typed-prefix{color:var(--neon-cyan)}
+        #hero-typed{color:var(--text-primary)}
+        .typed-cursor{display:inline-block;width:2px;height:1.1em;background:var(--neon-cyan);animation:blink .7s step-end infinite;vertical-align:text-bottom}
+        .hero-description{color:var(--text-secondary);line-height:1.8;font-size:clamp(.9rem,1.5vw,1rem);margin-bottom:2rem;max-width:480px}
+        .hero-stats{display:flex;gap:2rem;margin-bottom:2.5rem;flex-wrap:wrap}
+        .hero-stat-divider{width:1px;background:rgba(0,245,255,.2)}
+        .hero-stat-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--neon-cyan);text-shadow:var(--glow-cyan)}
+        .hero-stat-label{font-size:.75rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+        .hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}
+        .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;transition:var(--transition);border:none;position:relative;overflow:hidden}
+        .btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);opacity:0;transition:.3s}
+        .btn:hover::before{opacity:1}
+        .btn-primary{background:linear-gradient(135deg,var(--neon-cyan),rgba(0,245,255,.7));color:#020812;box-shadow:var(--glow-cyan)}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(0,245,255,.8),0 0 60px rgba(0,245,255,.4)}
+        .btn-secondary{background:transparent;color:var(--neon-cyan);border:1.5px solid rgba(0,245,255,.5)}
+        .btn-secondary:hover{background:rgba(0,245,255,.08);transform:translateY(-3px);box-shadow:var(--glow-cyan)}
+        .hero-right{position:relative;display:flex;align-items:center;justify-content:center;height:500px}
+        .hero-ring-1,.hero-ring-2{position:absolute;border-radius:50%;border:1px solid rgba(0,245,255,.15);animation:ringPulse 4s ease-in-out infinite}
+        .hero-ring-1{width:320px;height:320px;animation-delay:0s}
+        .hero-ring-2{width:420px;height:420px;animation-delay:-2s;border-color:rgba(191,0,255,.1)}
+        @keyframes ringPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.05);opacity:1}}
+        #decahedron-canvas{position:relative;z-index:2;filter:drop-shadow(0 0 20px rgba(0,245,255,.3))}
+        .scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.15em;z-index:5;animation:fadeInUp 1s 1s ease both}
+        .scroll-wheel{width:20px;height:32px;border:1.5px solid rgba(0,245,255,.3);border-radius:999px;display:flex;justify-content:center;padding:.4rem}
+        .scroll-wheel::after{content:'';width:3px;height:8px;background:var(--neon-cyan);border-radius:999px;animation:scrollAnim 2s ease-in-out infinite}
+        @keyframes scrollAnim{0%{transform:translateY(0);opacity:1}100%{transform:translateY(10px);opacity:0}}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        @media(max-width:900px){.hero .container{grid-template-columns:1fr}.hero-right{display:none}}
+
+        /* SECTION SHARED */
+        section{padding:6rem 0;position:relative}
+        .container{max-width:1280px;margin:0 auto;padding:0 2rem}
+        .section-header{text-align:center;margin-bottom:4rem}
+        .section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--neon-cyan);letter-spacing:.25em;text-transform:uppercase;display:block;margin-bottom:.75rem}
+        .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--text-primary)}
+        .section-title span{color:var(--neon-cyan);text-shadow:var(--glow-cyan)}
+        .section-line{width:60px;height:3px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta));border-radius:2px;margin:1rem auto 0;box-shadow:var(--glow-cyan)}
+        .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+        .reveal.visible{opacity:1;transform:none}
+        .reveal-left{opacity:0;transform:translateX(-60px);transition:opacity .8s ease,transform .8s ease}
+        .reveal-left.visible{opacity:1;transform:none}
+        .reveal-right{opacity:0;transform:translateX(60px);transition:opacity .8s ease,transform .8s ease}
+        .reveal-right.visible{opacity:1;transform:none}
+
+        /* ABOUT */
+        .about{background:var(--nexo-dark)}
+        .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:center}
+        .about-card-wrapper{position:relative}
+        .about-avatar-card{background:linear-gradient(135deg,rgba(0,245,255,.06),rgba(191,0,255,.06));border:var(--border-card);border-radius:24px;padding:2.5rem;text-align:center;position:relative;overflow:hidden;backdrop-filter:blur(10px)}
+        .about-avatar-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,rgba(0,245,255,.05) 60deg,transparent 120deg);animation:spin 8s linear infinite;pointer-events:none}
+        .avatar-icon-wrap{font-size:4rem;margin-bottom:1rem;filter:drop-shadow(0 0 20px rgba(0,245,255,.4));animation:float 4s ease-in-out infinite}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+        .about-name{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--text-primary);letter-spacing:.05em;margin-bottom:.3rem}
+        .about-role{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--neon-cyan);letter-spacing:.1em;margin-bottom:1.5rem}
+        .about-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+        .about-tag{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.2);border-radius:999px;padding:.25rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--neon-cyan);letter-spacing:.1em}
+        .floating-badges{position:absolute;width:100%}
+        .f-badge{position:absolute;background:rgba(5,13,26,.95);border:var(--border-card);border-radius:12px;padding:.5rem .8rem;font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--text-secondary);display:flex;align-items:center;gap:.4rem;white-space:nowrap;backdrop-filter:blur(10px);animation:float 5s ease-in-out infinite}
+        .f-badge-1{top:-20px;right:-30px;animation-delay:0s}
+        .f-badge-2{bottom:-10px;right:-20px;animation-delay:-1.5s}
+        .f-badge-3{top:50%;left:-30px;animation-delay:-3s}
+        .f-badge i{color:var(--neon-cyan)}
+        .about-content h3{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;margin-bottom:1.2rem;line-height:1.3}
+        .about-content h3 span{color:var(--neon-cyan)}
+        .about-content p{color:var(--text-secondary);line-height:1.85;margin-bottom:1rem}
+        .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+        .stat-card{background:rgba(0,245,255,.04);border:var(--border-card);border-radius:14px;padding:1.5rem 1rem;text-align:center;transition:var(--transition)}
+        .stat-card:hover{border-color:var(--neon-cyan);box-shadow:var(--glow-cyan);transform:translateY(-4px)}
+        .stat-num{font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:700;color:var(--neon-cyan);text-shadow:var(--glow-cyan)}
+        .stat-label{font-size:.75rem;color:var(--text-muted);letter-spacing:.1em;margin-top:.3rem;font-family:'JetBrains Mono',monospace}
+        @media(max-width:768px){.about-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}}
+
+        /* SKILLS */
+        .skills{background:var(--nexo-black)}
+        .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:3rem}
+        .skill-card{background:rgba(5,13,26,.8);border:var(--border-card);border-radius:20px;padding:1.8rem;transition:var(--transition);position:relative;overflow:hidden;backdrop-filter:blur(10px)}
+        .skill-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,245,255,.04),transparent);opacity:0;transition:.3s}
+        .skill-card:hover{border-color:rgba(0,245,255,.4);transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4),var(--glow-cyan)}
+        .skill-card:hover::before{opacity:1}
+        .skill-card-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+        .skill-icon-wrap{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+        .skill-icon-cyan{background:rgba(0,245,255,.12);color:var(--neon-cyan);border:1px solid rgba(0,245,255,.25)}
+        .skill-icon-green{background:rgba(0,255,136,.12);color:var(--neon-green);border:1px solid rgba(0,255,136,.25)}
+        .skill-icon-purple{background:rgba(191,0,255,.12);color:var(--neon-purple);border:1px solid rgba(191,0,255,.25)}
+        .skill-icon-pink{background:rgba(255,0,110,.12);color:var(--neon-pink);border:1px solid rgba(255,0,110,.25)}
+        .skill-icon-gold{background:rgba(255,215,0,.12);color:var(--neon-gold);border:1px solid rgba(255,215,0,.25)}
+        .skill-icon-orange{background:rgba(255,107,0,.12);color:var(--neon-orange);border:1px solid rgba(255,107,0,.25)}
+        .skill-card-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:var(--text-primary)}
+        .skill-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+        .skill-tag{border-radius:999px;padding:.25rem .75rem;font-size:.72rem;font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.05em;border:1px solid}
+        .skill-tag-cyan{background:rgba(0,245,255,.08);color:var(--neon-cyan);border-color:rgba(0,245,255,.2)}
+        .skill-tag-purple{background:rgba(191,0,255,.08);color:var(--neon-purple);border-color:rgba(191,0,255,.2)}
+        .skill-tag-pink{background:rgba(255,0,110,.08);color:var(--neon-pink);border-color:rgba(255,0,110,.2)}
+        .skill-tag-orange{background:rgba(255,107,0,.08);color:var(--neon-orange);border-color:rgba(255,107,0,.2)}
+        .skill-tag-green{background:rgba(0,255,136,.08);color:var(--neon-green);border-color:rgba(0,255,136,.2)}
+        .skill-tag-gold{background:rgba(255,215,0,.08);color:var(--neon-gold);border-color:rgba(255,215,0,.2)}
+        .proficiency-section{background:rgba(5,13,26,.7);border:var(--border-card);border-radius:20px;padding:2.5rem;backdrop-filter:blur(10px)}
+        .proficiency-title{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--neon-cyan);letter-spacing:.25em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+        .prof-list{display:flex;flex-direction:column;gap:1rem}
+        .prof-item{display:grid;grid-template-columns:120px 1fr 40px;gap:.8rem;align-items:center}
+        .prof-name{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--text-secondary)}
+        .prof-bar-track{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+        .prof-bar-fill{height:100%;border-radius:2px;width:0;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+        .fill-cyan{background:linear-gradient(90deg,rgba(0,245,255,.5),var(--neon-cyan));box-shadow:var(--glow-cyan)}
+        .fill-green{background:linear-gradient(90deg,rgba(0,255,136,.5),var(--neon-green));box-shadow:var(--glow-green)}
+        .fill-purple{background:linear-gradient(90deg,rgba(191,0,255,.5),var(--neon-purple))}
+        .fill-gold{background:linear-gradient(90deg,rgba(255,215,0,.5),var(--neon-gold))}
+        .fill-pink{background:linear-gradient(90deg,rgba(255,0,110,.5),var(--neon-pink))}
+        .fill-orange{background:linear-gradient(90deg,rgba(255,107,0,.5),var(--neon-orange))}
+        .prof-percent{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--neon-cyan);text-align:right}
+
+        /* MARQUEE */
+        .tech-marquee{background:rgba(5,13,26,.8);border-top:1px solid rgba(0,245,255,.08);border-bottom:1px solid rgba(0,245,255,.08);overflow:hidden;padding:1rem 0}
+        .marquee-track{display:flex;gap:3rem;animation:marqueeX 30s linear infinite;width:max-content}
+        .marquee-item{display:flex;align-items:center;gap:.6rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;letter-spacing:.15em;color:var(--text-muted);white-space:nowrap;transition:.3s}
+        .marquee-item i{color:var(--neon-cyan)}
+        @keyframes marqueeX{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+        /* TIMELINE */
+        .timeline-section{background:var(--nexo-darker);padding:6rem 0}
+        .timeline{position:relative;max-width:900px;margin:0 auto}
+        .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(0,245,255,.3) 20%,rgba(0,245,255,.3) 80%,transparent);transform:translateX(-50%)}
+        .timeline-item{display:grid;grid-template-columns:1fr 40px 1fr;gap:1rem;margin-bottom:3rem;align-items:center}
+        .timeline-content{background:rgba(5,13,26,.85);border:var(--border-card);border-radius:16px;padding:1.5rem;backdrop-filter:blur(10px);transition:var(--transition)}
+        .timeline-content:hover{border-color:rgba(0,245,255,.3);transform:translateY(-4px);box-shadow:var(--glow-cyan)}
+        .timeline-empty{min-height:1px}
+        .timeline-dot{width:14px;height:14px;border-radius:50%;background:var(--neon-cyan);box-shadow:var(--glow-cyan);margin:0 auto;position:relative;flex-shrink:0}
+        .timeline-dot::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(0,245,255,.3);animation:ringPulse 2s ease infinite}
+        .timeline-year{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--neon-cyan);letter-spacing:.1em;margin-bottom:.5rem}
+        .timeline-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;margin-bottom:.5rem;color:var(--text-primary)}
+        .timeline-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.7}
+        @media(max-width:768px){.timeline::before{left:20px}.timeline-item{grid-template-columns:20px 1fr;grid-template-rows:auto auto}.timeline-empty{display:none}.timeline-dot{margin:0}}
+
+        /* PROJECTS */
+        .projects{background:var(--nexo-black)}
+        .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem}
+        .project-card{background:rgba(5,13,26,.85);border:var(--border-card);border-radius:20px;padding:2rem;transition:var(--transition);position:relative;overflow:hidden;backdrop-filter:blur(10px)}
+        .project-card::after{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(0,245,255,.04),transparent);opacity:0;transition:.4s}
+        .project-card:hover{border-color:rgba(0,245,255,.35);transform:translateY(-8px) scale(1.01);box-shadow:0 30px 60px rgba(0,0,0,.5),var(--glow-cyan)}
+        .project-card:hover::after{opacity:1}
+        .project-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+        .project-badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;letter-spacing:.1em;padding:.25rem .7rem;border-radius:999px;border:1px solid}
+        .badge-cyan{color:var(--neon-cyan);background:rgba(0,245,255,.08);border-color:rgba(0,245,255,.25)}
+        .badge-purple{color:var(--neon-purple);background:rgba(191,0,255,.08);border-color:rgba(191,0,255,.25)}
+        .badge-pink{color:var(--neon-pink);background:rgba(255,0,110,.08);border-color:rgba(255,0,110,.25)}
+        .project-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text-primary);margin-bottom:.7rem}
+        .project-desc{font-size:.87rem;color:var(--text-secondary);line-height:1.75;margin-bottom:1.2rem}
+        .project-install{background:rgba(2,8,18,.95);border:1px solid rgba(0,245,255,.08);border-radius:12px;overflow:hidden;margin-bottom:1.2rem}
+        .install-header{display:flex;align-items:center;gap:.5rem;padding:.6rem 1rem;border-bottom:1px solid rgba(0,245,255,.06)}
+        .install-dots{display:flex;gap:.35rem}
+        .dot{width:10px;height:10px;border-radius:50%}
+        .dot-red{background:#ff5f57}.dot-yellow{background:#febc2e}.dot-green{background:#28c840}
+        .install-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);margin-left:.5rem;letter-spacing:.08em}
+        .project-install code{display:block;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:#a8d8ff;padding:1rem;line-height:1.8}
+        .project-tech-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem}
+        .tech-tag{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:.2rem .6rem}
+        .project-link-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--neon-cyan);font-family:'JetBrains Mono',monospace;font-size:.8rem;text-decoration:none;padding:.5rem 1rem;border:1px solid rgba(0,245,255,.25);border-radius:8px;transition:var(--transition)}
+        .project-link-btn:hover{background:rgba(0,245,255,.08);box-shadow:var(--glow-cyan);transform:translateX(4px)}
+        .project-video{width:100%;border-radius:10px;margin-bottom:1rem;border:1px solid rgba(0,245,255,.1)}
+
+        /* SECURITY */
+        .security-focus{background:var(--nexo-darker)}
+        .security-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+        .security-card{background:rgba(5,13,26,.85);border:var(--border-card);border-radius:20px;padding:2rem;text-align:center;transition:var(--transition);backdrop-filter:blur(10px)}
+        .security-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+        .security-card-icon{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1.2rem;color:var(--neon-cyan);background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.2)}
+        .security-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:.7rem;color:var(--text-primary)}
+        .security-card p{font-size:.87rem;color:var(--text-secondary);line-height:1.75}
+
+        /* SERVICES */
+        .services,.app-development{background:var(--nexo-black)}
+        .services-subtitle{text-align:center;color:var(--text-secondary);margin:-2rem 0 3rem;font-size:.95rem}
+        .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+        .service-card{background:rgba(5,13,26,.85);border:var(--border-card);border-radius:20px;padding:2rem;position:relative;transition:var(--transition);backdrop-filter:blur(10px)}
+        .service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:20px 20px 0 0;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta));opacity:0;transition:.3s}
+        .service-card:hover{transform:translateY(-6px);border-color:rgba(0,245,255,.25);box-shadow:0 25px 50px rgba(0,0,0,.4),var(--glow-cyan)}
+        .service-card:hover::before{opacity:1}
+        .service-card.featured{border-color:rgba(0,245,255,.3);box-shadow:var(--glow-cyan),0 20px 50px rgba(0,0,0,.4)}
+        .card-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;letter-spacing:.1em;padding:.2rem .7rem;border-radius:999px;background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.2);color:var(--neon-cyan);margin-bottom:1rem}
+        .featured-badge{background:rgba(255,215,0,.08);border-color:rgba(255,215,0,.3);color:var(--neon-gold)}
+        .card-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+        .card-header i{font-size:1.4rem;color:var(--neon-cyan)}
+        .card-header h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:var(--text-primary)}
+        .price-section{margin-bottom:1.2rem}
+        .price{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--neon-cyan);text-shadow:var(--glow-cyan)}
+        .price-desc{font-size:.78rem;color:var(--text-muted);margin-top:.2rem;font-family:'JetBrains Mono',monospace}
+        .card-divider{height:1px;background:rgba(0,245,255,.08);margin:1rem 0}
+        .features-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}
+        .features-list li{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--text-secondary)}
+        .features-list li i{color:var(--neon-green);font-size:.8rem}
+        .cta-btn{display:block;text-align:center;padding:.75rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;text-decoration:none;background:rgba(0,245,255,.08);border:1.5px solid rgba(0,245,255,.3);color:var(--neon-cyan);transition:var(--transition)}
+        .cta-btn:hover{background:var(--neon-cyan);color:#020812;box-shadow:var(--glow-cyan)}
+        .cta-btn-featured{background:linear-gradient(135deg,rgba(0,245,255,.2),rgba(191,0,255,.1));border-color:rgba(0,245,255,.5)}
+        .cta-btn-featured:hover{background:linear-gradient(135deg,var(--neon-cyan),rgba(191,0,255,.8));color:#020812}
+
+        /* AI CHAT */
+        .ai-chat-section{background:var(--nexo-darker)}
+        .ai-chat-wrapper{background:rgba(5,13,26,.9);border:var(--border-card);border-radius:24px;overflow:hidden;backdrop-filter:blur(20px);box-shadow:0 40px 80px rgba(0,0,0,.5),0 0 0 1px rgba(0,245,255,.05)}
+        .ai-chat-header{display:flex;align-items:center;gap:1rem;padding:1.2rem 1.5rem;border-bottom:1px solid rgba(0,245,255,.08);background:rgba(2,8,18,.5)}
+        .ai-avatar{font-size:2rem;filter:drop-shadow(0 0 10px rgba(0,245,255,.5))}
+        .ai-header-info h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.95rem;color:var(--text-primary)}
+        .ai-header-info p{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);letter-spacing:.1em}
+        .ai-status{display:flex;align-items:center;gap:.5rem;margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--neon-green)}
+        .ai-status-dot{width:8px;height:8px;border-radius:50%;background:var(--neon-green);box-shadow:var(--glow-green);animation:pulse-dot 2s infinite}
+
+        /* MODEL SELECTOR */
+        .model-selector{display:flex;gap:.5rem;padding:1rem 1.5rem;border-bottom:1px solid rgba(0,245,255,.06);overflow-x:auto;background:rgba(2,8,18,.3)}
+        .model-selector::-webkit-scrollbar{height:2px}
+        .model-tab{display:flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:.68rem;cursor:pointer;transition:var(--transition);white-space:nowrap}
+        .model-tab:hover{border-color:rgba(0,245,255,.3);color:var(--text-secondary)}
+        .model-tab.active{border-color:var(--neon-cyan);color:var(--neon-cyan);background:rgba(0,245,255,.08);box-shadow:var(--glow-cyan)}
+        .model-tab-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse-dot 2s infinite}
+
+        .ai-chat-box{display:flex;flex-direction:column;height:480px}
+        .chat-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem}
+        .chat-messages::-webkit-scrollbar{width:3px}
+        .chat-messages::-webkit-scrollbar-thumb{background:rgba(0,245,255,.2);border-radius:2px}
+        .chat-msg{display:flex;gap:.75rem;align-items:flex-start;animation:fadeInUp .4s ease}
+        .chat-msg.user{flex-direction:row-reverse}
+        .msg-avatar{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;background:rgba(0,245,255,.1);border:1px solid rgba(0,245,255,.2)}
+        .ai-msg-avatar{color:var(--neon-cyan)}
+        .chat-msg.user .msg-avatar{background:rgba(191,0,255,.1);border-color:rgba(191,0,255,.2)}
+        .msg-bubble{background:rgba(10,22,40,.9);border:1px solid rgba(0,245,255,.1);border-radius:14px;padding:.85rem 1.1rem;max-width:80%;font-size:.87rem;line-height:1.75;color:var(--text-secondary);position:relative}
+        .chat-msg.user .msg-bubble{background:rgba(191,0,255,.08);border-color:rgba(191,0,255,.15);color:var(--text-primary)}
+        .msg-time{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-muted);margin-top:.5rem;letter-spacing:.08em}
+        .quick-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+        .quick-chip{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.3rem .7rem;border-radius:999px;background:rgba(0,245,255,.06);border:1px solid rgba(0,245,255,.2);color:var(--neon-cyan);cursor:pointer;transition:var(--transition)}
+        .quick-chip:hover{background:rgba(0,245,255,.15);box-shadow:var(--glow-cyan)}
+        .typing-indicator{display:flex;align-items:center;gap:.3rem;padding:.75rem 1rem}
+        .typing-dot{width:7px;height:7px;border-radius:50%;background:var(--neon-cyan);animation:typingBounce 1.2s ease-in-out infinite}
+        .typing-dot:nth-child(2){animation-delay:.2s}
+        .typing-dot:nth-child(3){animation-delay:.4s}
+        @keyframes typingBounce{0%,80%,100%{transform:scale(1);opacity:.5}40%{transform:scale(1.3);opacity:1}}
+        .chat-input-area{display:flex;gap:.8rem;padding:1rem 1.5rem;border-top:1px solid rgba(0,245,255,.08);background:rgba(2,8,18,.4)}
+        .chat-input-area input{flex:1;background:rgba(10,22,40,.8);border:1px solid rgba(0,245,255,.12);border-radius:10px;padding:.7rem 1rem;color:var(--text-primary);font-family:'Inter',sans-serif;font-size:.87rem;outline:none;transition:var(--transition)}
+        .chat-input-area input:focus{border-color:rgba(0,245,255,.4);box-shadow:0 0 20px rgba(0,245,255,.1)}
+        .chat-input-area input::placeholder{color:var(--text-muted)}
+        #chatSendBtn{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--neon-cyan),rgba(0,245,255,.7));color:#020812;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0}
+        #chatSendBtn:hover{box-shadow:var(--glow-cyan);transform:scale(1.1)}
+
+        /* CONTACT */
+        .contact{background:var(--nexo-dark)}
+        .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start}
+        .contact-info h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;margin-bottom:1rem;color:var(--text-primary)}
+        .contact-info p{color:var(--text-secondary);line-height:1.8;margin-bottom:2rem;font-size:.9rem}
+        .contact-links{display:flex;flex-direction:column;gap:.8rem}
+        .contact-link{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:rgba(5,13,26,.85);border:var(--border-card);border-radius:14px;text-decoration:none;transition:var(--transition);backdrop-filter:blur(10px)}
+        .contact-link:hover{border-color:rgba(0,245,255,.3);transform:translateX(6px);box-shadow:var(--glow-cyan)}
+        .contact-link-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+        .icon-email{background:rgba(0,245,255,.1);color:var(--neon-cyan)}
+        .icon-whatsapp{background:rgba(0,255,136,.1);color:var(--neon-green)}
+        .icon-telegram{background:rgba(0,136,255,.1);color:#0088ff}
+        .icon-github{background:rgba(255,255,255,.05);color:var(--text-secondary)}
+        .contact-link-text h4{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;color:var(--text-primary);margin-bottom:.15rem}
+        .contact-link-text span{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-muted)}
+        .contact-form-wrap{background:rgba(5,13,26,.85);border:var(--border-card);border-radius:20px;padding:2rem;backdrop-filter:blur(10px)}
+        .form-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.1rem;margin-bottom:1.5rem;color:var(--text-primary)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+        .form-group label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase}
+        .form-group input,.form-group textarea{background:rgba(2,8,18,.8);border:1px solid rgba(0,245,255,.1);border-radius:10px;padding:.7rem 1rem;color:var(--text-primary);font-family:'Inter',sans-serif;font-size:.87rem;outline:none;transition:var(--transition);resize:vertical}
+        .form-group input:focus,.form-group textarea:focus{border-color:rgba(0,245,255,.4);box-shadow:0 0 20px rgba(0,245,255,.1)}
+        .form-group input::placeholder,.form-group textarea::placeholder{color:var(--text-muted)}
+        @media(max-width:768px){.contact-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}
+
+        /* FOOTER */
+        .footer{background:var(--nexo-black);border-top:1px solid rgba(0,245,255,.08);padding:2rem 0}
+        .footer .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+        .footer-left p{font-size:.82rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+        .footer-left span{color:var(--neon-cyan)}
+        .visitor-counter{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);margin-top:.3rem;display:flex;align-items:center;gap:.4rem}
+        .social-links{display:flex;align-items:center;gap:.8rem}
+        .social-link{width:38px;height:38px;border-radius:10px;background:rgba(0,245,255,.05);border:1px solid rgba(0,245,255,.1);color:var(--text-muted);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:var(--transition);font-size:.9rem}
+        .social-link:hover{color:var(--neon-cyan);border-color:var(--neon-cyan);box-shadow:var(--glow-cyan)}
+        .nexo-tech-link{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--neon-cyan);text-decoration:none;background:rgba(0,245,255,.06);border:1px solid rgba(0,245,255,.2);border-radius:8px;padding:.4rem .8rem;transition:var(--transition)}
+        .nexo-tech-link:hover{background:rgba(0,245,255,.15);box-shadow:var(--glow-cyan)}
+
+        /* FLOAT AI WIDGET */
+        #ai-float-btn{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--neon-cyan),rgba(0,245,255,.7));color:#020812;border:none;cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:var(--glow-cyan),0 10px 30px rgba(0,0,0,.4);transition:var(--transition);animation:float 3s ease-in-out infinite}
+        #ai-float-btn:hover{transform:scale(1.15) !important;box-shadow:0 0 50px rgba(0,245,255,1),0 15px 40px rgba(0,0,0,.4)}
+        .float-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--neon-magenta);color:#fff;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:var(--glow-magenta);font-family:'JetBrains Mono',monospace;animation:pulse-dot 2s infinite}
+        #ai-float-panel{position:fixed;bottom:6.5rem;right:2rem;width:360px;background:rgba(5,13,26,.97);border:var(--border-card);border-radius:20px;z-index:8999;display:none;flex-direction:column;backdrop-filter:blur(20px);box-shadow:0 40px 80px rgba(0,0,0,.6),var(--glow-cyan);overflow:hidden;max-height:500px}
+        #ai-float-panel.active{display:flex;animation:slideUpIn .3s ease}
+        @keyframes slideUpIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .float-panel-header{display:flex;align-items:center;gap:.8rem;padding:1rem 1.2rem;border-bottom:1px solid rgba(0,245,255,.08);background:rgba(2,8,18,.5)}
+        .float-panel-avatar{font-size:1.5rem;filter:drop-shadow(0 0 8px rgba(0,245,255,.4))}
+        .float-panel-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.85rem;color:var(--text-primary)}
+        .float-panel-sub{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-muted);letter-spacing:.08em}
+        #floatCloseBtn{margin-left:auto;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:.9rem;transition:.2s;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+        #floatCloseBtn:hover{background:rgba(255,0,110,.1);color:var(--neon-magenta)}
+        .float-chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.8rem;max-height:300px}
+        .float-input-area{display:flex;gap:.6rem;padding:.8rem 1rem;border-top:1px solid rgba(0,245,255,.08);background:rgba(2,8,18,.3)}
+        .float-input-area input{flex:1;background:rgba(10,22,40,.8);border:1px solid rgba(0,245,255,.12);border-radius:8px;padding:.55rem .8rem;color:var(--text-primary);font-family:'Inter',sans-serif;font-size:.82rem;outline:none;transition:.3s}
+        .float-input-area input:focus{border-color:rgba(0,245,255,.4)}
+        .float-input-area input::placeholder{color:var(--text-muted)}
+        #floatSendBtn{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--neon-cyan),rgba(0,245,255,.7));color:#020812;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s;flex-shrink:0}
+        #floatSendBtn{box-shadow:var(--glow-cyan)}
+        @media(max-width:480px){#ai-float-panel{width:calc(100vw - 2rem);right:1rem}}
+
+        /* ENHANCED ANIMATIONS */
+        @keyframes constellationPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.8;transform:scale(1.3)}}
+        @keyframes borderSweep{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+        @keyframes neonFlicker{0%,19%,21%,23%,25%,54%,56%,100%{text-shadow:var(--glow-cyan)}20%,24%,55%{text-shadow:none;opacity:.8}}
+        @keyframes slideInLeft{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:none}}
+        @keyframes slideInRight{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:none}}
+        @keyframes wipeIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0% 0 0)}}
+        .card-3d{transform-style:preserve-3d;transition:transform .15s ease}
+        .section-sweep{position:relative;overflow:hidden}
+        .section-sweep::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--neon-cyan),var(--neon-magenta),transparent);animation:none;z-index:10}
+        .section-sweep.sweep-active::before{animation:sweepLine .8s ease forwards}
+        @keyframes sweepLine{from{left:-100%}to{left:100%}}
+        .hover-glow{transition:var(--transition)}
+        .hover-glow:hover{filter:drop-shadow(0 0 10px rgba(0,245,255,.6))}
+        .stagger-1{animation-delay:.1s!important}.stagger-2{animation-delay:.2s!important}.stagger-3{animation-delay:.3s!important}.stagger-4{animation-delay:.4s!important}.stagger-5{animation-delay:.5s!important}.stagger-6{animation-delay:.6s!important}
+
+        /* LIGHT THEME */
+        :root[data-theme='light']{--nexo-black:#f0f4f8;--nexo-dark:#e2e8f0;--nexo-darker:#d1d9e3;--text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;--glass:rgba(240,244,248,.7);--border-card:1px solid rgba(0,100,200,.12)}
+        :root[data-theme='light'] .navbar.scrolled{background:rgba(240,244,248,.95)}
+        :root[data-theme='light'] #matrix-bg{opacity:.05}
+
+        /* APP DEV */
+        .app-development{background:var(--nexo-darker)}
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+    <div id="cursor-trail"></div>
+
+    <!-- Matrix Background Canvas -->
+    <canvas id="matrix-bg"></canvas>
+    <canvas id="constellation-canvas"></canvas>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-logo">NEXO-TECHNOLOGIES</div>
+        <div class="loader-ring"></div>
+        <div class="loader-progress"><div class="loader-progress-fill"></div></div>
+        <div class="loader-text" id="boot-text">INITIALIZING NEURAL CORE...</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="logo" onclick="scrollToTop()">
+                <div class="logo-hex"></div>
+                NEXO-TECHNOLOGIES
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="programming.html" class="nav-link">Programming</a></li>
+                <li><a href="hacking.html" class="nav-link">Hacking</a></li>
+                <li><a href="tools.html" class="nav-link">Arsenal</a></li>
+                <li><a href="terminal.html" class="nav-link">Terminal</a></li>
+                <li><a href="lab.html" class="nav-link">Lab</a></li>
+                <li><a href="learn-hacking.html" class="nav-link">Learn</a></li>
+                <li><a href="#ai-chat" class="nav-link">AI</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="home" class="hero">
+        <div class="hero-scanline"></div>
+        <div class="hero-hud-top">
+            <span><span class="hud-dot"></span>SYS_STATUS: ONLINE // NEXO_OS_v4.2</span>
+            <span>COORD: 6.5244° N, 3.3792° E</span>
+            <span>SECURE_LINK: ACTIVE</span>
+        </div>
+        <div class="hero-hud-bottom">
+            <span>THREAT_LEVEL: MINIMAL</span>
+            <span>UPTIME: 99.99%</span>
+            <span>NEXO-TECHNOLOGIES CORP. // EST. 2021</span>
+        </div>
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-bg-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+        <div class="container">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <div class="badge-pulse"></div>
+                    AVAILABLE FOR WORK
+                </div>
+                <div class="nexo-sub">// NEXO-TECHNOLOGIES PRESENTS</div>
+                <h1 class="hero-title">
+                    <span class="line-1">NEXO-TECHNOLOGIES</span>
+                    <span class="line-2 glitch" data-text="DIGITAL COMMAND CENTER">DIGITAL COMMAND CENTER</span>
+                </h1>
+                <div class="hero-typed-wrapper">
+                    <span class="typed-prefix">&gt;&nbsp;</span>
+                    <span id="hero-typed"></span>
+                    <span class="typed-cursor"></span>
+                </div>
+                <p class="hero-description">
+                    Professional full-stack architecture with expertise in <strong>15+ programming languages</strong>,
+                    specializing in system development, automation, and cutting-edge cybersecurity.
+                    Building the future, one line of code at a time.
+                </p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-num" id="stat-langs">15+</div>
+                        <div class="hero-stat-label">Languages</div>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num" id="stat-projects">50+</div>
+                        <div class="hero-stat-label">Projects</div>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-num" id="stat-years">5+</div>
+                        <div class="hero-stat-label">Years Exp</div>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary"><i class="fas fa-code"></i> View My Work</a>
+                    <a href="#contact" class="btn btn-secondary"><i class="fas fa-satellite-dish"></i> Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-ring-1"></div>
+                <div class="hero-ring-2"></div>
+                <canvas id="decahedron-canvas" width="340" height="340"></canvas>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-wheel"></div>
+            <span>SCROLL</span>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// who we are</span>
+                <h2 class="section-title">About <span>NEXO</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-visual reveal-left">
+                    <div class="about-card-wrapper">
+                        <div class="about-avatar-card">
+                            <div class="avatar-icon-wrap">🔐</div>
+                            <div class="about-name">NEXO-TECHNOLOGIES</div>
+                            <div class="about-role">Core Development & Cybersecurity Collective</div>
+                            <div class="about-tags">
+                                <span class="about-tag">LINUX</span>
+                                <span class="about-tag">RUST</span>
+                                <span class="about-tag">PYTHON</span>
+                                <span class="about-tag">HACKING</span>
+                            </div>
+                        </div>
+                        <div class="floating-badges">
+                            <div class="f-badge f-badge-1"><i class="fas fa-check-circle"></i> 50+ Projects Done</div>
+                            <div class="f-badge f-badge-2"><i class="fas fa-shield-alt"></i> Cyber Expert</div>
+                            <div class="f-badge f-badge-3"><i class="fas fa-fire"></i> 5+ Years</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-content reveal-right">
+                    <h3>Professional Development & <span>Grey Hat</span> Security Solutions</h3>
+                    <p>We are a dedicated team focusing on robust software architectures and deep cybersecurity analysis. We bring a comprehensive approach to problem-solving, specializing in Linux environments, automation, and secure infrastructure design.</p>
+                    <p>Our expertise spans low-level system programming to scalable application deployments. Driven by clean, efficient code and the pursuit of digital hardening, we build resilient systems for the modern web.</p>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-num" data-count="15">0</div>
+                            <div class="stat-label">Languages</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-num" data-count="50">0</div>
+                            <div class="stat-label">Projects</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-num" data-count="5">0</div>
+                            <div class="stat-label">Years Exp</div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="btn btn-primary" style="width:fit-content;"><i class="fas fa-handshake"></i> Let's Work Together</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SKILLS ==================== -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// what we know</span>
+                <h2 class="section-title">Technical <span>Stack</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card reveal">
+                    <div class="skill-card-header">
+                        <div class="skill-icon-wrap skill-icon-cyan"><i class="fas fa-server"></i></div>
+                        <div class="skill-card-title">Backend Development</div>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag skill-tag-cyan">Python</span>
+                        <span class="skill-tag skill-tag-purple">Java</span>
+                        <span class="skill-tag skill-tag-pink">C++</span>
+                        <span class="skill-tag skill-tag-orange">C#</span>
+                        <span class="skill-tag skill-tag-cyan">Golang</span>
+                        <span class="skill-tag skill-tag-orange">Rust</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-header">
+                        <div class="skill-icon-wrap skill-icon-green"><i class="fas fa-globe"></i></div>
+                        <div class="skill-card-title">Web Development</div>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag skill-tag-orange">HTML5</span>
+                        <span class="skill-tag skill-tag-cyan">CSS3</span>
+                        <span class="skill-tag skill-tag-gold">JavaScript</span>
+                        <span class="skill-tag skill-tag-green">Responsive</span>
+                        <span class="skill-tag skill-tag-purple">Node.js</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-header">
+                        <div class="skill-icon-wrap skill-icon-purple"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="skill-card-title">Mobile Development</div>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag skill-tag-cyan">Flutter</span>
+                        <span class="skill-tag skill-tag-purple">Dart</span>
+                        <span class="skill-tag skill-tag-pink">Cross-Platform</span>
+                        <span class="skill-tag skill-tag-green">iOS & Android</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-header">
+                        <div class="skill-icon-wrap skill-icon-pink"><i class="fas fa-terminal"></i></div>
+                        <div class="skill-card-title">System & Scripting</div>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag skill-tag-green">Shell Scripting</span>
+                        <span class="skill-tag skill-tag-cyan">Bash</span>
+                        <span class="skill-tag skill-tag-orange">VBS</span>
+                        <span class="skill-tag skill-tag-purple">Linux Admin</span>
+                        <span class="skill-tag skill-tag-pink">Automation</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-header">
+                        <div class="skill-icon-wrap skill-icon-gold"><i class="fas fa-shield-alt"></i></div>
+                        <div class="skill-card-title">Cybersecurity</div>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag skill-tag-pink">Network Security</span>
+                        <span class="skill-tag skill-tag-gold">System Hardening</span>
+                        <span class="skill-tag skill-tag-cyan">Security Analysis</span>
+                        <span class="skill-tag skill-tag-orange">Pen Testing</span>
+                        <span class="skill-tag skill-tag-purple">Linux Security</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-card-header">
+                        <div class="skill-icon-wrap skill-icon-orange"><i class="fas fa-tools"></i></div>
+                        <div class="skill-card-title">Tools & Platforms</div>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag skill-tag-orange">Git</span>
+                        <span class="skill-tag skill-tag-cyan">Docker</span>
+                        <span class="skill-tag skill-tag-purple">Linux Distros</span>
+                        <span class="skill-tag skill-tag-green">CLI Tools</span>
+                        <span class="skill-tag skill-tag-pink">Termux</span>
+                    </div>
+                </div>
+            </div>
+            <div class="proficiency-section reveal">
+                <div class="proficiency-title">⚡ LANGUAGE PROFICIENCY</div>
+                <div class="prof-list">
+                    <div class="prof-item"><span class="prof-name">Python</span><div class="prof-bar-track"><div class="prof-bar-fill fill-cyan" data-width="95"></div></div><span class="prof-percent">95%</span></div>
+                    <div class="prof-item"><span class="prof-name">Shell Script</span><div class="prof-bar-track"><div class="prof-bar-fill fill-green" data-width="92"></div></div><span class="prof-percent">92%</span></div>
+                    <div class="prof-item"><span class="prof-name">Java</span><div class="prof-bar-track"><div class="prof-bar-fill fill-purple" data-width="88"></div></div><span class="prof-percent">88%</span></div>
+                    <div class="prof-item"><span class="prof-name">JavaScript</span><div class="prof-bar-track"><div class="prof-bar-fill fill-gold" data-width="85"></div></div><span class="prof-percent">85%</span></div>
+                    <div class="prof-item"><span class="prof-name">C++</span><div class="prof-bar-track"><div class="prof-bar-fill fill-pink" data-width="82"></div></div><span class="prof-percent">82%</span></div>
+                    <div class="prof-item"><span class="prof-name">Rust</span><div class="prof-bar-track"><div class="prof-bar-fill fill-orange" data-width="78"></div></div><span class="prof-percent">78%</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MARQUEE ==================== -->
+    <div class="tech-marquee">
+        <div class="marquee-track">
+            <div class="marquee-item"><i class="fab fa-python"></i> PYTHON</div>
+            <div class="marquee-item"><i class="fab fa-rust"></i> RUST</div>
+            <div class="marquee-item"><i class="fab fa-node-js"></i> NODE.JS</div>
+            <div class="marquee-item"><i class="fab fa-js"></i> JAVASCRIPT</div>
+            <div class="marquee-item"><i class="fab fa-linux"></i> LINUX ADMIN</div>
+            <div class="marquee-item"><i class="fas fa-shield-alt"></i> ETHICAL HACKING</div>
+            <div class="marquee-item"><i class="fab fa-docker"></i> DOCKER</div>
+            <div class="marquee-item"><i class="fab fa-git-alt"></i> GIT</div>
+            <div class="marquee-item"><i class="fab fa-java"></i> JAVA</div>
+            <div class="marquee-item"><i class="fas fa-terminal"></i> BASH SCRIPTING</div>
+            <div class="marquee-item"><i class="fas fa-robot"></i> AI SYSTEMS</div>
+            <div class="marquee-item"><i class="fas fa-network-wired"></i> NETWORKING</div>
+            <div class="marquee-item"><i class="fab fa-python"></i> PYTHON</div>
+            <div class="marquee-item"><i class="fab fa-rust"></i> RUST</div>
+            <div class="marquee-item"><i class="fab fa-node-js"></i> NODE.JS</div>
+            <div class="marquee-item"><i class="fab fa-js"></i> JAVASCRIPT</div>
+            <div class="marquee-item"><i class="fab fa-linux"></i> LINUX ADMIN</div>
+            <div class="marquee-item"><i class="fas fa-shield-alt"></i> ETHICAL HACKING</div>
+            <div class="marquee-item"><i class="fab fa-docker"></i> DOCKER</div>
+            <div class="marquee-item"><i class="fab fa-git-alt"></i> GIT</div>
+            <div class="marquee-item"><i class="fab fa-java"></i> JAVA</div>
+            <div class="marquee-item"><i class="fas fa-terminal"></i> BASH SCRIPTING</div>
+            <div class="marquee-item"><i class="fas fa-robot"></i> AI SYSTEMS</div>
+            <div class="marquee-item"><i class="fas fa-network-wired"></i> NETWORKING</div>
+        </div>
+    </div>
+
+    <!-- ==================== TIMELINE ==================== -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// journey &amp; milestones</span>
+                <h2 class="section-title">Our <span>History</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024 — PRESENT</div>
+                        <div class="timeline-title">Lead Security Researcher & NEXO-TECH Evolution</div>
+                        <div class="timeline-desc">Scaling NEXO-TECHNOLOGIES. Developing secure automated workflows, leading system diagnostics, vulnerability assessment tools, and advanced Linux optimization.</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-empty"></div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-empty"></div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022 — 2024</div>
+                        <div class="timeline-title">Cybersecurity Analytics Ops</div>
+                        <div class="timeline-desc">Network architecture analysis, pentesting workflows, and server-side hardening techniques for enterprise-grade protection.</div>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2020 — 2022</div>
+                        <div class="timeline-title">Foundation & Development</div>
+                        <div class="timeline-desc">Initial building of specialized chatbots, Rust/C++ network utilities, and modular automation toolkits.</div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-empty"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROJECTS ==================== -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// what we build</span>
+                <h2 class="section-title">Featured <span>Projects</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card reveal">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap skill-icon-green" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;"><i class="fab fa-whatsapp"></i></div>
+                        <span class="project-badge badge-cyan">JavaScript</span>
+                    </div>
+                    <div class="project-title">DEMONIC-BOT WhatsApp</div>
+                    <div class="project-desc">Intelligent WhatsApp automation engine. Featuring multi-command response systems and advanced media management.</div>
+                    <div class="project-tech-tags">
+                        <span class="tech-tag">JavaScript</span><span class="tech-tag">Node.js</span><span class="tech-tag">WhatsApp API</span><span class="tech-tag">Automation</span>
+                    </div>
+                    <a href="https://github.com/demonalexander526-alt/DEMONIC-BOT" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
+                </div>
+                <div class="project-card reveal">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap skill-icon-purple" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;"><i class="fab fa-linux"></i></div>
+                        <span class="project-badge badge-purple">Python</span>
+                    </div>
+                    <div class="project-title">DEMONIC_TOOLS Suite</div>
+                    <div class="project-desc">A comprehensive Linux arsenal for administrators. Includes system-level utility scripts and security auditing.</div>
+                    <div class="project-tech-tags">
+                        <span class="tech-tag">Python</span><span class="tech-tag">Shell Script</span><span class="tech-tag">Linux</span><span class="tech-tag">Security</span>
+                    </div>
+                    <a href="https://github.com/demonalexander526-alt/DEMONIC_TOOLS" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
+                </div>
+                <div class="project-card reveal">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap skill-icon-orange" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;"><i class="fas fa-bolt"></i></div>
+                        <span class="project-badge badge-pink">Rust</span>
+                    </div>
+                    <div class="project-title">NEXO-TECH IP Flooder</div>
+                    <div class="project-desc">High-performance network stress tester built in Rust. Optimized for rapid testing and infrastructure resilience checks.</div>
+                    <video src="rust.mp4" class="project-video" controls muted></video>
+                    <div class="project-install">
+                        <div class="install-header">
+                            <div class="install-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+                            <span class="install-label">bash — Installation</span>
+                        </div>
+                        <code>pkg update && pkg upgrade<br>pkg install git rust -y<br>git clone https://github.com/demonalexander526-alt/NEXO-TECH_IP-FLOODER.git<br>cd NEXO-TECH_IP-FLOODER && cargo run</code>
+                    </div>
+                    <div class="project-tech-tags">
+                        <span class="tech-tag">Rust</span><span class="tech-tag">Networking</span><span class="tech-tag">Performance</span><span class="tech-tag">CLI</span>
+                    </div>
+                    <a href="https://github.com/demonalexander526-alt/NEXO-TECH_IP-FLOODER.git" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECURITY ==================== -->
+    <section class="security-focus">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// security expertise</span>
+                <h2 class="section-title">Cybersecurity & <span>Linux</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="security-grid">
+                <div class="security-card reveal">
+                    <div class="security-card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Security Analysis</h3>
+                    <p>In-depth analysis of system vulnerabilities and security configurations. Expertise in identifying and addressing critical security gaps in networks and systems.</p>
+                </div>
+                <div class="security-card reveal">
+                    <div class="security-card-icon" style="color:var(--neon-purple);background:rgba(191,0,255,.08);border-color:rgba(191,0,255,.2)"><i class="fas fa-server"></i></div>
+                    <h3>Linux Systems</h3>
+                    <p>Deep knowledge of Linux kernel, system administration, performance optimization, and advanced networking. Master of multiple Linux distributions.</p>
+                </div>
+                <div class="security-card reveal">
+                    <div class="security-card-icon" style="color:var(--neon-pink);background:rgba(255,0,110,.08);border-color:rgba(255,0,110,.2)"><i class="fas fa-bug"></i></div>
+                    <h3>System Diagnostics</h3>
+                    <p>Advanced tools and techniques for system debugging, performance profiling, and troubleshooting complex production issues under pressure.</p>
+                </div>
+                <div class="security-card reveal">
+                    <div class="security-card-icon" style="color:var(--neon-green);background:rgba(0,255,136,.08);border-color:rgba(0,255,136,.2)"><i class="fas fa-user-secret"></i></div>
+                    <h3>Penetration Testing</h3>
+                    <p>Comprehensive security testing methodologies for identifying system weaknesses and implementing protective measures. Ethical hacking for a safer digital world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SERVICES ==================== -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// hire us</span>
+                <h2 class="section-title">Web Development <span>Services</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <p class="services-subtitle">Professional web solutions tailored to business requirements.</p>
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="card-badge">Popular</div>
+                    <div class="card-header"><i class="fas fa-globe"></i><h3>Standard Website</h3></div>
+                    <div class="price-section"><span class="price">$200</span><p class="price-desc">One-time payment</p></div>
+                    <div class="card-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> 1 Professional Page</li>
+                        <li><i class="fas fa-check"></i> Responsive Design</li>
+                        <li><i class="fas fa-check"></i> Modern UI/UX</li>
+                        <li><i class="fas fa-check"></i> Contact Form</li>
+                    </ul>
+                    <a href="https://wa.me/2347044339491" target="_blank" class="cta-btn">Get Started</a>
+                </div>
+                <div class="service-card featured reveal">
+                    <div class="card-badge featured-badge">Best Value</div>
+                    <div class="card-header"><i class="fas fa-shop"></i><h3>Commercial Website</h3></div>
+                    <div class="price-section"><span class="price">$500</span><p class="price-desc">Up to 3 pages</p></div>
+                    <div class="card-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Multi-page Site</li>
+                        <li><i class="fas fa-check"></i> SEO Optimized</li>
+                        <li><i class="fas fa-check"></i> Custom Features</li>
+                        <li><i class="fas fa-check"></i> Analytics Setup</li>
+                    </ul>
+                    <a href="https://wa.me/2347044339491" target="_blank" class="cta-btn cta-btn-featured">Get Started</a>
+                </div>
+                <div class="service-card reveal">
+                    <div class="card-badge">Enterprise</div>
+                    <div class="card-header"><i class="fas fa-crown"></i><h3>Premium Package</h3></div>
+                    <div class="price-section"><span class="price">$1000+</span><p class="price-desc">Fully custom solution</p></div>
+                    <div class="card-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Unlimited Features</li>
+                        <li><i class="fas fa-check"></i> Admin Dashboard</li>
+                        <li><i class="fas fa-check"></i> Database Integration</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
+                    </ul>
+                    <a href="https://wa.me/2347044339491" target="_blank" class="cta-btn">Inquire Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== AI CHAT ==================== -->
+    <section id="ai-chat" class="ai-chat-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// neural interface</span>
+                <h2 class="section-title">Query <span>NEXO-AI</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="ai-chat-wrapper reveal">
+                <div class="ai-chat-header">
+                    <div class="ai-avatar">🤖</div>
+                    <div class="ai-header-info">
+                        <h3>NEXO-AI v4.2</h3>
+                        <p>NEURAL AGENT // ONLINE</p>
+                    </div>
+                </div>
+                <div class="ai-chat-box">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-msg ai">
+                            <div class="msg-avatar ai-msg-avatar">🤖</div>
+                            <div class="msg-bubble">
+                                NEXO-AI active. How can I assist with your NEXO-TECHNOLOGIES inquiries?
+                                <div class="quick-chips">
+                                    <button class="quick-chip" onclick="sendQuickMessage('Explain NEXO-TECHNOLOGIES services')">Services Offered?</button>
+                                    <button class="quick-chip" onclick="sendQuickMessage('What is your tech stack?')">Technical Stack?</button>
+                                    <button class="quick-chip" onclick="sendQuickMessage('How do I hire you?')">How to Hire?</button>
+                                </div>
+                                <span class="msg-time">SYSTEM ONLINE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Command..." onkeypress="handleChatKey(event)">
+                        <button id="chatSendBtn" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// connect with us</span>
+                <h2 class="section-title">Let's <span>Talk</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info reveal-left">
+                    <h3>Ready to build something extraordinary?</h3>
+                    <p>Connect with the NEXO-TECHNOLOGIES collective for project inquiries, technical collaboration, or cybersecurity consultation.</p>
+                    <div class="contact-links">
+                        <a href="mailto:demonalexander526@gmail.com" class="contact-link">
+                            <div class="contact-link-icon icon-email"><i class="fas fa-envelope"></i></div>
+                            <div class="contact-link-text"><h4>Email</h4><span>demonalexander526@gmail.com</span></div>
+                        </a>
+                        <a href="https://wa.me/2349054345858" target="_blank" class="contact-link">
+                            <div class="contact-link-icon icon-whatsapp"><i class="fab fa-whatsapp"></i></div>
+                            <div class="contact-link-text"><h4>WhatsApp</h4><span>Chat with NEXO-TECHNOLOGIES</span></div>
+                        </a>
+                        <a href="https://t.me/Vershdit" target="_blank" class="contact-link">
+                            <div class="contact-link-icon icon-telegram"><i class="fab fa-telegram-plane"></i></div>
+                            <div class="contact-link-text"><h4>Telegram</h4><span>@Vershdit</span></div>
+                        </a>
+                        <a href="https://github.com/demonalexander526-alt" target="_blank" class="contact-link">
+                            <div class="contact-link-icon icon-github"><i class="fab fa-github"></i></div>
+                            <div class="contact-link-text"><h4>GitHub</h4><span>View our workflow</span></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form-wrap reveal-right">
+                    <div class="form-title">📡 Send a Transmission</div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group"><label>Name</label><input type="text" placeholder="Name" required></div>
+                            <div class="form-group"><label>Email</label><input type="email" placeholder="Email" required></div>
+                        </div>
+                        <div class="form-group"><label>Subject</label><input type="text" placeholder="Subject" required></div>
+                        <div class="form-group"><label>Message</label><textarea placeholder="Project requirements..." rows="5" required></textarea></div>
+                        <button type="submit" class="btn btn-primary" style="width:100%"><i class="fas fa-paper-plane"></i> Transmit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-left">
+                <p>© 2026 <span>NEXO-TECHNOLOGIES</span> // Grey Hat Developer &amp; Cybersecurity Corp</p>
+                <div class="visitor-counter"><i class="fas fa-eye"></i> <span id="visitor-count">0</span> visitors</div>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/demonalexander526-alt" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="https://t.me/nexotechnologies" target="_blank" class="nexo-tech-link">NEXO-TECH</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating AI Widget -->
+    <button id="ai-float-btn" onclick="toggleAiFloatPanel()" title="Chat with NEXO-AI">
+        <i class="fas fa-robot"></i>
+        <div class="float-badge">AI</div>
+    </button>
+    <div id="ai-float-panel">
+        <div class="float-panel-header">
+            <div class="float-panel-avatar">🤖</div>
+            <div>
+                <div class="float-panel-title">NEXO-AI ASSISTANT</div>
+                <div class="float-panel-sub">SECURE_LINK // STABLE</div>
+            </div>
+            <button id="floatCloseBtn" onclick="toggleAiFloatPanel()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="model-selector" id="floatModelSelector"></div>
+        <div class="float-chat-messages" id="floatChatMessages">
+            <div class="chat-msg ai">
+                <div class="msg-avatar ai-msg-avatar">🤖</div>
+                <div class="msg-bubble">
+                    Hey! I'm NEXO-AI. Need a quick answer about NEXO-TECHNOLOGIES skills or pricing packages?
+                </div>
+            </div>
+        </div>
+        <div class="float-input-area">
+            <input type="text" id="floatChatInput" placeholder="Ask anything..." onkeypress="handleFloatChatKey(event)">
+            <button id="floatSendBtn" onclick="sendFloatChatMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

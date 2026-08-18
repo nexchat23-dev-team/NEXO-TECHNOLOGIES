@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>NEXO-TECH Arsenal — Hacking Tools & Utilities</title>
+    <meta name="description" content="NEXO-TECHNOLOGIES full arsenal of hacking tools, cybersecurity utilities, and automation scripts. DEMONIC-BOT, DEMONIC_TOOLS, IP Flooder, and more.">
+    <meta name="theme-color" content="#020812">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --nexo-black:#020812;--nexo-dark:#050d1a;--nexo-darker:#0a1628;
+            --neon-cyan:#00f5ff;--neon-magenta:#ff006e;--neon-green:#00ff88;
+            --neon-gold:#ffd700;--neon-purple:#bf00ff;--neon-orange:#ff6b00;
+            --neon-pink:#ff006e;--neon-red:#ff1744;
+            --text-primary:#e8f4fd;--text-secondary:#8baac9;--text-muted:#4a6680;
+            --glow-cyan:0 0 20px rgba(0,245,255,.6),0 0 40px rgba(0,245,255,.3);
+            --glow-green:0 0 20px rgba(0,255,136,.6),0 0 40px rgba(0,255,136,.3);
+            --glow-orange:0 0 20px rgba(255,107,0,.6),0 0 40px rgba(255,107,0,.3);
+            --glow-purple:0 0 20px rgba(191,0,255,.6),0 0 40px rgba(191,0,255,.3);
+            --border-card:1px solid rgba(0,245,255,.12);
+            --transition:all .35s cubic-bezier(.4,0,.2,1);
+        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth;font-size:16px;-webkit-text-size-adjust:100%}
+        body{background:var(--nexo-black);color:var(--text-primary);font-family:'Inter',sans-serif;overflow-x:hidden;min-height:100vh;min-height:calc(var(--vh, 1vh) * 100)}
+        
+        @media (hover: hover) and (pointer: fine) {
+            body { cursor: none; }
+            #custom-cursor{position:fixed;width:10px;height:10px;background:var(--neon-cyan);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:var(--glow-cyan);transition:width .15s,height .15s,background .15s}
+            #cursor-trail{position:fixed;width:32px;height:32px;border:1.5px solid rgba(0,245,255,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:border-color .3s}
+        }
+        @media (hover: none), (pointer: coarse) {
+            #custom-cursor, #cursor-trail { display: none !important; }
+        }
+
+        ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--nexo-dark)}::-webkit-scrollbar-thumb{background:var(--neon-cyan);border-radius:2px}
+        #hex-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.08;pointer-events:none}
+
+        /* NAVBAR */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.8rem 0;background:rgba(2,8,18,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,245,255,.1);transition:all .35s ease}
+        .navbar .container{display:flex;align-items:center;justify-content:space-between;max-width:1280px;margin:0 auto;padding:0 1.5rem}
+        .logo{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.08em;display:flex;align-items:center;gap:.5rem;color:var(--neon-cyan);text-shadow:var(--glow-cyan);text-decoration:none;white-space:nowrap}
+        .logo-hex{width:26px;height:26px;background:var(--neon-cyan);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hex-rotate 6s linear infinite;flex-shrink:0}
+        @keyframes hex-rotate{0%,100%{transform:rotate(0)}50%{transform:rotate(180deg)}}
+        .nav-menu{display:flex;align-items:center;gap:.2rem;list-style:none}
+        .nav-link{font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.05em;color:var(--text-secondary);text-decoration:none;padding:.45rem .7rem;border-radius:8px;transition:var(--transition);text-transform:uppercase;position:relative}
+        .nav-link::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:1.5px;background:var(--neon-cyan);transform:translateX(-50%);transition:width .3s}
+        .nav-link:hover{color:var(--neon-cyan)}
+        .nav-link:hover::after,.nav-link.active::after{width:80%}
+        .nav-link.active{color:var(--neon-cyan)}
+        .mobile-menu-toggle{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.2);color:var(--text-primary);width:42px;height:42px;border-radius:10px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:var(--transition);font-size:1.1rem}
+        .mobile-menu-toggle:hover{color:var(--neon-cyan);border-color:var(--neon-cyan);box-shadow:var(--glow-cyan)}
+
+        @media(max-width:960px){
+            .nav-menu{display:none;position:fixed;inset:0;background:rgba(2,8,18,.98);backdrop-filter:blur(30px);flex-direction:column;justify-content:center;gap:1.2rem;z-index:999;padding:2rem;overflow-y:auto}
+            .nav-menu.active{display:flex}
+            .nav-link{font-size:1.15rem;padding:.8rem 1.5rem;text-align:center;width:100%;max-width:300px}
+            .mobile-menu-toggle{display:flex}
+        }
+
+        /* HERO */
+        .tools-hero{position:relative;min-height:50vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;margin-top:60px;padding:3rem 1rem;background:radial-gradient(ellipse at 30% 50%,rgba(0,245,255,.12) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(255,107,0,.1) 0%,transparent 60%),var(--nexo-dark)}
+        .tools-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(0,245,255,.02) 80px,rgba(0,245,255,.02) 81px),repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(0,245,255,.02) 80px,rgba(0,245,255,.02) 81px);pointer-events:none;animation:gridMove 20s linear infinite}
+        @keyframes gridMove{0%{transform:translate(0,0)}100%{transform:translate(81px,81px)}}
+        .tools-hero-content{position:relative;z-index:2;max-width:800px;width:100%;margin:0 auto}
+        .hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:clamp(.65rem, 2vw, .75rem);color:var(--neon-orange);letter-spacing:.25em;text-transform:uppercase;margin-bottom:1rem}
+        .tools-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,6vw,4.5rem);font-weight:700;line-height:1.1;margin-bottom:1rem}
+        .tools-hero h1 .t1{color:var(--text-primary)}
+        .tools-hero h1 .t2{color:var(--neon-orange);text-shadow:var(--glow-orange)}
+        .tools-hero .subtitle{font-family:'JetBrains Mono',monospace;font-size:clamp(.75rem, 2vw, .85rem);color:var(--text-muted);letter-spacing:.12em;margin-bottom:2rem;padding:0 .5rem}
+        .hero-action-row{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+        .back-btn{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-muted);text-decoration:none;letter-spacing:.08em;padding:.5rem 1.1rem;border:1px solid rgba(255,255,255,.1);border-radius:999px;transition:var(--transition);touch-action:manipulation}
+        .back-btn:hover,.back-btn:active{color:var(--neon-cyan);border-color:rgba(0,245,255,.4);box-shadow:var(--glow-cyan)}
+        .arsenal-count{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--neon-orange);padding:.5rem 1.1rem;border:1px solid rgba(255,107,0,.3);border-radius:999px;background:rgba(255,107,0,.06)}
+        .arsenal-dot{width:6px;height:6px;border-radius:50%;background:var(--neon-orange);box-shadow:var(--glow-orange);animation:pulse-dot 1.5s infinite}
+        @keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+
+        /* CONTAINER */
+        .container{max-width:1280px;margin:0 auto;padding:0 clamp(1rem, 3vw, 2rem)}
+        section{padding:4rem 0;position:relative}
+        .section-header{text-align:center;margin-bottom:3rem}
+        .section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--neon-cyan);letter-spacing:.25em;text-transform:uppercase;display:block;margin-bottom:.7rem}
+        .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.5rem);font-weight:700;color:var(--text-primary)}
+        .section-title span{color:var(--neon-orange);text-shadow:var(--glow-orange)}
+        .section-line{width:60px;height:3px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-orange));border-radius:2px;margin:1rem auto 0;box-shadow:var(--glow-cyan)}
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+        .reveal.visible{opacity:1;transform:none}
+
+        /* TOOL CARDS */
+        .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%, 340px),1fr));gap:2rem}
+        .tool-card{background:rgba(5,13,26,.9);border:1px solid rgba(0,245,255,.1);border-radius:22px;overflow:hidden;transition:var(--transition);position:relative;backdrop-filter:blur(10px)}
+        .tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--tool-color,var(--neon-cyan)),transparent);opacity:0;transition:.4s}
+        .tool-card:hover{transform:translateY(-6px);border-color:var(--tool-color,rgba(0,245,255,.4));box-shadow:0 25px 50px rgba(0,0,0,.5),0 0 25px rgba(0,245,255,.15)}
+        .tool-card:hover::before{opacity:1}
+        .tool-card-header{padding:1.8rem;display:flex;align-items:flex-start;gap:1.2rem;border-bottom:1px solid rgba(255,255,255,.04)}
+        .tool-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;position:relative;overflow:hidden}
+        .tool-card-meta h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;color:var(--text-primary);margin-bottom:.3rem}
+        .tool-lang{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.08em;padding:.2rem .6rem;border-radius:999px;border:1px solid;margin-right:.4rem;display:inline-block;margin-bottom:.4rem}
+        .tool-status{display:inline-flex;align-items:center;gap:.3rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--neon-green);letter-spacing:.08em}
+        .status-dot{width:5px;height:5px;border-radius:50%;background:var(--neon-green);animation:pulse-dot 2s infinite}
+        .tool-card-body{padding:1.5rem 1.8rem}
+        .tool-desc{color:var(--text-secondary);font-size:.87rem;line-height:1.75;margin-bottom:1.2rem}
+        .capability-bars{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem}
+        .cap-item{display:grid;grid-template-columns:85px 1fr 36px;gap:.6rem;align-items:center}
+        .cap-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted)}
+        .cap-bar-track{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+        .cap-bar-fill{height:100%;border-radius:2px;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+        .cap-val{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);text-align:right}
+        .tool-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+        .tool-btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem 1.2rem;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:600;text-decoration:none;transition:var(--transition);cursor:pointer;border:none;touch-action:manipulation}
+        .tool-btn-primary{background:rgba(0,245,255,.1);border:1px solid rgba(0,245,255,.35);color:var(--neon-cyan)}
+        .tool-btn-primary:hover,.tool-btn-primary:active{background:rgba(0,245,255,.2);box-shadow:var(--glow-cyan);transform:translateY(-2px)}
+        .tool-btn-secondary{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-secondary)}
+        .tool-btn-secondary:hover,.tool-btn-secondary:active{border-color:rgba(255,255,255,.2);color:var(--text-primary)}
+
+        /* INSTALL TERMINAL */
+        .install-box{background:rgba(2,8,18,.95);border:1px solid rgba(0,245,255,.1);border-radius:12px;overflow:hidden;margin-top:1.2rem}
+        .install-bar{display:flex;align-items:center;gap:.5rem;padding:.5rem .9rem;border-bottom:1px solid rgba(0,245,255,.06);background:rgba(5,13,26,.8)}
+        .i-dots{display:flex;gap:.3rem}
+        .i-dot{width:9px;height:9px;border-radius:50%}
+        .i-dot-r{background:#ff5f57}.i-dot-y{background:#febc2e}.i-dot-g{background:#28c840}
+        .install-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);margin-left:.4rem}
+        .install-code{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:#a8d8ff;padding:.8rem .9rem;line-height:1.8;overflow-x:auto;-webkit-overflow-scrolling:touch}
+        .install-code .cmd-prompt{color:var(--neon-green)}
+        .install-code .cmd-comment{color:var(--text-muted)}
+
+        /* STATS BANNER */
+        .stats-banner{background:rgba(5,13,26,.8);border-top:1px solid rgba(0,245,255,.06);border-bottom:1px solid rgba(0,245,255,.06);padding:2rem 0}
+        .stats-banner .container{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;text-align:center}
+        .stat-item{position:relative}
+        .stat-item::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:rgba(0,245,255,.1)}
+        .stat-item:last-child::after{display:none}
+        .stat-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem, 3.5vw, 2.2rem);font-weight:700;color:var(--neon-cyan);text-shadow:var(--glow-cyan);display:block}
+        .stat-lbl{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;margin-top:.3rem}
+        
+        @media(max-width:640px){
+            .stats-banner .container{grid-template-columns:repeat(2,1fr);gap:1.2rem}
+            .stat-item:nth-child(2)::after{display:none}
+            .tool-card-header{padding:1.4rem;gap:1rem}
+            .tool-card-body{padding:1.2rem 1.4rem}
+        }
+
+        /* CTA */
+        .cta-section{background:rgba(5,13,26,.7);border:1px solid rgba(0,245,255,.12);border-radius:24px;padding:3rem 1.5rem;text-align:center;position:relative;overflow:hidden}
+        .cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(0,245,255,.06),transparent 70%);pointer-events:none}
+        .cta-section h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;color:var(--text-primary);margin-bottom:.8rem}
+        .cta-section h2 span{color:var(--neon-cyan);text-shadow:var(--glow-cyan)}
+        .cta-section p{color:var(--text-secondary);margin-bottom:2rem;font-size:.92rem;line-height:1.75;max-width:700px;margin-left:auto;margin-right:auto}
+        .cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.8rem;border-radius:12px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;transition:var(--transition);border:none;touch-action:manipulation}
+        .btn-primary{background:linear-gradient(135deg,var(--neon-cyan),rgba(0,245,255,.7));color:#020812;box-shadow:var(--glow-cyan)}
+        .btn-primary:hover,.btn-primary:active{transform:translateY(-2px);box-shadow:0 0 35px rgba(0,245,255,.8)}
+        .btn-secondary{background:transparent;color:var(--neon-cyan);border:1.5px solid rgba(0,245,255,.4)}
+        .btn-secondary:hover,.btn-secondary:active{background:rgba(0,245,255,.08);box-shadow:var(--glow-cyan)}
+
+        /* FOOTER */
+        footer{background:var(--nexo-black);border-top:1px solid rgba(0,245,255,.08);padding:2rem 0}
+        footer .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+        .footer-copy{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-muted)}
+        .footer-copy span{color:var(--neon-cyan)}
+        .footer-links{display:flex;gap:1rem;flex-wrap:wrap}
+        .footer-link{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);text-decoration:none;transition:.2s}
+        .footer-link:hover{color:var(--neon-cyan)}
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="cursor-trail"></div>
+    <canvas id="hex-bg"></canvas>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-hex"></div>NEXO-TECHNOLOGIES</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="programming.html" class="nav-link">Programming</a></li>
+                <li><a href="hacking.html" class="nav-link">Hacking</a></li>
+                <li><a href="tools.html" class="nav-link active">Arsenal</a></li>
+                <li><a href="terminal.html" class="nav-link">Terminal</a></li>
+                <li><a href="lab.html" class="nav-link">Lab</a></li>
+                <li><a href="learn-hacking.html" class="nav-link">Learn</a></li>
+                <li><a href="index.html#ai-chat" class="nav-link">AI</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="tools-hero">
+        <div class="tools-hero-content">
+            <div class="hero-eyebrow">// NEXO-TECHNOLOGIES // TOOL ARSENAL</div>
+            <h1><span class="t1">WEAPON</span> <span class="t2">CACHE</span></h1>
+            <p class="subtitle">CLASSIFIED_TOOLS // AUTHORIZED ACCESS ONLY // v4.2</p>
+            <div class="hero-action-row">
+                <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                <div class="arsenal-count"><div class="arsenal-dot"></div>3 ACTIVE TOOLS DEPLOYED</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-banner">
+        <div class="container">
+            <div class="stat-item">
+                <span class="stat-num">3</span>
+                <div class="stat-lbl">Active Tools</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">50K+</span>
+                <div class="stat-lbl">Lines of Code</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">15+</span>
+                <div class="stat-lbl">Languages Used</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">5+</span>
+                <div class="stat-lbl">Years Crafting</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOOLS SECTION -->
+    <section>
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// active deployments</span>
+                <h2 class="section-title">NEXO-TECH <span>Arsenal</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="tools-grid">
+                <!-- DEMONIC BOT -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-green)">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);color:var(--neon-green)">
+                            <i class="fab fa-whatsapp" style="font-size:1.8rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3>DEMONIC-BOT</h3>
+                            <span class="tool-lang" style="color:var(--neon-gold);border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.06)">JavaScript</span>
+                            <span class="tool-lang" style="color:var(--neon-green);border-color:rgba(0,255,136,.3);background:rgba(0,255,136,.06)">Node.js</span>
+                            <div class="tool-status"><div class="status-dot"></div>ACTIVE // DEPLOYED</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc">Advanced WhatsApp multi-purpose bot built with Baileys and Node.js. Automated chatbot with custom commands, media conversion, auto-reply, group moderation, and AI engine integration.</p>
+                        <div class="capability-bars">
+                            <div class="cap-item">
+                                <span class="cap-label">Automation</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-green);box-shadow:0 0 8px rgba(0,255,136,.4)" data-width="95"></div></div>
+                                <span class="cap-val">95%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Reliability</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-cyan);box-shadow:0 0 8px rgba(0,245,255,.4)" data-width="90"></div></div>
+                                <span class="cap-val">90%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Features</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-gold);box-shadow:0 0 8px rgba(255,215,0,.4)" data-width="88"></div></div>
+                                <span class="cap-val">88%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Quick Deploy</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># Install DEMONIC-BOT</span><br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/demonalexander526-alt/DEMONIC-BOT<br>
+                                <span class="cmd-prompt">$</span> cd DEMONIC-BOT && npm install<br>
+                                <span class="cmd-prompt">$</span> node index.js
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem">
+                            <a href="https://github.com/demonalexander526-alt/DEMONIC-BOT" target="_blank" class="tool-btn tool-btn-primary"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="index.html#contact" class="tool-btn tool-btn-secondary"><i class="fas fa-envelope"></i> Custom Build</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEMONIC TOOLS -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-purple)">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(191,0,255,.1);border:1px solid rgba(191,0,255,.25);color:var(--neon-purple)">
+                            <i class="fab fa-linux" style="font-size:1.8rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3>DEMONIC_TOOLS</h3>
+                            <span class="tool-lang" style="color:var(--neon-cyan);border-color:rgba(0,245,255,.3);background:rgba(0,245,255,.06)">Python</span>
+                            <span class="tool-lang" style="color:var(--neon-purple);border-color:rgba(191,0,255,.3);background:rgba(191,0,255,.06)">Shell</span>
+                            <div class="tool-status"><div class="status-dot"></div>ACTIVE // LINUX NATIVE</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc">Comprehensive Linux toolkit featuring system administration utilities, advanced automation scripts, security analysis tools, and network diagnostics — built by NEXO-TECHNOLOGIES.</p>
+                        <div class="capability-bars">
+                            <div class="cap-item">
+                                <span class="cap-label">Sys Admin</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-purple);box-shadow:0 0 8px rgba(191,0,255,.4)" data-width="92"></div></div>
+                                <span class="cap-val">92%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Security</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-pink);box-shadow:0 0 8px rgba(255,0,110,.4)" data-width="89"></div></div>
+                                <span class="cap-val">89%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Coverage</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-cyan);box-shadow:0 0 8px rgba(0,245,255,.4)" data-width="85"></div></div>
+                                <span class="cap-val">85%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Termux / Linux</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># Install DEMONIC_TOOLS</span><br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/demonalexander526-alt/DEMONIC_TOOLS<br>
+                                <span class="cmd-prompt">$</span> cd DEMONIC_TOOLS && chmod +x install.sh<br>
+                                <span class="cmd-prompt">$</span> ./install.sh
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem">
+                            <a href="https://github.com/demonalexander526-alt/DEMONIC_TOOLS" target="_blank" class="tool-btn tool-btn-primary"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="index.html#contact" class="tool-btn tool-btn-secondary"><i class="fas fa-download"></i> Request Access</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IP FLOODER -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-orange)">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(255,107,0,.1);border:1px solid rgba(255,107,0,.25);color:var(--neon-orange)">
+                            <i class="fas fa-bolt" style="font-size:1.8rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3>NEXO IP FLOODER</h3>
+                            <span class="tool-lang" style="color:var(--neon-orange);border-color:rgba(255,107,0,.3);background:rgba(255,107,0,.06)">Rust</span>
+                            <div class="tool-status"><div class="status-dot"></div>ACTIVE // HIGH PERFORMANCE</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc">Low-level network stress testing tool written in Rust for blazing-fast multi-threaded performance. Designed exclusively for authorized testing of network limits, resilience, and bandwidth capacity.</p>
+                        <div class="capability-bars">
+                            <div class="cap-item">
+                                <span class="cap-label">Speed</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-orange);box-shadow:0 0 8px rgba(255,107,0,.4)" data-width="99"></div></div>
+                                <span class="cap-val">99%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Precision</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-cyan);box-shadow:0 0 8px rgba(0,245,255,.4)" data-width="94"></div></div>
+                                <span class="cap-val">94%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Concurrency</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-gold);box-shadow:0 0 8px rgba(255,215,0,.4)" data-width="97"></div></div>
+                                <span class="cap-val">97%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Termux / Linux</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># ⚠️ AUTHORIZED USE ONLY</span><br>
+                                <span class="cmd-prompt">$</span> pkg install git rust -y<br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/demonalexander526-alt/NEXO-TECH_IP-FLOODER.git<br>
+                                <span class="cmd-prompt">$</span> cd NEXO-TECH_IP-FLOODER && cargo run
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem">
+                            <a href="https://github.com/demonalexander526-alt/NEXO-TECH_IP-FLOODER.git" target="_blank" class="tool-btn tool-btn-primary"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="index.html#contact" class="tool-btn tool-btn-secondary"><i class="fas fa-shield-alt"></i> Authorized Only</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+        <div class="container">
+            <div class="cta-section reveal">
+                <h2>Need a <span>Custom Tool</span> Built?</h2>
+                <p>NEXO-TECHNOLOGIES engineers bespoke security tools, automation scripts, and network utilities for authorized professional use. Every tool is crafted with precision and performance in mind.</p>
+                <div class="cta-btns">
+                    <a href="https://wa.me/2347044339491" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+                    <a href="index.html#contact" class="btn btn-secondary"><i class="fas fa-envelope"></i> Send Inquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-copy">© 2026 <span>NEXO-TECHNOLOGIES</span> // All Rights Reserved</div>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="terminal.html" class="footer-link">Terminal</a>
+                <a href="lab.html" class="footer-link">Lab</a>
+                <a href="hacking.html" class="footer-link">Hacking</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Android / Mobile Auto-Resize Handling
+        function setDocHeight() {
+            document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+        }
+        window.addEventListener('resize', setDocHeight);
+        window.addEventListener('orientationchange', () => setTimeout(setDocHeight, 100));
+        setDocHeight();
+
+        // Mouse Cursor (only desktop)
+        const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        if (!isTouch) {
+            const cur = document.getElementById('custom-cursor');
+            const trail = document.getElementById('cursor-trail');
+            let tx=0,ty=0,cx=0,cy=0;
+            document.addEventListener('mousemove',e=>{
+                cx=e.clientX;cy=e.clientY;
+                if(cur) { cur.style.left=cx+'px';cur.style.top=cy+'px'; }
+            });
+            function animateTrail(){
+                tx+=(cx-tx)*.12;ty+=(cy-ty)*.12;
+                if(trail) { trail.style.left=tx+'px';trail.style.top=ty+'px'; }
+                requestAnimationFrame(animateTrail);
+            }
+            animateTrail();
+            document.querySelectorAll('a,button').forEach(el=>{
+                el.addEventListener('mouseenter',()=>{if(cur){cur.style.width='20px';cur.style.height='20px';}});
+                el.addEventListener('mouseleave',()=>{if(cur){cur.style.width='10px';cur.style.height='10px';}});
+            });
+        }
+
+        // Hex Canvas BG with Resize Observer
+        const hexCvs = document.getElementById('hex-bg');
+        if (hexCvs) {
+            const hctx = hexCvs.getContext('2d');
+            function resizeHexCanvas() {
+                hexCvs.width = window.innerWidth;
+                hexCvs.height = window.innerHeight;
+                drawHexGrid();
+            }
+            function drawHexGrid(){
+                hctx.clearRect(0,0,hexCvs.width,hexCvs.height);
+                const size=40, w=size*2, h=Math.sqrt(3)*size;
+                hctx.strokeStyle='rgba(0,245,255,0.6)'; hctx.lineWidth=0.5;
+                for(let row=0;row<hexCvs.height/h+2;row++){
+                    for(let col=0;col<hexCvs.width/w+2;col++){
+                        const x=col*w*0.75-w/2, y=row*h+(col%2)*h/2;
+                        hctx.beginPath();
+                        for(let i=0;i<6;i++){const a=Math.PI/3*i-Math.PI/6;hctx.lineTo(x+size*Math.cos(a),y+size*Math.sin(a));}
+                        hctx.closePath();hctx.stroke();
+                    }
+                }
+            }
+            resizeHexCanvas();
+            window.addEventListener('resize', resizeHexCanvas);
+        }
+
+        // Mobile menu
+        const mmToggle=document.getElementById('mobileMenuToggle');
+        const navMenu=document.getElementById('nav-menu');
+        if(mmToggle && navMenu) {
+            mmToggle.addEventListener('click',()=>{
+                navMenu.classList.toggle('active');
+                mmToggle.innerHTML = navMenu.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            navMenu.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    mmToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        }
+
+        // Reveal on scroll
+        const revealEls=document.querySelectorAll('.reveal');
+        const revealObs=new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{
+                if(e.isIntersecting){
+                    e.target.classList.add('visible');
+                    revealObs.unobserve(e.target);
+                }
+            });
+        },{threshold:0.1});
+        revealEls.forEach(el=>revealObs.observe(el));
+
+        // Capability bars
+        const capObs=new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{
+                if(e.isIntersecting){
+                    e.target.querySelectorAll('.cap-bar-fill').forEach(bar=>{
+                        bar.style.width=bar.getAttribute('data-width')+'%';
+                    });
+                }
+            });
+        },{threshold:0.25});
+        document.querySelectorAll('.tool-card').forEach(c=>capObs.observe(c));
+    </script>
+</body>
+</html>

