@@ -6,10 +6,18 @@
     <title>NEXO-TECH Arsenal — Hacking Tools & Utilities</title>
     <meta name="description" content="NEXO-TECHNOLOGIES full arsenal of hacking tools, cybersecurity utilities, and automation scripts. DEMONIC-BOT, DEMONIC_TOOLS, IP Flooder, and more.">
     <meta name="theme-color" content="#020812">
+        <!-- FAVICONS & METADATA -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cmd-palette.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -166,6 +174,69 @@
         .footer-links{display:flex;gap:1rem;flex-wrap:wrap}
         .footer-link{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);text-decoration:none;transition:.2s}
         .footer-link:hover{color:var(--neon-cyan)}
+
+        /* ── INTERACTIVE SANDBOXES STYLES ── */
+        .sandbox-section{padding:3.5rem 0;position:relative}
+        .sandbox-card{background:rgba(5,13,26,.92);border:1px solid rgba(0,245,255,.2);border-radius:24px;padding:2.5rem;box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 30px rgba(0,245,255,.1);backdrop-filter:blur(15px);position:relative;overflow:hidden;margin-bottom:3rem}
+        .sandbox-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.8rem;border-bottom:1px solid rgba(0,245,255,.12);padding-bottom:1.2rem}
+        .sandbox-header-left{display:flex;align-items:center;gap:1rem}
+        .sandbox-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+        .sandbox-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--text-primary)}
+        .sandbox-sub{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);letter-spacing:.1em}
+        
+        /* Flooder Simulator */
+        .flooder-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:2rem;align-items:center}
+        .flooder-controls{display:flex;flex-direction:column;gap:1.2rem}
+        .ctrl-group label{display:block;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--neon-orange);margin-bottom:.4rem;letter-spacing:.08em}
+        .ctrl-input{width:100%;background:rgba(2,8,18,.9);border:1px solid rgba(255,107,0,.3);border-radius:10px;padding:.7rem 1rem;color:var(--text-primary);font-family:'JetBrains Mono',monospace;font-size:.85rem;outline:none;transition:var(--transition)}
+        .ctrl-input:focus{border-color:var(--neon-orange);box-shadow:var(--glow-orange)}
+        .slider-wrap{display:flex;align-items:center;gap:1rem}
+        .slider-wrap input[type="range"]{flex:1;accent-color:var(--neon-orange);cursor:pointer}
+        .slider-val{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--neon-orange);font-weight:700;min-width:35px}
+        .flooder-btn{background:linear-gradient(135deg,var(--neon-orange),#ff3d00);color:#020812;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;padding:.85rem 1.8rem;border-radius:12px;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;box-shadow:var(--glow-orange);transition:var(--transition)}
+        .flooder-btn:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(255,107,0,.8)}
+        .flooder-btn.running{background:linear-gradient(135deg,#ff1744,#d50000);color:#fff;box-shadow:0 0 25px rgba(255,23,68,.6)}
+        
+        .flooder-telemetry{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.2rem}
+        .telem-box{background:rgba(2,8,18,.8);border:1px solid rgba(255,107,0,.2);border-radius:12px;padding:1rem;text-align:center}
+        .telem-val{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;color:var(--neon-orange);display:block}
+        .telem-lbl{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-muted);text-transform:uppercase;margin-top:.2rem}
+        .flooder-canvas-wrap{width:100%;height:320px;background:rgba(2,8,18,.95);border:1px solid rgba(255,107,0,.25);border-radius:16px;overflow:hidden;position:relative}
+        #flooderCanvas{width:100%;height:100%;display:block}
+
+        /* WhatsApp Phone Simulator */
+        .wa-sim-wrap{display:flex;justify-content:center}
+        .wa-phone{width:100%;max-width:380px;height:580px;background:#0b141a;border:3px solid rgba(0,255,136,.3);border-radius:36px;box-shadow:0 25px 60px rgba(0,0,0,.8),var(--glow-green);overflow:hidden;display:flex;flex-direction:column;position:relative}
+        .wa-notch{height:22px;background:#020812;display:flex;justify-content:center;align-items:center}
+        .wa-camera{width:50px;height:12px;background:#000;border-radius:8px}
+        .wa-top-bar{background:#1f2c34;padding:.6rem 1rem;display:flex;align-items:center;gap:.8rem;border-bottom:1px solid rgba(255,255,255,.05)}
+        .wa-avatar{width:36px;height:36px;border-radius:50%;background:rgba(0,255,136,.15);border:1.5px solid var(--neon-green);display:flex;align-items:center;justify-content:center;color:var(--neon-green);font-size:1.1rem}
+        .wa-user-info h4{font-size:.85rem;font-weight:600;color:#e9edef;display:flex;align-items:center;gap:.3rem}
+        .wa-badge{color:var(--neon-green);font-size:.7rem}
+        .wa-user-info span{font-size:.65rem;color:var(--neon-green);display:block}
+        .wa-chat-body{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.7rem;background-image:radial-gradient(rgba(0,255,136,.03) 1px,transparent 1px);background-size:16px 16px}
+        .wa-bubble{max-width:85%;padding:.6rem .8rem;border-radius:12px;font-size:.8rem;line-height:1.5;position:relative;word-break:break-word}
+        .wa-bubble.in{background:#202c33;color:#e9edef;align-self:flex-start;border-top-left-radius:2px}
+        .wa-bubble.out{background:#005c4b;color:#e9edef;align-self:flex-end;border-top-right-radius:2px}
+        .wa-time{font-size:.6rem;color:rgba(255,255,255,.5);display:block;text-align:right;margin-top:.3rem}
+        .wa-quick-pills{display:flex;gap:.4rem;padding:.5rem;overflow-x:auto;background:#111b21;scrollbar-width:none}
+        .wa-pill{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--neon-green);padding:.25rem .65rem;border-radius:999px;font-size:.68rem;cursor:pointer;white-space:nowrap;font-family:'JetBrains Mono',monospace;transition:var(--transition)}
+        .wa-pill:hover{background:var(--neon-green);color:#020812}
+        .wa-input-row{background:#1f2c34;padding:.6rem .8rem;display:flex;gap:.5rem;align-items:center}
+        .wa-input{flex:1;background:#2a3942;border:none;border-radius:20px;padding:.5rem .9rem;color:#e9edef;font-size:.82rem;outline:none}
+        .wa-send-btn{width:36px;height:36px;border-radius:50%;background:var(--neon-green);border:none;color:#020812;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;box-shadow:var(--glow-green)}
+
+        /* Linux Console Runner */
+        .linux-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
+        .l-action-btn{background:rgba(2,8,18,.8);border:1px solid rgba(191,0,255,.3);border-radius:12px;padding:1rem;cursor:pointer;transition:var(--transition);text-align:left}
+        .l-action-btn:hover{border-color:var(--neon-purple);transform:translateY(-2px);box-shadow:var(--glow-purple)}
+        .l-action-btn h5{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--neon-purple);margin-bottom:.3rem}
+        .l-action-btn p{font-size:.72rem;color:var(--text-muted)}
+        .l-terminal-screen{background:#020812;border:1px solid rgba(191,0,255,.2);border-radius:14px;padding:1.2rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.7;color:#a8e6ff;max-height:280px;overflow-y:auto;white-space:pre-wrap}
+        
+        @media(max-width:850px){
+            .flooder-grid{grid-template-columns:1fr}
+        }
     </style>
 </head>
 <body>
@@ -188,7 +259,12 @@
                 <li><a href="index.html#ai-chat" class="nav-link">AI</a></li>
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
             </ul>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            <div style="display:flex;align-items:center;gap:0.6rem">
+                <button class="cmd-quick-trigger" onclick="openNexoCommandPalette()" title="Universal Command HUD [Ctrl+K]">
+                    <i class="fas fa-terminal"></i> <kbd>Ctrl+K</kbd>
+                </button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            </div>
         </div>
     </nav>
 
@@ -200,7 +276,7 @@
             <p class="subtitle">CLASSIFIED_TOOLS // AUTHORIZED ACCESS ONLY // v4.2</p>
             <div class="hero-action-row">
                 <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
-                <div class="arsenal-count"><div class="arsenal-dot"></div>3 ACTIVE TOOLS DEPLOYED</div>
+                <div class="arsenal-count" style="border-color:var(--neon-gold);color:var(--neon-gold);background:rgba(255,215,0,.08)"><div class="arsenal-dot" style="background:var(--neon-gold);box-shadow:0 0 10px var(--neon-gold)"></div> <i class="fas fa-crown" style="color:var(--neon-gold)"></i> FLAGSHIP CORE: ASTERIX-OS &amp; ARSENAL</div>
             </div>
         </div>
     </div>
@@ -209,8 +285,8 @@
     <div class="stats-banner">
         <div class="container">
             <div class="stat-item">
-                <span class="stat-num">3</span>
-                <div class="stat-lbl">Active Tools</div>
+                <span class="stat-num" style="color:var(--neon-gold)">9+</span>
+                <div class="stat-lbl">Arsenal Tools &amp; OS</div>
             </div>
             <div class="stat-item">
                 <span class="stat-num">50K+</span>
@@ -236,6 +312,317 @@
                 <div class="section-line"></div>
             </div>
             <div class="tools-grid">
+                <!-- ==================== CROWN JEWEL: ASTERIX-OS [COMPANY PRIDE] ==================== -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-gold); grid-column: 1 / -1; border-color: rgba(255,215,0,.5); background: linear-gradient(135deg, rgba(255,215,0,.08), rgba(5,13,26,.96)); box-shadow: 0 0 40px rgba(255,215,0,.18);">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.45);color:var(--neon-gold);box-shadow:0 0 25px rgba(255,215,0,.4)">
+                            <i class="fas fa-crown" style="font-size:2rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3 style="font-size:1.6rem;color:var(--text-primary)">ASTERIX-OS — Sovereign Cyber Operating System</h3>
+                            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin:.35rem 0">
+                                <span class="tool-lang" style="color:var(--neon-gold);border-color:var(--neon-gold);background:rgba(255,215,0,.15);font-weight:700"> COMPANY PRIDE</span>
+                                <span class="tool-lang" style="color:var(--neon-cyan);border-color:rgba(0,245,255,.3);background:rgba(0,245,255,.06)">C / Rust</span>
+                                <span class="tool-lang" style="color:var(--neon-green);border-color:rgba(0,255,136,.3);background:rgba(0,255,136,.06)">Microkernel</span>
+                                <span class="tool-lang" style="color:var(--neon-purple);border-color:rgba(191,0,255,.3);background:rgba(191,0,255,.06)">Post-Quantum</span>
+                            </div>
+                            <div class="tool-status" style="color:var(--neon-gold)"><div class="status-dot" style="background:var(--neon-gold);box-shadow:0 0 10px var(--neon-gold)"></div>OUR CROWN JEWEL // FLAGSHIP ARCHITECTURE</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc" style="font-size:.95rem;max-width:980px">The pinnacle engineered by NEXO-TECHNOLOGIES. An immutable microkernel-hybrid operating system crafted for sovereign security, real-time volumetric DDoS mitigation via Asterix-Anti-Attack, NIST Crystals-Kyber-1024 post-quantum cryptography, and zero telemetry.</p>
+                        <div class="capability-bars" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+                            <div class="cap-item">
+                                <span class="cap-label">Kernel Hardening</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-gold);box-shadow:0 0 10px rgba(255,215,0,.5)" data-width="99"></div></div>
+                                <span class="cap-val">99%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Threat Scrubbing</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-green);box-shadow:0 0 10px rgba(0,255,136,.5)" data-width="98"></div></div>
+                                <span class="cap-val">98%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Post-Quantum CryptFS</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-cyan);box-shadow:0 0 10px rgba(0,245,255,.5)" data-width="97"></div></div>
+                                <span class="cap-val">97%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Git Clone &amp; Deployment</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># Clone the Flagship Operating System</span><br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git<br>
+                                <span class="cmd-prompt">$</span> cd ASTERIX-OS && make boot-image
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem;display:flex;gap:.8rem;flex-wrap:wrap">
+                            <a href="https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git" target="_blank" class="tool-btn" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#020812;font-weight:700;border:none;box-shadow:0 0 20px rgba(255,215,0,.5)">
+                                <i class="fab fa-github"></i> Flagship GitHub
+                            </a>
+                            <a href="https://gitlab.com/nexo-technologies-group/asterix-os.git" target="_blank" class="tool-btn" style="background:rgba(255,107,0,.15);border:1px solid #ff6b00;color:#ff6b00">
+                                <i class="fab fa-gitlab"></i> GitLab Mirror
+                            </a>
+                            <a href="index.html#asterix-os-spotlight" class="tool-btn" style="background:rgba(0,245,255,.1);border:1px solid var(--neon-cyan);color:var(--neon-cyan)">
+                                <i class="fas fa-terminal"></i> Interactive Console
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== ARSENAL: Asterix-Anti-Network-Attack ==================== -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-green)">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);color:var(--neon-green)">
+                            <i class="fas fa-shield-halved" style="font-size:1.8rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3>Asterix-Anti-Attack</h3>
+                            <span class="tool-lang" style="color:var(--neon-cyan);border-color:rgba(0,245,255,.3);background:rgba(0,245,255,.06)">Python</span>
+                            <span class="tool-lang" style="color:var(--neon-green);border-color:rgba(0,255,136,.3);background:rgba(0,255,136,.06)">eBPF / Raw</span>
+                            <div class="tool-status"><div class="status-dot"></div>ACTIVE // DEFENSIVE SHIELD</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc">Kernel-grade packet scrubbing engine designed to neutralize high-volume SYN, UDP, and ICMP distributed network floods with real-time heuristic anomaly detection.</p>
+                        <div class="capability-bars">
+                            <div class="cap-item">
+                                <span class="cap-label">Packet Scrubbing</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-green)" data-width="98"></div></div>
+                                <span class="cap-val">98%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">SYN Mitigation</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-cyan)" data-width="96"></div></div>
+                                <span class="cap-val">96%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Latency Guard</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-gold)" data-width="94"></div></div>
+                                <span class="cap-val">94%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Installation</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># Install Asterix-Anti-Network-Attack</span><br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/alexhack235-code/Asterix-Anti-Network-Attack.git<br>
+                                <span class="cmd-prompt">$</span> cd Asterix-Anti-Network-Attack && python3 -m pip install -r requirements.txt
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem">
+                            <a href="https://github.com/alexhack235-code/Asterix-Anti-Network-Attack.git" target="_blank" class="tool-btn tool-btn-primary"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="index.html#contact" class="tool-btn tool-btn-secondary"><i class="fas fa-shield-alt"></i> Integration</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== ARSENAL: APEX-OVERDRIVE ==================== -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-cyan)">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(0,245,255,.1);border:1px solid rgba(0,245,255,.25);color:var(--neon-cyan)">
+                            <i class="fas fa-tachometer-alt" style="font-size:1.8rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3>APEX-OVERDRIVE</h3>
+                            <span class="tool-lang" style="color:var(--neon-cyan);border-color:rgba(0,245,255,.3);background:rgba(0,245,255,.06)">Python</span>
+                            <span class="tool-lang" style="color:var(--neon-orange);border-color:rgba(255,107,0,.3);background:rgba(255,107,0,.06)">Multi-Thread</span>
+                            <div class="tool-status"><div class="status-dot"></div>ACTIVE // HIGH CONCURRENCY</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc">High-velocity orchestration engine for extreme computing tasks. Maximizes multicore thread utilization, bypasses serialization bottlenecks, and accelerates execution speed.</p>
+                        <div class="capability-bars">
+                            <div class="cap-item">
+                                <span class="cap-label">Velocity</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-cyan)" data-width="99"></div></div>
+                                <span class="cap-val">99%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Thread Scaling</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-orange)" data-width="95"></div></div>
+                                <span class="cap-val">95%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Optimization</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-gold)" data-width="92"></div></div>
+                                <span class="cap-val">92%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Installation</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># Install APEX-OVERDRIVE</span><br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/alexhack235-code/APEX-OVERDRIVE-.git<br>
+                                <span class="cmd-prompt">$</span> cd APEX-OVERDRIVE- && python3 setup.py
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem">
+                            <a href="https://github.com/alexhack235-code/APEX-OVERDRIVE-.git" target="_blank" class="tool-btn tool-btn-primary"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="index.html#contact" class="tool-btn tool-btn-secondary"><i class="fas fa-bolt"></i> Benchmarks</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== ARSENAL: LIGHTNING ==================== -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-gold)">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.25);color:var(--neon-gold)">
+                            <i class="fas fa-bolt" style="font-size:1.8rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3>LIGHTNING</h3>
+                            <span class="tool-lang" style="color:var(--neon-gold);border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.06)">Python</span>
+                            <span class="tool-lang" style="color:var(--neon-green);border-color:rgba(0,255,136,.3);background:rgba(0,255,136,.06)">Async I/O</span>
+                            <div class="tool-status"><div class="status-dot"></div>ACTIVE // RAPID RECON</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc">Instantaneous asynchronous network probe and target profiler. Rapidly validates port responsiveness, interrogates listening banners, and builds full subnet maps in milliseconds.</p>
+                        <div class="capability-bars">
+                            <div class="cap-item">
+                                <span class="cap-label">Scan Speed</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-gold)" data-width="99"></div></div>
+                                <span class="cap-val">99%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Fingerprinting</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-cyan)" data-width="93"></div></div>
+                                <span class="cap-val">93%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Stealth Profile</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-green)" data-width="90"></div></div>
+                                <span class="cap-val">90%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Installation</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># Install LIGHTNING</span><br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/alexhack235-code/LIGHTNING-.git<br>
+                                <span class="cmd-prompt">$</span> cd LIGHTNING- && python3 lightning.py --help
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem">
+                            <a href="https://github.com/alexhack235-code/LIGHTNING-.git" target="_blank" class="tool-btn tool-btn-primary"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="index.html#contact" class="tool-btn tool-btn-secondary"><i class="fas fa-radar"></i> Recon Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== ARSENAL: REDOX-PY_SCANNER ==================== -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-magenta)">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(255,0,110,.1);border:1px solid rgba(255,0,110,.25);color:var(--neon-magenta)">
+                            <i class="fas fa-magnifying-glass-chart" style="font-size:1.8rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3>REDOX-PY Scanner</h3>
+                            <span class="tool-lang" style="color:var(--neon-magenta);border-color:rgba(255,0,110,.3);background:rgba(255,0,110,.06)">Python</span>
+                            <span class="tool-lang" style="color:var(--neon-purple);border-color:rgba(191,0,255,.3);background:rgba(191,0,255,.06)">SecOps</span>
+                            <div class="tool-status"><div class="status-dot"></div>ACTIVE // HEURISTIC SCANNER</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc">Autonomous vulnerability reconnaissance framework. Scans endpoints for configuration oversights, unpatched server daemons, and exposure vectors with comprehensive structured audit reports.</p>
+                        <div class="capability-bars">
+                            <div class="cap-item">
+                                <span class="cap-label">Vuln Discovery</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-magenta)" data-width="95"></div></div>
+                                <span class="cap-val">95%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Heuristic Rules</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-purple)" data-width="91"></div></div>
+                                <span class="cap-val">91%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Accuracy</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-cyan)" data-width="96"></div></div>
+                                <span class="cap-val">96%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Installation</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># Install REDOX-PY_SCANNER</span><br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/alexhack235-code/REDOX-PY_SCANNER.git<br>
+                                <span class="cmd-prompt">$</span> cd REDOX-PY_SCANNER && python3 redox_scanner.py
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem">
+                            <a href="https://github.com/alexhack235-code/REDOX-PY_SCANNER.git" target="_blank" class="tool-btn tool-btn-primary"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="index.html#contact" class="tool-btn tool-btn-secondary"><i class="fas fa-file-shield"></i> Reports</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== ARSENAL: THUNDER ==================== -->
+                <div class="tool-card reveal" style="--tool-color: var(--neon-purple)">
+                    <div class="tool-card-header">
+                        <div class="tool-icon" style="background:rgba(191,0,255,.1);border:1px solid rgba(191,0,255,.25);color:var(--neon-purple)">
+                            <i class="fas fa-cloud-bolt" style="font-size:1.8rem"></i>
+                        </div>
+                        <div class="tool-card-meta">
+                            <h3>THUNDER</h3>
+                            <span class="tool-lang" style="color:var(--neon-purple);border-color:rgba(191,0,255,.3);background:rgba(191,0,255,.06)">Python</span>
+                            <span class="tool-lang" style="color:var(--neon-cyan);border-color:rgba(0,245,255,.3);background:rgba(0,245,255,.06)">Sockets</span>
+                            <div class="tool-status"><div class="status-dot"></div>ACTIVE // STRESS TESTING</div>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-desc">Industrial stress-testing tool and network bandwidth saturation test bench. Safely simulates extreme distributed load to gauge perimeter fault tolerance and buffer overload resilience.</p>
+                        <div class="capability-bars">
+                            <div class="cap-item">
+                                <span class="cap-label">Throughput</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-purple)" data-width="97"></div></div>
+                                <span class="cap-val">97%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Concurrency</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-magenta)" data-width="95"></div></div>
+                                <span class="cap-val">95%</span>
+                            </div>
+                            <div class="cap-item">
+                                <span class="cap-label">Load Variance</span>
+                                <div class="cap-bar-track"><div class="cap-bar-fill" style="background:var(--neon-orange)" data-width="93"></div></div>
+                                <span class="cap-val">93%</span>
+                            </div>
+                        </div>
+                        <div class="install-box">
+                            <div class="install-bar">
+                                <div class="i-dots"><div class="i-dot i-dot-r"></div><div class="i-dot i-dot-y"></div><div class="i-dot i-dot-g"></div></div>
+                                <span class="install-label">bash — Authorized Test Only</span>
+                            </div>
+                            <div class="install-code">
+                                <span class="cmd-comment"># Install THUNDER</span><br>
+                                <span class="cmd-prompt">$</span> git clone https://github.com/alexhack235-code/THUNDER.git<br>
+                                <span class="cmd-prompt">$</span> cd THUNDER && python3 thunder.py
+                            </div>
+                        </div>
+                        <div class="tool-actions" style="margin-top:1.2rem">
+                            <a href="https://github.com/alexhack235-code/THUNDER.git" target="_blank" class="tool-btn tool-btn-primary"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="index.html#contact" class="tool-btn tool-btn-secondary"><i class="fas fa-lock"></i> Authorized Only</a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- DEMONIC BOT -->
                 <div class="tool-card reveal" style="--tool-color: var(--neon-green)">
                     <div class="tool-card-header">
@@ -375,7 +762,7 @@
                                 <span class="install-label">bash — Termux / Linux</span>
                             </div>
                             <div class="install-code">
-                                <span class="cmd-comment"># ⚠️ AUTHORIZED USE ONLY</span><br>
+                                <span class="cmd-comment"># [!] AUTHORIZED USE ONLY</span><br>
                                 <span class="cmd-prompt">$</span> pkg install git rust -y<br>
                                 <span class="cmd-prompt">$</span> git clone https://github.com/demonalexander526-alt/NEXO-TECH_IP-FLOODER.git<br>
                                 <span class="cmd-prompt">$</span> cd NEXO-TECH_IP-FLOODER && cargo run
@@ -387,6 +774,171 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== LIVE INTERACTIVE WEAPON SANDBOXES ==================== -->
+    <section class="sandbox-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">// live simulations</span>
+                <h2 class="section-title">Interactive <span>Weapon Sandboxes</span></h2>
+                <div class="section-line"></div>
+                <p style="color:var(--text-secondary);max-width:650px;margin:1rem auto 0;font-size:0.88rem">
+                    Test drive NEXO-TECHNOLOGIES proprietary cybersecurity engines right inside your browser sandbox.
+                </p>
+            </div>
+
+            <!-- 1. NEXO IP FLOODER SIMULATOR -->
+            <div class="sandbox-card reveal" id="flooder-simulator">
+                <div class="sandbox-header">
+                    <div class="sandbox-header-left">
+                        <div class="sandbox-icon" style="background:rgba(255,107,0,.15);color:var(--neon-orange);border:1px solid rgba(255,107,0,.3)">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div>
+                            <div class="sandbox-title">NEXO IP Flooder // Real-Time Stress Test Engine</div>
+                            <div class="sandbox-sub">RUST_CORE // MULTI-THREADED SOCKET STREAMING</div>
+                        </div>
+                    </div>
+                    <div class="tool-status"><div class="status-dot"></div>SIMULATOR READY</div>
+                </div>
+
+                <div class="flooder-grid">
+                    <div class="flooder-controls">
+                        <div class="ctrl-group">
+                            <label><i class="fas fa-network-wired"></i> TARGET IP / SUBNET</label>
+                            <input type="text" id="targetIpInput" class="ctrl-input" value="192.168.1.105" spellcheck="false">
+                        </div>
+                        <div class="ctrl-group">
+                            <label><i class="fas fa-shield-alt"></i> STRESS PROTOCOL</label>
+                            <select id="protocolSelect" class="ctrl-input" style="cursor:pointer">
+                                <option value="SYN">TCP SYN Flood (Handshake Exhaustion)</option>
+                                <option value="UDP">UDP High-Frequency Datagram Storm</option>
+                                <option value="HTTP2">HTTP/2 Rapid Reset Multiplexing</option>
+                                <option value="ICMP">ICMP Echo Ping Volley</option>
+                            </select>
+                        </div>
+                        <div class="ctrl-group">
+                            <label><i class="fas fa-microchip"></i> THREAD CONCURRENCY: <span id="threadCountVal" class="slider-val">16</span></label>
+                            <div class="slider-wrap">
+                                <input type="range" id="threadSlider" min="1" max="64" value="16" oninput="document.getElementById('threadCountVal').textContent=this.value">
+                            </div>
+                        </div>
+                        <button id="flooderToggleBtn" class="flooder-btn" onclick="toggleFlooderSim()">
+                            <i class="fas fa-play"></i> INITIATE STRESS BENCHMARK
+                        </button>
+
+                        <div class="flooder-telemetry">
+                            <div class="telem-box">
+                                <span class="telem-val" id="ppsMeter">0</span>
+                                <span class="telem-lbl">Packets / Sec</span>
+                            </div>
+                            <div class="telem-box">
+                                <span class="telem-val" id="bandwidthMeter">0.00</span>
+                                <span class="telem-lbl">Gbps Throughput</span>
+                            </div>
+                            <div class="telem-box">
+                                <span class="telem-val" id="lossMeter">0%</span>
+                                <span class="telem-lbl">Packet Loss</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flooder-canvas-wrap">
+                        <canvas id="flooderCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. DEMONIC-BOT WHATSAPP PHONE SIMULATOR -->
+            <div class="sandbox-card reveal" id="bot-simulator">
+                <div class="sandbox-header">
+                    <div class="sandbox-header-left">
+                        <div class="sandbox-icon" style="background:rgba(0,255,136,.15);color:var(--neon-green);border:1px solid rgba(0,255,136,.3)">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <div class="sandbox-title">DEMONIC-BOT // WhatsApp Interactive Phone Sandbox</div>
+                            <div class="sandbox-sub">NODE.JS // BAILEYS PROTOCOL // REAL-TIME HANDLERS</div>
+                        </div>
+                    </div>
+                    <div class="tool-status"><div class="status-dot"></div>BOT ONLINE</div>
+                </div>
+
+                <div class="wa-sim-wrap">
+                    <div class="wa-phone">
+                        <div class="wa-notch"><div class="wa-camera"></div></div>
+                        <div class="wa-top-bar">
+                            <div class="wa-avatar"><i class="fas fa-robot"></i></div>
+                            <div class="wa-user-info">
+                                <h4>DEMONIC-BOT <i class="fas fa-check-circle wa-badge"></i></h4>
+                                <span>ONLINE // BAILEYS v6.5</span>
+                            </div>
+                        </div>
+                        <div class="wa-chat-body" id="waChatBody">
+                            <div class="wa-bubble in">
+                                *DEMONIC-BOT v4.2 INITIALIZED*<br>
+                                Welcome operator! Tap any quick command below or type your own command (e.g. <code>.menu</code>, <code>.status</code>, <code>.speed</code>).
+                                <span class="wa-time">12:00 PM</span>
+                            </div>
+                        </div>
+                        <div class="wa-quick-pills">
+                            <button class="wa-pill" onclick="sendWaCommand('.menu')">.menu</button>
+                            <button class="wa-pill" onclick="sendWaCommand('.status')">.status</button>
+                            <button class="wa-pill" onclick="sendWaCommand('.sticker')">.sticker</button>
+                            <button class="wa-pill" onclick="sendWaCommand('.speed')">.speed</button>
+                            <button class="wa-pill" onclick="sendWaCommand('.ai who is nexo?')">.ai</button>
+                            <button class="wa-pill" onclick="sendWaCommand('.owner')">.owner</button>
+                            <button class="wa-pill" onclick="sendWaCommand('.ping')">.ping</button>
+                        </div>
+                        <div class="wa-input-row">
+                            <input type="text" id="waInput" class="wa-input" placeholder="Type a bot command (e.g. .menu)..." onkeypress="if(event.key==='Enter')handleWaSubmit()">
+                            <button class="wa-send-btn" onclick="handleWaSubmit()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. DEMONIC_TOOLS LINUX CONSOLE RUNNER -->
+            <div class="sandbox-card reveal" id="tools-console">
+                <div class="sandbox-header">
+                    <div class="sandbox-header-left">
+                        <div class="sandbox-icon" style="background:rgba(191,0,255,.15);color:var(--neon-purple);border:1px solid rgba(191,0,255,.3)">
+                            <i class="fab fa-linux"></i>
+                        </div>
+                        <div>
+                            <div class="sandbox-title">DEMONIC_TOOLS // Interactive Linux Security Console</div>
+                            <div class="sandbox-sub">POSIX SHELL &amp; PYTHON // AUDITING SUITE</div>
+                        </div>
+                    </div>
+                    <div class="tool-status"><div class="status-dot"></div>ROOT READY</div>
+                </div>
+
+                <div class="linux-actions">
+                    <button class="l-action-btn" onclick="runLinuxCommand('subnet_scan')">
+                        <h5><i class="fas fa-search"></i> [01] Subnet ARP/SYN Scan</h5>
+                        <p>Probe 192.168.1.0/24 for active host fingerprints.</p>
+                    </button>
+                    <button class="l-action-btn" onclick="runLinuxCommand('wifi_handshake')">
+                        <h5><i class="fas fa-wifi"></i> [02] 4-Way Handshake Audit</h5>
+                        <p>Simulate EAPOL frame interception &amp; PMK check.</p>
+                    </button>
+                    <button class="l-action-btn" onclick="runLinuxCommand('clean_system')">
+                        <h5><i class="fas fa-broom"></i> [03] Deep Clean Temp &amp; Logs</h5>
+                        <p>Purge journald, /tmp caches &amp; rotate auth logs.</p>
+                    </button>
+                    <button class="l-action-btn" onclick="runLinuxCommand('kernel_audit')">
+                        <h5><i class="fas fa-shield-alt"></i> [04] Kernel Hardening Audit</h5>
+                        <p>Verify sysctl.conf, AppArmor &amp; SYN cookies.</p>
+                    </button>
+                </div>
+
+                <div class="l-terminal-screen" id="linuxTerminalScreen">root@nexo-sec-node:~# ./demonic_tools.sh --status
+[  OK  ] Demonic Tools Suite v4.2 loaded.
+[ INFO ] Select any diagnostic routine above to execute real-time simulation.
+_</div>
             </div>
         </div>
     </section>
@@ -513,6 +1065,209 @@
             });
         },{threshold:0.25});
         document.querySelectorAll('.tool-card').forEach(c=>capObs.observe(c));
+
+        // ── 1. NEXO IP FLOODER SIMULATION ENGINE ──
+        let flooderActive = false;
+        let flAnim = null;
+        const flCanvas = document.getElementById('flooderCanvas');
+        const flCtx = flCanvas ? flCanvas.getContext('2d') : null;
+        let flParticles = [];
+
+        function resizeFlooderCanvas() {
+            if (!flCanvas) return;
+            flCanvas.width = flCanvas.offsetWidth;
+            flCanvas.height = flCanvas.offsetHeight;
+        }
+        window.addEventListener('resize', resizeFlooderCanvas);
+        setTimeout(resizeFlooderCanvas, 150);
+
+        function toggleFlooderSim() {
+            const btn = document.getElementById('flooderToggleBtn');
+            const threads = parseInt(document.getElementById('threadSlider').value, 10);
+
+            flooderActive = !flooderActive;
+            if (window.NexoAudio) {
+                if (flooderActive) window.NexoAudio.playLaser();
+                else window.NexoAudio.playClick();
+            }
+
+            if (flooderActive) {
+                btn.innerHTML = '<i class="fas fa-stop"></i> TERMINATE BENCHMARK';
+                btn.classList.add('running');
+                startFlooderAnimation(threads);
+            } else {
+                btn.innerHTML = '<i class="fas fa-play"></i> INITIATE STRESS BENCHMARK';
+                btn.classList.remove('running');
+                document.getElementById('ppsMeter').textContent = '0';
+                document.getElementById('bandwidthMeter').textContent = '0.00';
+                document.getElementById('lossMeter').textContent = '0%';
+                if (flCtx && flCanvas) flCtx.clearRect(0, 0, flCanvas.width, flCanvas.height);
+            }
+        }
+
+        function startFlooderAnimation(threads) {
+            resizeFlooderCanvas();
+            flParticles = [];
+            let shockwave = 0;
+
+            function animateFlooder() {
+                if (!flooderActive) return;
+                flCtx.fillStyle = 'rgba(2, 8, 18, 0.25)';
+                flCtx.fillRect(0, 0, flCanvas.width, flCanvas.height);
+
+                const sourceX = 60, sourceY = flCanvas.height / 2;
+                const targetX = flCanvas.width - 60, targetY = flCanvas.height / 2;
+
+                // Source Node
+                flCtx.beginPath();
+                flCtx.arc(sourceX, sourceY, 12, 0, Math.PI * 2);
+                flCtx.fillStyle = '#00f5ff';
+                flCtx.shadowColor = '#00f5ff';
+                flCtx.shadowBlur = 15;
+                flCtx.fill();
+
+                // Target Node
+                flCtx.beginPath();
+                flCtx.arc(targetX, targetY, 18, 0, Math.PI * 2);
+                flCtx.fillStyle = '#ff6b00';
+                flCtx.shadowColor = '#ff6b00';
+                flCtx.shadowBlur = 20;
+                flCtx.fill();
+                flCtx.shadowBlur = 0;
+
+                // Spawn particles based on thread count
+                for (let i = 0; i < Math.min(threads * 2, 40); i++) {
+                    flParticles.push({
+                        x: sourceX,
+                        y: sourceY + (Math.random() - 0.5) * 20,
+                        vx: Math.random() * 8 + 7,
+                        vy: (Math.random() - 0.5) * 2,
+                        size: Math.random() * 3 + 1,
+                        color: Math.random() > 0.3 ? '#ff6b00' : '#00f5ff'
+                    });
+                }
+
+                // Update particles
+                for (let i = flParticles.length - 1; i >= 0; i--) {
+                    const p = flParticles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    flCtx.beginPath();
+                    flCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    flCtx.fillStyle = p.color;
+                    flCtx.fill();
+
+                    if (p.x >= targetX) {
+                        shockwave = 15;
+                        flParticles.splice(i, 1);
+                    }
+                }
+
+                if (shockwave > 0) {
+                    flCtx.beginPath();
+                    flCtx.arc(targetX, targetY, 18 + (15 - shockwave) * 3, 0, Math.PI * 2);
+                    flCtx.strokeStyle = `rgba(255, 107, 0, ${shockwave / 15})`;
+                    flCtx.lineWidth = 2;
+                    flCtx.stroke();
+                    shockwave--;
+                }
+
+                // Update telemetry values
+                const basePps = threads * 29500 + Math.floor(Math.random() * 4500);
+                const baseBw = (threads * 0.25 + Math.random() * 0.05).toFixed(2);
+                const loss = (Math.random() * 1.5).toFixed(1);
+                document.getElementById('ppsMeter').textContent = basePps.toLocaleString();
+                document.getElementById('bandwidthMeter').textContent = baseBw;
+                document.getElementById('lossMeter').textContent = `${loss}%`;
+
+                flAnim = requestAnimationFrame(animateFlooder);
+            }
+            animateFlooder();
+        }
+
+        // ── 2. WHATSAPP DEMONIC-BOT SIMULATOR ──
+        function sendWaCommand(cmd) {
+            const input = document.getElementById('waInput');
+            if (input) {
+                input.value = cmd;
+                handleWaSubmit();
+            }
+        }
+
+        function handleWaSubmit() {
+            const input = document.getElementById('waInput');
+            const chatBody = document.getElementById('waChatBody');
+            if (!input || !chatBody) return;
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = '';
+
+            const now = new Date();
+            const timeStr = `${now.getHours() % 12 || 12}:${now.getMinutes().toString().padStart(2, '0')} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
+
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'wa-bubble out';
+            userMsg.innerHTML = `${text.replace(/</g, '&lt;')}<span class="wa-time">${timeStr}</span>`;
+            chatBody.appendChild(userMsg);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            if (window.NexoAudio) window.NexoAudio.playClick();
+
+            // Generate bot reply
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'wa-bubble in';
+                let reply = '';
+                const lower = text.toLowerCase();
+
+                if (lower === '.menu') {
+                    reply = `<i class="fas fa-terminal" style="color:var(--neon-green)"></i> *DEMONIC-BOT COMMAND DIRECTORY*<br><br>• <code>.status</code> — Bot uptime & CPU stats<br>• <code>.sticker</code> — Convert media to animated webp<br>• <code>.speed</code> — Latency ping benchmark<br>• <code>.ai [query]</code> — Ask neural reasoning core<br>• <code>.owner</code> — Contact Alexander<br>• <code>.ping</code> — WebSocket handshake delay`;
+                } else if (lower === '.status') {
+                    reply = `<i class="fas fa-server" style="color:var(--neon-cyan)"></i> *DEMONIC-BOT SYSTEM METRICS*<br>• Uptime: 14 days, 6 hours<br>• Engine: Node.js v20.11 / Baileys WebSocket<br>• RAM Usage: 142 MB / 2048 MB<br>• Active Group Chats: 38<br>• Status: <i class="fas fa-circle-check" style="color:var(--neon-green)"></i> *NOMINAL*`;
+                } else if (lower === '.sticker') {
+                    reply = `<i class="fas fa-wand-magic-sparkles" style="color:var(--neon-purple)"></i> *STICKER ENGINE*<br>Converting simulated image to sticker...<br>[STICKER GENERATED: Demonic Cyber Skull]`;
+                } else if (lower === '.speed' || lower === '.ping') {
+                    reply = `<i class="fas fa-bolt" style="color:var(--neon-gold)"></i> *PONG!* Latency: *${Math.floor(Math.random() * 25 + 12)}ms*<br>WebSocket connection to WhatsApp servers is ultra-stable.`;
+                } else if (lower === '.owner') {
+                    reply = ` <i class="fas fa-crown" style="color:var(--neon-gold)"></i> *DEVELOPER & FOUNDER*<br>Alexander // NEXO-TECHNOLOGIES<br>WhatsApp: +234 704 4339 491<br>GitHub: github.com/demonalexander526-alt`;
+                } else if (lower.startsWith('.ai')) {
+                    const prompt = text.replace(/^\.ai\s*/i, '');
+                    reply = `<i class="fas fa-brain" style="color:var(--neon-cyan)"></i> *NEXO-AI RESPONSE*<br>Query: _${prompt || 'No query provided'}_<br><br>NEXO-TECHNOLOGIES engineers military-grade distributed architectures, WhatsApp automated engines, and Rust network tools.`;
+                } else {
+                    reply = `Unknown command: <code>${text.replace(/</g, '&lt;')}</code><br>Type <code>.menu</code> to view available commands.`;
+                }
+
+                botMsg.innerHTML = `${reply}<span class="wa-time">${timeStr}</span>`;
+                chatBody.appendChild(botMsg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                if (window.NexoAudio) window.NexoAudio.playSuccess();
+            }, 500);
+        }
+
+        // ── 3. LINUX CONSOLE RUNNER ──
+        function runLinuxCommand(type) {
+            const screen = document.getElementById('linuxTerminalScreen');
+            if (!screen) return;
+            if (window.NexoAudio) window.NexoAudio.playLaser();
+
+            screen.textContent = `root@nexo-sec-node:~# executing ${type}...\n[....] Initializing socket & kernel modules...`;
+
+            setTimeout(() => {
+                if (type === 'subnet_scan') {
+                    screen.textContent = `root@nexo-sec-node:~# nmap -sS -O 192.168.1.0/24\nStarting Nmap 7.94 ( https://nmap.org )\nNmap scan report for 192.168.1.1 (Gateway)\nHost is up (0.0012s latency).\nPORT     STATE SERVICE\n22/tcp   open  ssh\n53/tcp   open  domain\n80/tcp   open  http\n443/tcp  open  https\n\nNmap scan report for 192.168.1.105 (Target)\nHost is up (0.0004s latency).\nPORT     STATE SERVICE\n8080/tcp open  http-proxy (nginx 1.18.0)\n\n[  OK  ] Subnet ARP/SYN scan completed. 2 hosts active.`;
+                } else if (type === 'wifi_handshake') {
+                    screen.textContent = `root@nexo-sec-node:~# airmon-ng start wlan0 && airodump-ng wlan0mon\n[ OK ] PHY interface wlan0 enabled in monitor mode (wlan0mon)\n[+] CH 6 ][ BSSID: 00:14:6C:7E:40:80 ][ ESSID: NEXO_SECURE_AP\n[+] Transmitting deauth frame to client: D4:6E:0E:12:34:56\n[+] WPA handshake: 00:14:6C:7E:40:80 captured successfully!\n[+] Key verification against dictionary: 100% Valid\n\n[  OK  ] 4-Way Handshake captured and preserved in ./handshakes/`;
+                } else if (type === 'clean_system') {
+                    screen.textContent = `root@nexo-sec-node:~# ./cleanup.sh --aggressive\n[+] Purging systemd-journald logs older than 2 days... [DONE]\n[+] Vacuuming package cache: freed 1.2 GB disk space... [DONE]\n[+] Shredding bash_history and temporary debug dumps... [DONE]\n[+] Flushed ARP and DNS resolver cache... [DONE]\n\n[  OK  ] System cleanup completed. 0 trace artifacts remaining.`;
+                } else if (type === 'kernel_audit') {
+                    screen.textContent = `root@nexo-sec-node:~# sysctl -p /etc/sysctl.d/99-nexo-security.conf\nnet.ipv4.tcp_syncookies = 1\nnet.ipv4.conf.all.rp_filter = 1\nnet.ipv4.icmp_echo_ignore_broadcasts = 1\nkernel.randomize_va_space = 2\nkernel.kptr_restrict = 2\n\n[  OK  ] ASLR, SYN-Cookie Protection & Address Space Hardened. Status: 100% Compliant.`;
+                }
+                if (window.NexoAudio) window.NexoAudio.playSuccess();
+            }, 600);
+        }
     </script>
+    <script src="audio.js"></script>
+    <script src="cmd-palette.js"></script>
 </body>
 </html>

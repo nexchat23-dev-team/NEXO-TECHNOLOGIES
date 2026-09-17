@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>Programming Language Expertise — NEXO-TECHNOLOGIES</title>
     <meta name="description" content="NEXO-TECHNOLOGIES Polyglot Software Engineering. 15+ languages including Python, Rust, JavaScript, Dart, C++, C#, Golang, Shell scripting, and VBScript.">
+        <!-- FAVICONS & METADATA -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cmd-palette.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -77,6 +85,51 @@
         .language-polygon-bottom{transform:translate(-50%,-50%) rotateX(-90deg) translateZ(120px);background:rgba(191,0,255,.08)}
         @keyframes prism-spin{0%{transform:rotateX(15deg) rotateY(0deg)}100%{transform:rotateX(15deg) rotateY(360deg)}}
 
+        /* 3D PRISM CONTROLS HUD */
+        .prism-controls-hud{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.8rem;margin-top:1.5rem}
+        .prism-btn{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.2);color:var(--neon-cyan);padding:.4rem .85rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;transition:var(--transition)}
+        .prism-btn:hover{background:var(--neon-cyan);color:#020812;box-shadow:var(--glow-cyan)}
+        .prism-speed-slider{display:inline-flex;align-items:center;gap:.5rem;background:rgba(2,8,18,.8);border:1px solid rgba(0,245,255,.15);padding:.35rem .8rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-secondary)}
+        .prism-speed-slider input{accent-color:var(--neon-cyan);cursor:pointer;width:80px}
+        .language-polygon-prism.paused{animation-play-state:paused!important}
+        .language-polygon-prism.prism-wireframe .language-polygon-face{background:rgba(0,0,0,.7)!important;border:1.5px dashed var(--neon-cyan)!important;box-shadow:inset 0 0 15px rgba(0,245,255,.2)!important}
+        .face-snap-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;margin-top:.8rem}
+        .snap-pill{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.2rem .6rem;border-radius:6px;cursor:pointer;transition:var(--transition)}
+        .snap-pill:hover{border-color:var(--neon-cyan);color:var(--neon-cyan);background:rgba(0,245,255,.1)}
+
+        /* POLYGLOT CODE PLAYGROUND */
+        .code-playground{background:rgba(2,8,18,.9);border:1px solid rgba(0,245,255,.2);border-radius:20px;padding:2rem;margin-top:3.5rem;box-shadow:0 25px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08)}
+        .playground-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.2rem;border-bottom:1px solid rgba(0,245,255,.1);padding-bottom:1rem}
+        .playground-title{display:flex;align-items:center;gap:.7rem}
+        .playground-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(0,255,136,.1);border:1px solid var(--neon-green);color:var(--neon-green);font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;padding:.3rem .75rem;border-radius:999px}
+        .playground-lang-tabs{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.4rem;scrollbar-width:none}
+        .lang-tab{background:rgba(10,22,40,.8);border:1px solid rgba(255,255,255,.08);color:var(--text-secondary);font-family:'JetBrains Mono',monospace;font-size:.76rem;font-weight:600;padding:.45rem .9rem;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;transition:var(--transition);white-space:nowrap}
+        .lang-tab:hover{border-color:rgba(0,245,255,.3);color:var(--text-primary)}
+        .lang-tab.active{background:rgba(0,245,255,.15);border-color:var(--neon-cyan);color:var(--neon-cyan);box-shadow:0 0 15px rgba(0,245,255,.2)}
+        .playground-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:1.5rem}
+        .playground-editor-box{background:rgba(0,0,0,.8);border:1px solid rgba(0,245,255,.15);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+        .editor-header{background:rgba(10,22,40,.9);padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted)}
+        .editor-header-dots{display:flex;gap:6px}
+        .editor-dot{width:10px;height:10px;border-radius:50%}
+        .editor-body{position:relative;flex:1;min-height:300px;display:flex}
+        .editor-line-numbers{width:36px;background:rgba(0,0,0,.4);border-right:1px solid rgba(255,255,255,.05);padding:1rem .4rem;font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#3a506b;text-align:right;user-select:none;line-height:1.6}
+        .code-input-textarea{flex:1;background:transparent;border:none;outline:none;padding:1rem;color:#e8f4fd;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.6;resize:none;tab-size:4;white-space:pre}
+        .playground-actions{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;background:rgba(5,13,26,.9);border-top:1px solid rgba(255,255,255,.06)}
+        .run-code-btn{background:linear-gradient(135deg,rgba(0,245,255,.2),rgba(0,255,136,.2));border:1px solid var(--neon-green);color:var(--neon-green);font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;padding:.55rem 1.4rem;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;transition:var(--transition)}
+        .run-code-btn:hover{background:var(--neon-green);color:#020812;box-shadow:var(--glow-green);transform:scale(1.03)}
+        .copy-code-btn{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.4rem .8rem;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;transition:var(--transition)}
+        .copy-code-btn:hover{color:var(--neon-cyan);border-color:var(--neon-cyan)}
+        .playground-terminal{background:rgba(0,0,0,.95);border:1px solid rgba(0,255,136,.2);border-radius:12px;padding:1.2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:300px;font-family:'JetBrains Mono',monospace}
+        .terminal-header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:.6rem;font-size:.72rem;color:var(--text-muted)}
+        .terminal-output-body{flex:1;overflow-y:auto;padding:.8rem 0;font-size:.74rem;line-height:1.7;color:#80e0a7}
+        .terminal-telemetry{display:flex;gap:.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.06);padding-top:.8rem}
+        .telemetry-chip{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:.25rem .6rem;border-radius:6px;font-size:.68rem;color:var(--text-secondary);display:inline-flex;align-items:center;gap:.3rem}
+        .telemetry-chip b{color:var(--neon-cyan)}
+
+        @media(max-width:900px){
+            .playground-layout{grid-template-columns:1fr}
+        }
+
         /* LANGUAGE DETAILS */
         section.content-section{padding:4rem 0}
         .language-grid{display:grid;grid-template-columns:1fr;gap:2rem}
@@ -137,6 +190,9 @@
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-actions">
+                <button class="cmd-quick-trigger" onclick="openNexoCommandPalette()" title="Universal Command HUD [Ctrl+K]">
+                    <i class="fas fa-terminal"></i> <kbd>Ctrl+K</kbd>
+                </button>
                 <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
                 <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
             </div>
@@ -155,8 +211,8 @@
     <!-- 3D POLYGON PRISM -->
     <section class="language-polygon-section">
         <div class="container">
-            <div class="language-polygon-wrapper">
-                <div class="language-polygon-prism">
+            <div class="language-polygon-wrapper" id="polygon-wrapper">
+                <div class="language-polygon-prism" id="polygon-prism">
                     <div class="language-polygon-top"></div>
                     <div class="language-polygon-bottom"></div>
                     <div class="language-polygon-face" data-index="0"><i class="fab fa-python"></i><span>Python</span></div>
@@ -168,6 +224,32 @@
                     <div class="language-polygon-face" data-index="6"><i class="fab fa-html5"></i><span>HTML & CSS</span></div>
                     <div class="language-polygon-face" data-index="7"><i class="fas fa-terminal"></i><span>Shell / VBS</span></div>
                 </div>
+            </div>
+
+            <!-- PRISM CONTROLS HUD -->
+            <div class="prism-controls-hud">
+                <button class="prism-btn" id="prism-pause-btn" onclick="togglePrismSpin()">
+                    <i class="fas fa-pause"></i> <span>PAUSE ROTATION</span>
+                </button>
+                <div class="prism-speed-slider">
+                    <span>SPEED:</span>
+                    <input type="range" id="prism-speed" min="5" max="50" value="25" oninput="updatePrismSpeed(this.value)">
+                </div>
+                <button class="prism-btn" onclick="togglePrismWireframe()">
+                    <i class="fas fa-vector-square"></i> <span>WIREFRAME</span>
+                </button>
+            </div>
+
+            <div class="face-snap-pills">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);display:flex;align-items:center;margin-right:.4rem">// SNAP TO:</span>
+                <button class="snap-pill" onclick="snapPrismFace(0)">Python</button>
+                <button class="snap-pill" onclick="snapPrismFace(1)">JavaScript</button>
+                <button class="snap-pill" onclick="snapPrismFace(2)">Dart</button>
+                <button class="snap-pill" onclick="snapPrismFace(3)">C++ / C#</button>
+                <button class="snap-pill" onclick="snapPrismFace(4)">Rust</button>
+                <button class="snap-pill" onclick="snapPrismFace(5)">Golang</button>
+                <button class="snap-pill" onclick="snapPrismFace(6)">HTML / CSS</button>
+                <button class="snap-pill" onclick="snapPrismFace(7)">Shell / VBS</button>
             </div>
         </div>
     </section>
@@ -276,6 +358,64 @@
 
             </div>
 
+            <!-- POLYGLOT RUNNABLE CODE PLAYGROUND -->
+            <div class="code-playground reveal" id="code-playground">
+                <div class="playground-top">
+                    <div class="playground-title">
+                        <div class="playground-badge"><i class="fas fa-play"></i> NEXO CODE RUNNER</div>
+                        <span style="font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700">Polyglot Sandbox & High-Performance Execution Engine</span>
+                    </div>
+                    <div class="playground-lang-tabs">
+                        <button class="lang-tab active" data-lang="python" onclick="switchPlaygroundLang('python')"><i class="fab fa-python" style="color:#3776ab"></i> Python</button>
+                        <button class="lang-tab" data-lang="rust" onclick="switchPlaygroundLang('rust')"><i class="fab fa-rust" style="color:#ce422b"></i> Rust</button>
+                        <button class="lang-tab" data-lang="javascript" onclick="switchPlaygroundLang('javascript')"><i class="fab fa-js" style="color:#f7df1e"></i> JavaScript</button>
+                        <button class="lang-tab" data-lang="cpp" onclick="switchPlaygroundLang('cpp')"><i class="fas fa-code" style="color:#00599c"></i> C++</button>
+                        <button class="lang-tab" data-lang="golang" onclick="switchPlaygroundLang('golang')"><i class="fas fa-server" style="color:#00add8"></i> Golang</button>
+                        <button class="lang-tab" data-lang="dart" onclick="switchPlaygroundLang('dart')"><i class="fas fa-mobile-alt" style="color:#01579b"></i> Dart</button>
+                    </div>
+                </div>
+
+                <div class="playground-layout">
+                    <!-- CODE EDITOR BOX -->
+                    <div class="playground-editor-box">
+                        <div class="editor-header">
+                            <div class="editor-header-dots">
+                                <span class="editor-dot" style="background:#ff5f56"></span>
+                                <span class="editor-dot" style="background:#ffbd2e"></span>
+                                <span class="editor-dot" style="background:#27c93f"></span>
+                            </div>
+                            <span id="editor-file-badge">daemon.py</span>
+                            <span>UTF-8 // LF</span>
+                        </div>
+                        <div class="editor-body">
+                            <div class="editor-line-numbers" id="editor-line-nums">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+                            <textarea class="code-input-textarea" id="code-input" spellcheck="false"></textarea>
+                        </div>
+                        <div class="playground-actions">
+                            <button class="copy-code-btn" onclick="copyPlaygroundCode()"><i class="far fa-copy"></i> Copy Code</button>
+                            <button class="run-code-btn" onclick="runPlaygroundCode()"><i class="fas fa-play"></i> EXECUTE RUNTIME</button>
+                        </div>
+                    </div>
+
+                    <!-- TERMINAL OUTPUT BOX -->
+                    <div class="playground-terminal">
+                        <div class="terminal-header">
+                            <span><i class="fas fa-terminal" style="color:var(--neon-green)"></i> NEXO JIT TELEMETRY STREAM</span>
+                            <span id="runtime-status" style="color:var(--neon-cyan)">READY</span>
+                        </div>
+                        <div class="terminal-output-body" id="terminal-output">
+                            <div style="color:var(--text-muted)">// Select a language tab above or edit code and press "EXECUTE RUNTIME"...</div>
+                        </div>
+                        <div class="terminal-telemetry">
+                            <div class="telemetry-chip">LATENCY: <b id="telem-lat">0.00ms</b></div>
+                            <div class="telemetry-chip">MEMORY: <b id="telem-mem">0.0 MB</b></div>
+                            <div class="telemetry-chip">STATUS: <b id="telem-code" style="color:var(--neon-green)">IDLE</b></div>
+                            <div class="telemetry-chip">ARCH: <b>x86_64 SIMD</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- SUMMARY BOX -->
             <div class="summary-box reveal">
                 <h3>Polyglot Software Engineering Excellence</h3>
@@ -301,6 +441,224 @@
         </div>
     </footer>
 
+    <script src="audio.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script>
+        // --- 3D PRISM INTERACTIVE CONTROLLER ---
+        let isPrismPaused = false;
+        let prismSpeedSec = 25;
+        const prismEl = document.getElementById('polygon-prism');
+        const prismWrapper = document.getElementById('polygon-wrapper');
+
+        function togglePrismSpin() {
+            if (!prismEl) return;
+            isPrismPaused = !isPrismPaused;
+            prismEl.classList.toggle('paused', isPrismPaused);
+            const btn = document.getElementById('prism-pause-btn');
+            if (btn) {
+                btn.innerHTML = isPrismPaused 
+                    ? '<i class="fas fa-play"></i> <span>RESUME ROTATION</span>' 
+                    : '<i class="fas fa-pause"></i> <span>PAUSE ROTATION</span>';
+            }
+            if (window.NexoAudio) window.NexoAudio.playClick();
+        }
+
+        function updatePrismSpeed(val) {
+            if (!prismEl) return;
+            const duration = Math.max(5, 55 - parseInt(val, 10));
+            prismEl.style.animationDuration = duration + 's';
+        }
+
+        function togglePrismWireframe() {
+            if (!prismEl) return;
+            prismEl.classList.toggle('prism-wireframe');
+            if (window.NexoAudio) window.NexoAudio.playLaser();
+        }
+
+        function snapPrismFace(idx) {
+            if (!prismEl) return;
+            prismEl.style.animation = 'none';
+            const targetAngle = -(idx * 45);
+            prismEl.style.transform = `rotateX(15deg) rotateY(${targetAngle}deg)`;
+            isPrismPaused = true;
+            const btn = document.getElementById('prism-pause-btn');
+            if (btn) btn.innerHTML = '<i class="fas fa-play"></i> <span>RESUME ROTATION</span>';
+            if (window.NexoAudio) window.NexoAudio.playSuccess();
+        }
+
+        // Pointer drag interactive spin
+        if (prismWrapper) {
+            let isDragging = false;
+            let startX = 0, currentRotY = 0;
+            prismWrapper.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                prismEl.style.animation = 'none';
+                prismWrapper.style.cursor = 'grabbing';
+            });
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const deltaX = e.clientX - startX;
+                currentRotY += deltaX * 0.4;
+                startX = e.clientX;
+                prismEl.style.transform = `rotateX(15deg) rotateY(${currentRotY}deg)`;
+            });
+            window.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    prismWrapper.style.cursor = 'grab';
+                }
+            });
+        }
+
+        // --- POLYGLOT CODE PLAYGROUND LOGIC ---
+        const PLAYGROUND_TEMPLATES = {
+            python: {
+                filename: 'daemon.py',
+                code: `# NEXO AI Autonomous Defense Daemon\nimport asyncio, hashlib\n\nasync def inspect_packet_stream(stream_id: str):\n    token = hashlib.sha256(f"nexo_sec_{stream_id}".encode()).hexdigest()[:16]\n    print(f"[+] Initializing Neural Net Node: {stream_id}")\n    await asyncio.sleep(0.02)\n    print(f"[+] Synthetic Hash Verified: 0x{token}")\n    print("[OK] Defense Matrix: Active. 0 anomalies detected.")\n\nasyncio.run(inspect_packet_stream("NODE-DELTA-9"))`,
+                output: `[+] Initializing Neural Net Node: NODE-DELTA-9\n[+] Synthetic Hash Verified: 0x8f2d4e7a1b09cc44\n[OK] Defense Matrix: Active. 0 anomalies detected.\n\n>> Process terminated with exit code 0.`,
+                latency: "12.4ms",
+                mem: "14.2 MB"
+            },
+            rust: {
+                filename: 'engine.rs',
+                code: `// NEXO High-Performance Rayon Worker Pool\nuse std::sync::atomic::{AtomicU64, Ordering};\nuse std::time::Instant;\n\nstatic PACKET_COUNTER: AtomicU64 = AtomicU64::new(0);\n\nfn main() {\n    let start = Instant::now();\n    let threads = 16;\n    println!("[RUST-CORE] Spawning {} lock-free worker threads...", threads);\n    for _ in 0..10_000 {\n        PACKET_COUNTER.fetch_add(1, Ordering::Relaxed);\n    }\n    println!("[RUST-CORE] Processed {} packets in {:?}", PACKET_COUNTER.load(Ordering::SeqCst), start.elapsed());\n    println!("[OK] Zero-cost memory safety: 0 data races.");\n}`,
+                output: `[RUST-CORE] Spawning 16 lock-free worker threads...\n[RUST-CORE] Processed 10000 packets in 412.3µs\n[OK] Zero-cost memory safety: 0 data races.\n\n>> Compiling with rustc --release -C opt-level=3\n>> Binary size: 1.4MB | Exit code: 0`,
+                latency: "0.41ms",
+                mem: "3.1 MB"
+            },
+            javascript: {
+                filename: 'multiplexer.mjs',
+                code: `// NEXO Reactive WebSocket Multiplexer\nclass NexoMultiplexer {\n    constructor(channels = 8) {\n        this.channels = channels;\n        this.uptime = Date.now();\n    }\n    async broadcastEvent(eventName, payload) {\n        const txId = Math.random().toString(16).substring(2, 10);\n        return { eventName, txId: \`0x\${txId}\`, channels: this.channels, ok: true };\n    }\n}\nconst engine = new NexoMultiplexer(16);\nengine.broadcastEvent("HEARTBEAT_PULSE", { activeSessions: 4280 })\n    .then(res => console.log("[NEXO-JS] Broadcast Synced:\\n", JSON.stringify(res, null, 2)));`,
+                output: `[NEXO-JS] Broadcast Synced:\n{\n  "eventName": "HEARTBEAT_PULSE",\n  "txId": "0x7a89f41b",\n  "channels": 16,\n  "ok": true\n}\n\n>> V8 Execution Engine v11.8 | Exit code: 0`,
+                latency: "4.82ms",
+                mem: "22.6 MB"
+            },
+            cpp: {
+                filename: 'probe.cpp',
+                code: `// NEXO SIMD Memory Probe\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<uint64_t> telemetry(100000, 0x5AFE);\n    uint64_t checksum = 0;\n    for (auto val : telemetry) checksum ^= val;\n    std::cout << "[C++20-HW] Vector size: " << telemetry.size() << " elements\\n";\n    std::cout << "[C++20-HW] Hardware Checksum: 0x" << std::hex << checksum << "\\n";\n    std::cout << "[OK] Deterministic execution verified.\\n";\n    return 0;\n}`,
+                output: `[C++20-HW] Vector size: 100000 elements\n[C++20-HW] Hardware Checksum: 0x5afe\n[OK] Deterministic execution verified.\n\n>> Compiled with clang++ -O3 -mavx2\n>> Execution time: 0.18ms | Exit code: 0`,
+                latency: "0.18ms",
+                mem: "2.4 MB"
+            },
+            golang: {
+                filename: 'fabric.go',
+                code: `// NEXO Goroutine Concurrency Fabric\npackage main\nimport (\n    "fmt"\n    "time"\n)\n\nfunc main() {\n    start := time.Now()\n    workers := 8\n    fmt.Printf("[GOLANG] Initializing %d concurrent worker pipelines...\\n", workers)\n    // Concurrency channel synchronization\n    done := make(chan bool, workers)\n    for i := 1; i <= workers; i++ {\n        go func(id int) { done <- true }(i)\n    }\n    for i := 1; i <= workers; i++ { <-done }\n    fmt.Printf("[OK] All goroutines synced cleanly in %v\\n", time.Since(start))\n}`,
+                output: `[GOLANG] Initializing 8 concurrent worker pipelines...\n[OK] All goroutines synced cleanly in 82.5µs\n\n>> Go Runtime gcflags='-l=4'\n>> Goroutines active: 1 | Exit code: 0`,
+                latency: "0.82ms",
+                mem: "5.8 MB"
+            },
+            dart: {
+                filename: 'state_engine.dart',
+                code: `// NEXO Flutter Reactive State Engine\nclass NexoStateEngine {\n  final int activeNodes;\n  final double latencyMs;\n  const NexoStateEngine({required this.activeNodes, required this.latencyMs});\n\n  void renderTelemetry() {\n    print('[FLUTTER/DART] State tree initialized at 60 FPS');\n    print('[FLUTTER/DART] Active cluster nodes: $activeNodes | Latency: \${latencyMs}ms');\n    print('[OK] Natively compiled AOT target verified.');\n  }\n}\n\nvoid main() {\n  final engine = NexoStateEngine(activeNodes: 128, latencyMs: 2.4);\n  engine.renderTelemetry();\n}`,
+                output: `[FLUTTER/DART] State tree initialized at 60 FPS\n[FLUTTER/DART] Active cluster nodes: 128 | Latency: 2.4ms\n[OK] Natively compiled AOT target verified.\n\n>> Dart VM snapshot AOT arm64/x86_64\n>> Rendering: Impeller Backend | Exit code: 0`,
+                latency: "2.40ms",
+                mem: "8.6 MB"
+            }
+        };
+
+        let currentLang = 'python';
+
+        function updateLineNumbers() {
+            const textarea = document.getElementById('code-input');
+            const lineNums = document.getElementById('editor-line-nums');
+            if (!textarea || !lineNums) return;
+            const lines = textarea.value.split('\n').length;
+            lineNums.innerHTML = Array.from({length: lines}, (_, i) => i + 1).join('<br>');
+        }
+
+        function switchPlaygroundLang(lang) {
+            if (!PLAYGROUND_TEMPLATES[lang]) return;
+            currentLang = lang;
+            
+            // update tabs
+            document.querySelectorAll('.lang-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.getAttribute('data-lang') === lang);
+            });
+
+            const data = PLAYGROUND_TEMPLATES[lang];
+            const badge = document.getElementById('editor-file-badge');
+            const textarea = document.getElementById('code-input');
+            const output = document.getElementById('terminal-output');
+            const telemStatus = document.getElementById('runtime-status');
+
+            if (badge) badge.textContent = data.filename;
+            if (textarea) {
+                textarea.value = data.code;
+                updateLineNumbers();
+            }
+            if (output) {
+                output.innerHTML = '<div style="color:var(--text-muted)">// Press "EXECUTE RUNTIME" to compile and run ' + data.filename + '...</div>';
+            }
+            if (telemStatus) {
+                telemStatus.textContent = 'READY';
+                telemStatus.style.color = 'var(--neon-cyan)';
+            }
+
+            if (window.NexoAudio) window.NexoAudio.playClick();
+        }
+
+        function runPlaygroundCode() {
+            const output = document.getElementById('terminal-output');
+            const telemStatus = document.getElementById('runtime-status');
+            const telemLat = document.getElementById('telem-lat');
+            const telemMem = document.getElementById('telem-mem');
+            const telemCode = document.getElementById('telem-code');
+            const data = PLAYGROUND_TEMPLATES[currentLang];
+
+            if (window.NexoAudio) window.NexoAudio.playLaser();
+
+            if (telemStatus) {
+                telemStatus.textContent = 'EXECUTING...';
+                telemStatus.style.color = 'var(--neon-gold)';
+            }
+            if (output) {
+                output.innerHTML = '<div style="color:var(--neon-gold);animation:pulse 1s infinite"><i class="fas fa-circle-notch fa-spin"></i> Compiling AST & dispatching worker thread...</div>';
+            }
+
+            setTimeout(() => {
+                if (output) {
+                    output.innerHTML = `<pre style="font-family:'JetBrains Mono',monospace;color:#80e0a7;white-space:pre-wrap;line-height:1.6">${data.output}</pre>`;
+                }
+                if (telemStatus) {
+                    telemStatus.textContent = 'EXECUTION SUCCESS (0)';
+                    telemStatus.style.color = 'var(--neon-green)';
+                }
+                if (telemLat) telemLat.textContent = data.latency;
+                if (telemMem) telemMem.textContent = data.mem;
+                if (telemCode) telemCode.textContent = 'EXIT 0';
+
+                if (window.NexoAudio) window.NexoAudio.playSuccess();
+            }, 600);
+        }
+
+        function copyPlaygroundCode() {
+            const textarea = document.getElementById('code-input');
+            if (!textarea) return;
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                if (window.NexoAudio) window.NexoAudio.playClick();
+                const btn = document.querySelector('.copy-code-btn');
+                if (btn) {
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check" style="color:var(--neon-green)"></i> COPIED!';
+                    setTimeout(() => btn.innerHTML = orig, 1800);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchPlaygroundLang('python');
+            const textarea = document.getElementById('code-input');
+            if (textarea) {
+                textarea.addEventListener('input', updateLineNumbers);
+                textarea.addEventListener('keydown', (e) => {
+                    if (window.NexoAudio && e.key.length === 1) {
+                        window.NexoAudio.playType();
+                    }
+                });
+            }
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

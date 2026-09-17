@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>NEXO Terminal — Interactive Browser Console</title>
     <meta name="description" content="Interactive browser terminal experience by NEXO-TECHNOLOGIES. Type commands to explore the NEXO system, projects, skills, and more.">
+        <!-- FAVICONS & METADATA -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="cmd-palette.css">
     <style>
         :root{--nexo-black:#020812;--neon-cyan:#00f5ff;--neon-green:#00ff88;--neon-magenta:#ff006e;--neon-gold:#ffd700;--text-primary:#e8f4fd;--text-muted:#4a6680;--glow-green:0 0 20px rgba(0,255,136,.6);}
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -67,9 +75,12 @@
             <div class="tb-dot tb-dot-r"></div>
             <div class="tb-dot tb-dot-y"></div>
             <div class="tb-dot tb-dot-g"></div>
-            <div class="tb-title"><span>NEXO-TECHNOLOGIES</span> // SECURE TERMINAL v4.2</div>
+            <div class="tb-title"><span style="color:var(--neon-gold)"><i class="fas fa-crown"></i> ASTERIX-OS</span> // SECURE TERMINAL v1.0 [COMPANY PRIDE]</div>
         </div>
         <div class="top-bar-right">
+            <button class="cmd-quick-trigger" onclick="openNexoCommandPalette()" title="Universal Command HUD [Ctrl+K]" style="padding:.25rem .6rem;font-size:.68rem">
+                <i class="fas fa-terminal"></i> <kbd>Ctrl+K</kbd>
+            </button>
             <div class="tb-nav">
                 <a href="index.html">HOME</a>
                 <a href="tools.html">ARSENAL</a>
@@ -82,15 +93,17 @@
     <div class="terminal-wrapper">
         <div class="terminal-body" id="termBody"></div>
         <div class="input-line">
-            <span class="prompt-text">nexo@technologies<span class="prompt-arr"> ➜ </span>~</span>
+            <span class="prompt-text">nexo@technologies<span class="prompt-arr"> -> </span>~</span>
             <span style="color:var(--neon-green);margin-right:.3rem">$</span>
             <input type="text" class="term-input" id="termInput" autocomplete="off" spellcheck="false" placeholder="type 'help'...">
         </div>
     </div>
+    <script src="audio.js"></script>
+    <script src="cmd-palette.js"></script>
     <script>
     // Cursor
     const cur=document.getElementById('custom-cursor');
-    document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+    document.addEventListener('mousemove',e=>{if(cur){cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';}});
 
     // Matrix rain
     const canvas=document.getElementById('matrix-rain');
@@ -101,7 +114,8 @@
     const chars='NEXO0123456789ABCDEF!@#$%^&*アイウエオカキクケコ';
     function drawMatrix(){
         ctx.fillStyle='rgba(2,8,18,0.05)';ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle='#00ff88';ctx.font='13px JetBrains Mono';
+        ctx.fillStyle=getComputedStyle(document.body).color||'#00ff88';
+        ctx.font='13px JetBrains Mono';
         drops.forEach((y,i)=>{
             const c=chars[Math.floor(Math.random()*chars.length)];
             ctx.fillText(c,i*16,y*16);
@@ -112,24 +126,575 @@
     setInterval(drawMatrix,50);
     window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 
-    // Terminal Engine
+    // --- VIRTUAL LINUX FILESYSTEM ---
+    let currentPath = '/home/nexo';
+    const VFS = {
+        '/': {
+            type: 'dir',
+            children: {
+                'bin': {
+                    type: 'dir',
+                    children: {
+                        'cat': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' },
+                        'ls': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' },
+                        'nmap': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' },
+                        'htop': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' },
+                        'speedtest': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' },
+                        'ping': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' },
+                        'cve': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' },
+                        'decrypt': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' },
+                        'ai': { type: 'file', content: 'ELF 64-bit LSB executable, x86-64, dynamic' }
+                    }
+                },
+                'etc': {
+                    type: 'dir',
+                    children: {
+                        'hosts': { type: 'file', content: '127.0.0.1   localhost\n127.0.1.1   asterix-core\n192.168.1.1 gateway.local\n10.0.0.1    nexo-c2-matrix.internal' },
+                        'resolv.conf': { type: 'file', content: 'nameserver 1.1.1.1\nnameserver 8.8.8.8\noptions edns0 trust-ad' },
+                        'os-release': { type: 'file', content: 'NAME="ASTERIX-OS"\nVERSION="1.0-SOVEREIGN"\nID=asterix-os\nPRETTY_NAME="ASTERIX-OS v1.0 [COMPANY PRIDE]"\nHOME_URL="https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git"\nGITLAB_URL="https://gitlab.com/nexo-technologies-group/asterix-os.git"\nSUPPORT_URL="https://t.me/nexotechnologies"\nBUG_REPORT_URL="https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS/issues"' },
+                        'motd': { type: 'file', content: '===============================================\n* ASTERIX-OS v1.0 [COMPANY PRIDE FLAGSHIP]    *\n* POST-QUANTUM MICROKERNEL HYBRID LINUX       *\n* BUILT FOR ELITE OFFENSIVE & DEFENSIVE OPS   *\n===============================================' },
+                        'shadow': { type: 'file', perm: 'root', content: 'root:$6$nexo$k3rn3lP4ssw0rdH4sh...:19740:0:99999:7:::\nnexo:$6$usr$p0lygl0tD3v...:19740:0:99999:7:::' }
+                    }
+                },
+                'home': {
+                    type: 'dir',
+                    children: {
+                        'nexo': {
+                            type: 'dir',
+                            children: {
+                                'secret_keys.txt': { type: 'file', content: 'NEXO_ROOT_KEY=0x9f4a21e78bc0991d\nSTAGING_JWT_SECRET=c3VwZXJfc2VjcmV0X25leG9fa2V5XzIwMjY=\nAI_GATEWAY_TOKEN=nexo_live_ai_99482\nASTERIX_QUANTUM_PASSPHRASE=kyber1024_sovereign_alpha' },
+                                'payload.sh': { type: 'file', content: '#!/bin/bash\n# NEXO Stealth Probe\nTARGET="${1:-127.0.0.1}"\necho "[*] Probing $TARGET for open listeners..."\nnc -zv -w 2 "$TARGET" 20-100 2>&1 | grep succeeded\necho "[+] Probe complete."' },
+                                'notes.txt': { type: 'file', content: '- Flagship ASTERIX-OS v1.0 deployment approved (Company Pride)\n- Asterix-Anti-Network-Attack eBPF packet filter benchmarks validated\n- APEX-OVERDRIVE concurrency engine optimized\n- LIGHTNING asynchronous network probe active\n- REDOX-PY heuristic vulnerability scanner integrated\n- THUNDER socket saturation stress tester calibrated' },
+                                'portfolio': {
+                                    type: 'dir',
+                                    children: {
+                                        'projects.json': { type: 'file', content: '[\n  {"name": "ASTERIX-OS", "role": "FLAGSHIP // COMPANY PRIDE", "tech": "C, Rust, Microkernel", "status": "ACTIVE", "github": "https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git", "gitlab": "https://gitlab.com/nexo-technologies-group/asterix-os.git"},\n  {"name": "Asterix-Anti-Network-Attack", "tech": "Python, eBPF", "status": "ACTIVE", "github": "https://github.com/alexhack235-code/Asterix-Anti-Network-Attack.git"},\n  {"name": "APEX-OVERDRIVE", "tech": "Python, Concurrency", "status": "ACTIVE", "github": "https://github.com/alexhack235-code/APEX-OVERDRIVE-.git"},\n  {"name": "LIGHTNING", "tech": "Python, Async", "status": "ACTIVE", "github": "https://github.com/alexhack235-code/LIGHTNING-.git"},\n  {"name": "REDOX-PY_SCANNER", "tech": "Python, SecOps", "status": "ACTIVE", "github": "https://github.com/alexhack235-code/REDOX-PY_SCANNER.git"},\n  {"name": "THUNDER", "tech": "Python, Sockets", "status": "ACTIVE", "github": "https://github.com/alexhack235-code/THUNDER.git"},\n  {"name": "DEMONIC-BOT", "tech": "Node.js, Baileys", "status": "ACTIVE"},\n  {"name": "DEMONIC_TOOLS", "tech": "Python, Bash", "status": "ACTIVE"},\n  {"name": "NEXO IP FLOODER", "tech": "Rust, Tokio", "status": "ACTIVE"}\n]' },
+                                        'readme.md': { type: 'file', content: '# NEXO-TECHNOLOGIES & ASTERIX-OS\nFlagship Operating System and Cyber Offensive/Defensive Arsenal.' }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                'var': {
+                    type: 'dir',
+                    children: {
+                        'log': {
+                            type: 'dir',
+                            children: {
+                                'auth.log': { type: 'file', content: 'Sep 17 23:30:12 nexo-core sshd[1420]: Accepted publickey for nexo from 192.168.1.45 port 52140 ssh2\nSep 17 23:32:01 nexo-core sudo: nexo : TTY=pts/0 ; PWD=/home/nexo ; USER=root ; COMMAND=/bin/htop' },
+                                'syslog': { type: 'file', content: 'Sep 17 23:00:01 nexo-core kernel: [0.000000] Linux version 6.8.0-45-CYBER (gcc-13.2.0)\nSep 17 23:00:01 nexo-core kernel: [0.024100] NEXO Cryptographic Lattice Acceleration Enabled.' }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    function resolveNode(pathStr) {
+        let clean = pathStr.trim();
+        if (clean === '~' || clean.startsWith('~/')) {
+            clean = clean.replace('~', '/home/nexo');
+        }
+        let parts;
+        if (clean.startsWith('/')) {
+            parts = clean.split('/').filter(Boolean);
+        } else {
+            const currentParts = currentPath.split('/').filter(Boolean);
+            parts = [...currentParts, ...clean.split('/').filter(Boolean)];
+        }
+
+        const resolved = [];
+        for (const p of parts) {
+            if (p === '.') continue;
+            if (p === '..') {
+                if (resolved.length > 0) resolved.pop();
+            } else {
+                resolved.push(p);
+            }
+        }
+
+        let curr = VFS['/'];
+        for (const part of resolved) {
+            if (!curr.children || !curr.children[part]) return null;
+            curr = curr.children[part];
+        }
+        return { node: curr, absPath: '/' + resolved.join('/') };
+    }
+
+    // Terminal DOM
     const termBody=document.getElementById('termBody');
     const termInput=document.getElementById('termInput');
+    const promptText=document.querySelector('.prompt-text');
     let cmdHistory=[],histIdx=-1;
 
-    const COMMANDS={
-        help:()=>`<div class="help-grid"><span class="hc">help</span><span class="hd">Show available commands</span><span class="hc">whoami</span><span class="hd">Display system identity</span><span class="hc">ls</span><span class="hd">List available modules</span><span class="hc">projects</span><span class="hd">View NEXO-TECH projects</span><span class="hc">skills</span><span class="hd">Technical proficiencies</span><span class="hc">contact</span><span class="hd">Get contact info</span><span class="hc">services</span><span class="hd">Services & pricing</span><span class="hc">hack</span><span class="hd">Run intrusion simulation</span><span class="hc">matrix</span><span class="hd">Toggle matrix intensity</span><span class="hc">clear</span><span class="hd">Clear terminal</span><span class="hc">exit</span><span class="hd">Return to main site</span></div>`,
-        whoami:()=>`<span style="color:var(--neon-cyan)">NEXO-TECHNOLOGIES</span> // Grey Hat Developer & Cybersecurity Corp\n├── Founded: 2021 | Lagos, Nigeria\n├── Specialization: Full-Stack Dev, Linux, Network Security\n├── Languages: Python, Rust, JavaScript, Java, C++, Golang, Dart...\n├── Projects: 50+ | Tools: 3+ Active | Experience: 5+ Years\n└── Status: <span style="color:var(--neon-green)">OPERATIONAL</span>`,
-        ls:()=>`<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  index.html         <span style="color:var(--text-muted)">// Main portfolio</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  hacking.html       <span style="color:var(--text-muted)">// Cybersecurity hub</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  programming.html   <span style="color:var(--text-muted)">// Language expertise</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  learn-hacking.html <span style="color:var(--text-muted)">// Hacking academy</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  tools.html         <span style="color:var(--text-muted)">// Tool arsenal</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  terminal.html      <span style="color:var(--text-muted)">// You are here</span>\n<span style="color:var(--neon-cyan)">drwxr-xr-x</span>  lab.html           <span style="color:var(--text-muted)">// Innovation lab</span>`,
-        projects:()=>`<span style="color:var(--neon-gold)">[ NEXO-TECHNOLOGIES PROJECT INDEX ]</span>\n\n<span style="color:var(--neon-green)">01.</span> <span style="color:var(--neon-cyan)">DEMONIC-BOT</span>\n    WhatsApp automation bot | Node.js + Baileys\n    Status: <span style="color:var(--neon-green)">ACTIVE</span>\n\n<span style="color:var(--neon-green)">02.</span> <span style="color:var(--neon-cyan)">DEMONIC_TOOLS</span>\n    Linux security & admin toolkit | Python + Shell\n    Status: <span style="color:var(--neon-green)">ACTIVE</span>\n\n<span style="color:var(--neon-green)">03.</span> <span style="color:var(--neon-cyan)">NEXO IP FLOODER</span>\n    Network stress tool | Rust (multi-threaded)\n    Status: <span style="color:var(--neon-green)">ACTIVE</span> // Authorized use only`,
-        skills:()=>`<span style="color:var(--neon-gold)">[ SYSTEM SKILL MATRIX ]</span>\n\nPython      ████████████████████ 95%  <span style="color:var(--neon-cyan)">PRIMARY</span>\nShell/Bash  ███████████████████░ 92%\nJava        ██████████████████░░ 88%\nJavaScript  █████████████████░░░ 85%\nC++         ████████████████░░░░ 82%\nRust        ███████████████░░░░░ 78%\nGolang      ██████████████░░░░░░ 74%`,
-        contact:()=>`<span style="color:var(--neon-gold)">[ NEXO-TECHNOLOGIES CONTACT MATRIX ]</span>\n\nEmail:    demonalexander526@gmail.com\nWhatsApp: +234 704 4339 491\nTelegram: @Vershdit\nGitHub:   github.com/demonalexander526-alt\n\nType <span style="color:var(--neon-cyan)">services</span> to see pricing.`,
-        services:()=>`<span style="color:var(--neon-gold)">[ SERVICE CATALOG // NEXO-TECHNOLOGIES ]</span>\n\n<span style="color:var(--neon-cyan)">WEB DEVELOPMENT</span>\n  Standard Site    $200   · 1 page, responsive\n  Commercial Site  $500   · 2-3 pages, SEO\n  Premium Package  $1000+ · Unlimited pages\n\n<span style="color:var(--neon-cyan)">APP DEVELOPMENT</span>\n  MVP Build        $800   · Fast prototyping\n  Native App       $1500  · iOS or Android\n  Cross-Platform   $2500  · iOS + Android + Web\n  Enterprise       $5000+ · Full custom platform\n\nContact: WhatsApp +234 704 4339 491`,
-        matrix:()=>{canvas.style.opacity=canvas.style.opacity==='0.25'?'0.08':'0.25';return`Matrix intensity → <span style="color:var(--neon-green)">${canvas.style.opacity==='0.25'?'HIGH':'LOW'}</span>`;},
-        clear:()=>{termBody.innerHTML='';return null;},
-        exit:()=>{window.location.href='index.html';return'Redirecting...';},
-        hack:()=>runHack(),
+    function updatePrompt() {
+        if (!promptText) return;
+        const displayPath = currentPath === '/home/nexo' ? '~' : currentPath;
+        promptText.innerHTML = `nexo@technologies<span class="prompt-arr"> -> </span>${displayPath}`;
+    }
+
+    function appendLine(html,cls='out'){
+        const div=document.createElement('div');
+        div.className=`boot-line ${cls}`;
+        div.innerHTML=html||'&nbsp;';
+        termBody.appendChild(div);
+        setTimeout(()=>div.classList.add('visible'),10);
+        termBody.scrollTop=termBody.scrollHeight;
+    }
+
+    // --- COMMAND DISPATCHER ---
+    const COMMANDS = {
+        help: () => `<div class="help-grid">
+<span class="hc" style="color:var(--neon-gold)"><i class="fas fa-crown"></i> asterixos</span><span class="hd">Inspect ASTERIX-OS [COMPANY PRIDE &amp; FLAGSHIP]</span>
+<span class="hc">help</span><span class="hd">Show available command reference</span>
+<span class="hc">ls [path]</span><span class="hd">List files and directories</span>
+<span class="hc">cd &lt;dir&gt;</span><span class="hd">Change virtual filesystem directory</span>
+<span class="hc">pwd</span><span class="hd">Print current working directory</span>
+<span class="hc">cat &lt;file&gt;</span><span class="hd">Display contents of a file</span>
+<span class="hc">mkdir &lt;dir&gt;</span><span class="hd">Create a new virtual directory</span>
+<span class="hc">touch &lt;file&gt;</span><span class="hd">Create a new empty file</span>
+<span class="hc">rm &lt;file&gt;</span><span class="hd">Remove virtual file or directory</span>
+<span class="hc">htop</span><span class="hd">Interactive live ASCII process manager</span>
+<span class="hc">nmap [ip]</span><span class="hd">Simulate subnet & port vulnerability scan</span>
+<span class="hc">ping [host]</span><span class="hd">ICMP echo packet latency test</span>
+<span class="hc">speedtest</span><span class="hd">Run network throughput benchmark</span>
+<span class="hc">cve &lt;query&gt;</span><span class="hd">Search CVE vulnerability database</span>
+<span class="hc">decrypt &lt;val&gt;</span><span class="hd">Decode MD5, Base64, Hex, or ROT13 cipher</span>
+<span class="hc">ai &lt;question&gt;</span><span class="hd">Ask NEXO Neural Technical Intelligence</span>
+<span class="hc">audio [on|off]</span><span class="hd">Toggle procedural Web Audio synthesis</span>
+<span class="hc">theme &lt;name&gt;</span><span class="hd">Change terminal phosphor (green, amber, cyan)</span>
+<span class="hc">whoami</span><span class="hd">Display identity and credentials</span>
+<span class="hc">projects</span><span class="hd">View full company arsenal &amp; ASTERIX-OS</span>
+<span class="hc">skills</span><span class="hd">Technical proficiency matrix</span>
+<span class="hc">contact</span><span class="hd">Official communication channels</span>
+<span class="hc">services</span><span class="hd">Engineering service tiers and pricing</span>
+<span class="hc">hack</span><span class="hd">Run simulated red-team cyber intrusion</span>
+<span class="hc">matrix</span><span class="hd">Toggle matrix rain density</span>
+<span class="hc">clear</span><span class="hd">Clear terminal display</span>
+<span class="hc">exit</span><span class="hd">Navigate to home page</span>
+</div>`,
+
+        asterixos: () => `<span style="color:var(--neon-gold);font-weight:700"> [ ASTERIX-OS v1.0 — COMPANY PRIDE & SOVEREIGN FLAGSHIP ]</span>
+
+<span style="color:var(--neon-gold)">┌── ARCHITECTURE SPECIFICATIONS ────────────────────────────────────────┐</span>
+│ <span style="color:var(--neon-cyan)">Name:</span>          ASTERIX-OS (Sovereign Cyber Operating System)        │
+│ <span style="color:var(--neon-cyan)">Classification:</span><span style="color:var(--neon-gold)">CROWN JEWEL &amp; COMPANY PRIDE OF NEXO-TECHNOLOGIES</span>      │
+│ <span style="color:var(--neon-cyan)">Kernel Core:</span>   Microkernel Hybrid / Hardened Ring-0 Subsystem         │
+│ <span style="color:var(--neon-cyan)">Protection:</span>    Asterix-Anti-Attack autonomous packet scrubber (eBPF)  │
+│ <span style="color:var(--neon-cyan)">Cryptography:</span>  NIST Crystals-Kyber-1024 + Dilithium-3 Post-Quantum     │
+│ <span style="color:var(--neon-cyan)">Telemetry:</span>     ZERO (100% telemetry-free, unbackdoored architecture) │
+│ <span style="color:var(--neon-cyan)">Status:</span>        <span style="color:var(--neon-green)">ACTIVE // PRODUCTION FLAGSHIP</span>                          │
+└── REPOSITORY &amp; ACCESS ────────────────────────────────────────────────┘
+
+  <span style="color:var(--neon-gold)">* GitHub Flagship:</span> <a href="https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git" target="_blank" style="color:var(--neon-cyan)">https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git</a>
+  <span style="color:#ff6b00">* GitLab Mirror:</span>   <a href="https://gitlab.com/nexo-technologies-group/asterix-os.git" target="_blank" style="color:#ff6b00">https://gitlab.com/nexo-technologies-group/asterix-os.git</a>
+
+  <span style="color:var(--text-muted)">Type 'cat /etc/os-release' to inspect kernel release metadata.</span>`,
+
+        crown: () => COMMANDS.asterixos(),
+
+        pwd: () => `<span style="color:var(--neon-cyan)">${currentPath}</span>`,
+
+        whoami: () => `<span style="color:var(--neon-cyan)">NEXO-TECHNOLOGIES</span> // Grey Hat Developer &amp; Cybersecurity Collective
+├── Flagship Project: <span style="color:var(--neon-gold)"> ASTERIX-OS v1.0 [COMPANY PRIDE]</span>
+├── Founded: 2021 | Lagos, Nigeria
+├── Specialization: Full-Stack Dev, Custom OS Development, Linux Kernel, Offensive/Defensive Cyber
+├── Languages: C, Rust, Python, JavaScript, Java, C++, Golang, Dart, Shell
+├── Arsenal: 9+ Systems &amp; Tools | Projects: 50+ Completed | Experience: 5+ Years
+└── Status: <span style="color:var(--neon-green)">OPERATIONAL // ALL SYSTEMS NOMINAL</span>`,
+
+        projects: () => `<span style="color:var(--neon-gold)">[ NEXO-TECHNOLOGIES FLAGSHIP OS &amp; PRODUCTION ARSENAL ]</span>
+
+<span style="color:var(--neon-gold);font-weight:700"> FLAGSHIP CORE: ASTERIX-OS v1.0 [COMPANY PRIDE]</span>
+    Sovereign Cyber OS | Microkernel + Post-Quantum CryptFS + Anti-Attack
+    GitHub: <span style="color:var(--neon-cyan)">https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git</span>
+    GitLab: <span style="color:#ff6b00">https://gitlab.com/nexo-technologies-group/asterix-os.git</span>
+    Status: <span style="color:var(--neon-gold)">CROWN JEWEL // ACTIVE</span>
+
+<span style="color:var(--neon-green)">01.</span> <span style="color:var(--neon-cyan)">Asterix-Anti-Network-Attack</span>
+    Autonomous packet scrubbing &amp; real-time DDoS deflection shield | Python + eBPF
+    GitHub: <span style="color:var(--neon-cyan)">https://github.com/alexhack235-code/Asterix-Anti-Network-Attack.git</span>
+
+<span style="color:var(--neon-green)">02.</span> <span style="color:var(--neon-cyan)">APEX-OVERDRIVE</span>
+    Extreme performance multi-thread execution &amp; resource dispatching engine
+    GitHub: <span style="color:var(--neon-cyan)">https://github.com/alexhack235-code/APEX-OVERDRIVE-.git</span>
+
+<span style="color:var(--neon-green)">03.</span> <span style="color:var(--neon-cyan)">LIGHTNING</span>
+    Instantaneous asynchronous network probe &amp; port reconnaissance tool
+    GitHub: <span style="color:var(--neon-cyan)">https://github.com/alexhack235-code/LIGHTNING-.git</span>
+
+<span style="color:var(--neon-green)">04.</span> <span style="color:var(--neon-cyan)">REDOX-PY_SCANNER</span>
+    Python heuristic vulnerability scanner &amp; security configuration auditor
+    GitHub: <span style="color:var(--neon-cyan)">https://github.com/alexhack235-code/REDOX-PY_SCANNER.git</span>
+
+<span style="color:var(--neon-green)">05.</span> <span style="color:var(--neon-cyan)">THUNDER</span>
+    High-capacity socket load tester &amp; network bandwidth stress framework
+    GitHub: <span style="color:var(--neon-cyan)">https://github.com/alexhack235-code/THUNDER.git</span>
+
+<span style="color:var(--neon-green)">06.</span> <span style="color:var(--neon-cyan)">DEMONIC-BOT</span>
+    WhatsApp multi-command automation engine | Node.js + Baileys
+    Status: <span style="color:var(--neon-green)">ACTIVE</span> // High concurrency
+
+<span style="color:var(--neon-green)">07.</span> <span style="color:var(--neon-cyan)">DEMONIC_TOOLS</span>
+    Linux security &amp; sysadmin toolchain | Python + Bash
+    Status: <span style="color:var(--neon-green)">ACTIVE</span> // Multi-distro support
+
+<span style="color:var(--neon-green)">08.</span> <span style="color:var(--neon-cyan)">NEXO IP FLOODER</span>
+    Network stress tester | Rust + Tokio (multi-threaded async)
+    Status: <span style="color:var(--neon-green)">ACTIVE</span> // Authorized pentest only`,
+
+        skills: () => `<span style="color:var(--neon-gold)">[ SYSTEM SKILL MATRIX ]</span>
+
+Python      ████████████████████ 95%  <span style="color:var(--neon-cyan)">PRIMARY</span>
+Shell/Bash  ███████████████████░ 92%
+Java        ██████████████████░░ 88%
+JavaScript  █████████████████░░░ 85%
+C++         ████████████████░░░░ 82%
+Rust        ███████████████░░░░░ 78%
+Golang      ██████████████░░░░░░ 74%`,
+
+        contact: () => `<span style="color:var(--neon-gold)">[ NEXO-TECHNOLOGIES CONTACT MATRIX ]</span>
+
+Email:    demonalexander526@gmail.com
+WhatsApp: +234 704 4339 491
+Telegram: @Vershdit
+GitHub:   github.com/demonalexander526-alt
+
+Type <span style="color:var(--neon-cyan)">services</span> to inspect engineering packages.`,
+
+        services: () => `<span style="color:var(--neon-gold)">[ SERVICE CATALOG // NEXO-TECHNOLOGIES ]</span>
+
+<span style="color:var(--neon-cyan)">WEB DEVELOPMENT</span>
+  Standard Site    $200   · 1 page, responsive
+  Commercial Site  $500   · 2-3 pages, SEO
+  Premium Package  $1000+ · Full dynamic platform
+
+<span style="color:var(--neon-cyan)">APP DEVELOPMENT</span>
+  MVP Build        $800   · Rapid prototyping
+  Native App       $1500  · iOS or Android
+  Cross-Platform   $2500  · iOS + Android + Web
+  Enterprise       $5000+ · Complete cloud ecosystem
+
+Contact: WhatsApp +234 704 4339 491`,
+
+        matrix: () => {
+            canvas.style.opacity = canvas.style.opacity === '0.25' ? '0.08' : '0.25';
+            return `Matrix rain intensity → <span style="color:var(--neon-green)">${canvas.style.opacity === '0.25' ? 'HIGH (0.25)' : 'LOW (0.08)'}</span>`;
+        },
+
+        clear: () => {
+            termBody.innerHTML = '';
+            return null;
+        },
+
+        exit: () => {
+            window.location.href = 'index.html';
+            return 'Redirecting to NEXO HQ...';
+        },
+
+        audio: (args) => {
+            if (!window.NexoAudio) return 'Web Audio synthesizer not loaded.';
+            const sub = (args[0] || '').toLowerCase();
+            if (sub === 'on') {
+                if (window.NexoAudio.isMuted) window.NexoAudio.toggle();
+                return 'Synthesizer sound effects: <span style="color:var(--neon-green)">ENABLED</span>';
+            } else if (sub === 'off') {
+                if (!window.NexoAudio.isMuted) window.NexoAudio.toggle();
+                return 'Synthesizer sound effects: <span style="color:var(--neon-magenta)">MUTED</span>';
+            } else {
+                const s = window.NexoAudio.toggle();
+                return `Synthesizer sound effects: <span style="color:${s ? 'var(--neon-green)' : 'var(--neon-magenta)'}">${s ? 'ENABLED' : 'MUTED'}</span>`;
+            }
+        },
+
+        theme: (args) => {
+            const t = (args[0] || '').toLowerCase();
+            if (t === 'amber') {
+                document.documentElement.style.setProperty('--neon-green', '#ffb000');
+                document.documentElement.style.setProperty('--neon-cyan', '#ffd700');
+                return 'CRT Phosphor updated: <span style="color:#ffb000">AMBER P3</span>';
+            } else if (t === 'cyan') {
+                document.documentElement.style.setProperty('--neon-green', '#00f5ff');
+                document.documentElement.style.setProperty('--neon-cyan', '#80e0a7');
+                return 'CRT Phosphor updated: <span style="color:#00f5ff">CYBER CYAN</span>';
+            } else if (t === 'green') {
+                document.documentElement.style.setProperty('--neon-green', '#00ff88');
+                document.documentElement.style.setProperty('--neon-cyan', '#00f5ff');
+                return 'CRT Phosphor updated: <span style="color:#00ff88">MATRIX GREEN P1</span>';
+            }
+            return 'Usage: <span style="color:var(--neon-cyan)">theme &lt;green | amber | cyan&gt;</span>';
+        }
     };
+
+    // --- FILESYSTEM COMMANDS ---
+    function executeLs(args) {
+        const target = args[0] || currentPath;
+        const res = resolveNode(target);
+        if (!res || res.node.type !== 'dir') {
+            return `<span style="color:#ff1744">ls: cannot access '${target}': No such file or directory</span>`;
+        }
+        const entries = Object.keys(res.node.children || {}).sort();
+        if (entries.length === 0) return '';
+        const lines = entries.map(name => {
+            const item = res.node.children[name];
+            if (item.type === 'dir') {
+                return `<span style="color:var(--neon-cyan);font-weight:700">drwxr-xr-x</span>  <span style="color:#00f5ff">${name}/</span>`;
+            } else {
+                return `<span style="color:var(--text-muted)">-rw-r--r--</span>  <span style="color:#e8f4fd">${name}</span>`;
+            }
+        });
+        return lines.join('\n');
+    }
+
+    function executeCd(args) {
+        const target = args[0] || '~';
+        const res = resolveNode(target);
+        if (!res) {
+            return `<span style="color:#ff1744">cd: no such file or directory: ${target}</span>`;
+        }
+        if (res.node.type !== 'dir') {
+            return `<span style="color:#ff1744">cd: not a directory: ${target}</span>`;
+        }
+        currentPath = res.absPath;
+        updatePrompt();
+        return null;
+    }
+
+    function executeCat(args) {
+        if (!args[0]) return 'Usage: cat <filename>';
+        const res = resolveNode(args[0]);
+        if (!res) {
+            return `<span style="color:#ff1744">cat: ${args[0]}: No such file or directory</span>`;
+        }
+        if (res.node.type === 'dir') {
+            return `<span style="color:#ff1744">cat: ${args[0]}: Is a directory</span>`;
+        }
+        if (res.node.perm === 'root') {
+            if (window.NexoAudio) window.NexoAudio.playLaser();
+            return `<span style="color:#ff1744">cat: ${args[0]}: Permission denied (requires root privilege)</span>`;
+        }
+        return `<pre style="font-family:'JetBrains Mono',monospace;color:#80e0a7;white-space:pre-wrap;line-height:1.5">${res.node.content}</pre>`;
+    }
+
+    function executeMkdir(args) {
+        if (!args[0]) return 'Usage: mkdir <dirname>';
+        const res = resolveNode(currentPath);
+        if (res && res.node.type === 'dir') {
+            res.node.children[args[0]] = { type: 'dir', children: {} };
+            return `<span style="color:var(--neon-green)">Directory '${args[0]}' created.</span>`;
+        }
+        return `<span style="color:#ff1744">mkdir: failed to create directory '${args[0]}'</span>`;
+    }
+
+    function executeTouch(args) {
+        if (!args[0]) return 'Usage: touch <filename>';
+        const res = resolveNode(currentPath);
+        if (res && res.node.type === 'dir') {
+            res.node.children[args[0]] = { type: 'file', content: '' };
+            return '';
+        }
+        return `<span style="color:#ff1744">touch: failed to touch '${args[0]}'</span>`;
+    }
+
+    function executeRm(args) {
+        if (!args[0]) return 'Usage: rm <filename>';
+        const res = resolveNode(currentPath);
+        if (res && res.node.children && res.node.children[args[0]]) {
+            delete res.node.children[args[0]];
+            return `<span style="color:var(--neon-green)">Removed '${args[0]}'.</span>`;
+        }
+        return `<span style="color:#ff1744">rm: cannot remove '${args[0]}': No such file or directory</span>`;
+    }
+
+    function executeEcho(args) {
+        const full = args.join(' ');
+        if (full.includes('>')) {
+            const parts = full.split('>');
+            const text = parts[0].trim().replace(/^['"]|['"]$/g, '');
+            const fname = parts[1].trim();
+            const res = resolveNode(currentPath);
+            if (res && res.node.type === 'dir') {
+                res.node.children[fname] = { type: 'file', content: text };
+                return '';
+            }
+        }
+        return full.replace(/^['"]|['"]$/g, '');
+    }
+
+    // --- INTERACTIVE HIGH-TECH UTILITIES ---
+    function runHtop() {
+        if (window.NexoAudio) window.NexoAudio.playClick();
+        const cpuPct1 = Math.floor(Math.random() * 15 + 10);
+        const cpuPct2 = Math.floor(Math.random() * 20 + 25);
+        const cpuBars1 = '█'.repeat(Math.floor(cpuPct1 / 5)) + '░'.repeat(20 - Math.floor(cpuPct1 / 5));
+        const cpuBars2 = '█'.repeat(Math.floor(cpuPct2 / 5)) + '░'.repeat(20 - Math.floor(cpuPct2 / 5));
+        const memMB = 1420;
+        const totalMB = 16384;
+        const memBars = '█'.repeat(Math.floor((memMB / totalMB) * 20) + 2) + '░'.repeat(18);
+
+        return `<div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.4;color:var(--neon-green)">
+<span style="color:var(--neon-cyan)">1</span>  [${cpuBars1}  ${cpuPct1}.2%]   <span style="color:var(--neon-cyan)">Tasks:</span> 112, 1 thr, 126 kthr; 1 running
+<span style="color:var(--neon-cyan)">2</span>  [${cpuBars2}  ${cpuPct2}.8%]   <span style="color:var(--neon-cyan)">Load average:</span> 0.28 0.35 0.42
+<span style="color:var(--neon-cyan)">Mem</span>[${memBars} ${memMB}M/${totalMB}M] <span style="color:var(--neon-cyan)">Uptime:</span> 42 days, 14:22:18
+─────────────────────────────────────────────────────────────────────────────
+<span style="color:var(--neon-gold)">  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command</span>
+ 1042 root       20   0  1.4G  412M   84M S  4.2  2.5  14:02.1 /usr/bin/nexo-defense-daemon
+ 1198 nexo       20   0  520M   98M   32M S  2.8  0.6  08:14.3 /bin/flooder-worker-pool
+ 1340 nexo       20   0  240M   45M   18M S  1.1  0.3  02:45.0 /usr/bin/quantum-lattice-bridge
+ 1455 nexo       20   0  890M  180M   64M S  0.8  1.1  05:12.7 node /services/demonic-bot.js
+ 2014 nexo       20   0   18M  3.2M  1.8M R  0.1  0.0  00:00.1 htop
+─────────────────────────────────────────────────────────────────────────────
+<span style="color:var(--text-muted)">[F1]Help [F2]Setup [F3]Search [F9]Kill [F10]Quit  // Snapshot logged cleanly.</span>
+</div>`;
+    }
+
+    function runNmap(args) {
+        const target = args[0] || '192.168.1.1';
+        if (window.NexoAudio) window.NexoAudio.playLaser();
+        const steps = [
+            { t: 0, text: `<span style="color:var(--neon-gold)">Starting Nmap 7.94 ( https://nmap.org ) at ${new Date().toLocaleTimeString()}</span>`, c: 'warn' },
+            { t: 300, text: `Initiating SYN Stealth Scan against ${target} [1000 ports]...`, c: 'dim' },
+            { t: 900, text: `Scanning ${target} [1000 ports] - 100% completed in 0.62s`, c: 'dim' },
+            { t: 1400, text: `Nmap scan report for ${target}`, c: 'cmd' },
+            { t: 1500, text: `Host is up (0.00042s latency). MAC: 00:1A:2B:3C:4D:5E (Cisco-Linksys)`, c: 'out' },
+            { t: 1700, text: `<pre style="font-family:'JetBrains Mono',monospace;color:var(--text-primary);line-height:1.5">PORT     STATE SERVICE     VERSION
+22/tcp   open  ssh         OpenSSH 8.9p1 Ubuntu (protocol 2.0)
+53/tcp   open  domain      dnsmasq 2.86
+80/tcp   open  http        nginx 1.18.0 (Ubuntu)
+443/tcp  open  ssl/https   nginx 1.18.0 (TLS 1.3)
+3306/tcp open  mysql       MySQL 8.0.35-0ubuntu0.22.04.1
+8080/tcp open  http-proxy  NEXO Microservice Gateway v2.4</pre>`, c: 'out' },
+            { t: 2100, text: `Device type: general purpose | OS details: Linux 5.4 - 6.2 (99% certainty)`, c: 'success' },
+            { t: 2300, text: `<span style="color:var(--neon-green)">Nmap done: 1 IP address (1 host up) scanned in 1.48 seconds</span>`, c: 'success' }
+        ];
+        steps.forEach(s => setTimeout(() => appendLine(s.text, s.c), s.t));
+        return null;
+    }
+
+    function runPing(args) {
+        const host = args[0] || '1.1.1.1';
+        if (window.NexoAudio) window.NexoAudio.playClick();
+        appendLine(`<span style="color:var(--neon-gold)">PING ${host} (${host}) 56(84) bytes of data.</span>`, 'warn');
+        for (let i = 1; i <= 4; i++) {
+            const delay = (Math.random() * 8 + 4).toFixed(2);
+            setTimeout(() => {
+                appendLine(`64 bytes from ${host}: icmp_seq=${i} ttl=64 time=${delay} ms`, 'out');
+                if (window.NexoAudio) window.NexoAudio.playType();
+                if (i === 4) {
+                    setTimeout(() => {
+                        appendLine(`\n--- ${host} ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 4.12/6.84/11.45/2.18 ms`, 'success');
+                        if (window.NexoAudio) window.NexoAudio.playSuccess();
+                    }, 300);
+                }
+            }, i * 600);
+        }
+        return null;
+    }
+
+    function runSpeedtest() {
+        if (window.NexoAudio) window.NexoAudio.playLaser();
+        appendLine('<span style="color:var(--neon-cyan)">[ SPEEDTEST // NEXO GIGABIT FIBER TELEMETRY ]</span>', 'warn');
+        appendLine('Connecting to server: Frankfurt, DE (NEXO-IX Core #1)...', 'dim');
+
+        setTimeout(() => appendLine('Latency / Ping: <span style="color:var(--neon-green);font-weight:700">4.12 ms</span> (Jitter: 0.28ms)', 'out'), 600);
+        setTimeout(() => appendLine('Testing Download Speed: [████████████████████] 100% → <span style="color:var(--neon-cyan);font-weight:700">942.85 Mbps</span>', 'out'), 1400);
+        setTimeout(() => {
+            appendLine('Testing Upload Speed:   [██████████████████░░] 90%  → <span style="color:var(--neon-green);font-weight:700">884.10 Mbps</span>', 'out');
+            appendLine('<span style="color:var(--neon-gold)">Result: TIER-1 FIBER CONNECTIVITY NOMINAL (Zero Packet Loss)</span>', 'success');
+            if (window.NexoAudio) window.NexoAudio.playSuccess();
+        }, 2200);
+        return null;
+    }
+
+    function runCve(args) {
+        const query = (args[0] || '').toLowerCase();
+        const CVES = {
+            'log4j': { id: 'CVE-2021-44228', name: 'Log4Shell', cvss: '10.0 CRITICAL', desc: 'JNDI injection in Apache Log4j allows unauthenticated remote code execution via LDAP lookup.' },
+            'eternalblue': { id: 'CVE-2017-0144', name: 'EternalBlue', cvss: '9.8 CRITICAL', desc: 'SMBv1 buffer overflow in srv.sys allows remote attackers to execute arbitrary code via crafted packets.' },
+            'dirtycow': { id: 'CVE-2016-5195', name: 'Dirty COW', cvss: '7.8 HIGH', desc: 'Race condition in Linux kernel memory subsystem copy-on-write (COW) allows local privilege escalation to root.' },
+            'spring4shell': { id: 'CVE-2022-22965', name: 'Spring4Shell', cvss: '9.8 CRITICAL', desc: 'Class binding vulnerability in Spring MVC running on JDK 9+ allowing remote code execution.' },
+            'xz': { id: 'CVE-2024-3094', name: 'XZ Utils Backdoor', cvss: '10.0 CRITICAL', desc: 'Malicious backdoor in upstream xz/liblzma tarballs targeting OpenSSH authentication via systemd notify.' }
+        };
+
+        if (!query) {
+            return `Available CVE profiles: <span style="color:var(--neon-cyan)">log4j, eternalblue, dirtycow, spring4shell, xz</span>\nUsage: <span style="color:var(--neon-cyan)">cve &lt;name&gt;</span>`;
+        }
+
+        const match = Object.keys(CVES).find(k => k === query || CVES[k].id.toLowerCase() === query);
+        if (match) {
+            const c = CVES[match];
+            return `<div style="font-family:'JetBrains Mono',monospace;color:var(--text-primary);line-height:1.6">
+<span style="color:var(--neon-gold)">// CVE ADVISORY: ${c.id} — ${c.name}</span>
+Severity: <span style="color:#ff1744;font-weight:700">${c.cvss}</span>
+Details:  ${c.desc}
+Patch:    Upstream vendor security update applied in NEXO hardened builds.
+</div>`;
+        }
+        return `<span style="color:var(--neon-gold)">CVE entry '${query}' not found in cached index. Try 'log4j', 'eternalblue', 'dirtycow', 'xz'.</span>`;
+    }
+
+    function runDecrypt(args) {
+        if (!args[0]) return 'Usage: decrypt <hash/text>';
+        const val = args[0].trim();
+        // MD5 lookup
+        if (val.toLowerCase() === '5f4dcc3b5aa765d61d8327deb882cf99') {
+            return `<span style="color:var(--neon-green)">[OK] MD5 Rainbow Cracked: 'password'</span>`;
+        }
+        // Base64
+        try {
+            const decoded = atob(val);
+            if (decoded && /^[\x20-\x7E\r\n\t]+$/.test(decoded)) {
+                return `<span style="color:var(--neon-green)">[OK] Base64 Decoded: '${decoded}'</span>`;
+            }
+        } catch(e) {}
+        // Hex
+        if (/^[0-9a-fA-F]+$/.test(val) && val.length % 2 === 0) {
+            let str = '';
+            for (let i = 0; i < val.length; i += 2) {
+                str += String.fromCharCode(parseInt(val.substr(i, 2), 16));
+            }
+            if (/^[\x20-\x7E]+$/.test(str)) {
+                return `<span style="color:var(--neon-green)">[OK] Hex Decoded: '${str}'</span>`;
+            }
+        }
+        // ROT13
+        const rot13 = val.replace(/[a-zA-Z]/g, c => {
+            const base = c <= 'Z' ? 65 : 97;
+            return String.fromCharCode((c.charCodeAt(0) - base + 13) % 26 + base);
+        });
+        return `<span style="color:var(--neon-cyan)">ROT13 Shift: '${rot13}'</span>`;
+    }
+
+    function runAiQuery(args) {
+        if (!args.length) return 'Usage: ai <question about cybersecurity, programming, or tools>';
+        const q = args.join(' ').toLowerCase();
+        if (window.NexoAudio) window.NexoAudio.playLaser();
+
+        let answer = "NEXO Neural Network operates as a low-latency autonomous defense and reverse-engineering pipeline. For dedicated penetration testing, custom bot automation, or smart contracts, reach out on WhatsApp at +234 704 4339 491.";
+
+        if (q.includes('price') || q.includes('cost') || q.includes('services')) {
+            answer = "NEXO Engineering rates: Web development starts at $200 (1 page) up to $1000+ (enterprise platform). App development starts at $800 (MVP), $1500 (native iOS/Android), $2500 (cross-platform). Academy mentorship ranges $150–$700.";
+        } else if (q.includes('os') || q.includes('asterix') || q.includes('kernel') || q.includes('distro')) {
+            answer = " ASTERIX-OS is the company pride and sovereign flagship operating system of NEXO-TECHNOLOGIES. Engineered with a hardened microkernel hybrid architecture, zero telemetry, integrated Asterix-Anti-Attack real-time packet scrubber, and NIST Crystals-Kyber-1024 post-quantum cryptography. Repos: GitHub: https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git | GitLab: https://gitlab.com/nexo-technologies-group/asterix-os.git";
+        } else if (q.includes('tool') || q.includes('bot') || q.includes('flooder') || q.includes('arsenal') || q.includes('project')) {
+            answer = "NEXO Flagship & Arsenal:  1) ASTERIX-OS (Sovereign OS // Company Pride), 2) Asterix-Anti-Network-Attack (eBPF DDoS Deflection), 3) APEX-OVERDRIVE (Extreme Concurrency Engine), 4) LIGHTNING (Async Recon), 5) REDOX-PY Scanner (Heuristic Vuln Auditor), 6) THUNDER (Bandwidth Saturation), 7) DEMONIC-BOT (WhatsApp daemon), 8) DEMONIC_TOOLS (Linux Auditor), 9) NEXO IP Flooder (Rust stress tool).";
+        } else if (q.includes('wireshark') || q.includes('packet')) {
+            answer = "Wireshark packet analysis inspects OSI Layers: Physical Frame, Data Link (Ethernet II MAC), Network (IPv4/IPv6 TTL & checksum), Transport (TCP 3-way handshake SYN/ACK / UDP), and Application payload (TLS, HTTP, DNS).";
+        } else if (q.includes('metasploit') || q.includes('exploit')) {
+            answer = "Metasploit Framework automates vulnerability probing and payload delivery. Typical workflow: msfconsole -> search <cve> -> use <exploit> -> set RHOSTS -> set PAYLOAD -> exploit -> Meterpreter shell session.";
+        } else if (q.includes('python') || q.includes('rust')) {
+            answer = "NEXO polyglot stack combines Python for rapid AI automation, scraping, and FastAPI prototyping with Rust for zero-cost thread safety and ultra-low latency packet manipulation.";
+        }
+
+        return `<div style="font-family:'JetBrains Mono',monospace;color:var(--text-primary);border-left:2px solid var(--neon-cyan);padding-left:.8rem;line-height:1.6">
+<span style="color:var(--neon-cyan)">[NEXO NEURAL INTELLIGENCE]</span>
+${answer}
+</div>`;
+    }
 
     function runHack(){
         const steps=[
@@ -144,37 +709,72 @@
             {t:4000,text:'root',c:'out'},
             {t:4500,text:'<span style="color:var(--neon-gold)">[ SIMULATION COMPLETE — AUTHORIZED DEMO ONLY ]</span>',c:'warn'},
         ];
+        if (window.NexoAudio) window.NexoAudio.playIntrusion();
         steps.forEach(s=>setTimeout(()=>appendLine(s.text,s.c),s.t));
         return null;
     }
 
-    function appendLine(html,cls='out'){
-        const div=document.createElement('div');
-        div.className=`boot-line ${cls}`;
-        div.innerHTML=html||'&nbsp;';
-        termBody.appendChild(div);
-        setTimeout(()=>div.classList.add('visible'),10);
-        termBody.scrollTop=termBody.scrollHeight;
-    }
+    COMMANDS['hack'] = runHack;
+    COMMANDS['htop'] = runHtop;
+    COMMANDS['nmap'] = (args) => runNmap(args);
+    COMMANDS['ping'] = (args) => runPing(args);
+    COMMANDS['speedtest'] = runSpeedtest;
+    COMMANDS['cve'] = (args) => runCve(args);
+    COMMANDS['decrypt'] = (args) => runDecrypt(args);
+    COMMANDS['ai'] = (args) => runAiQuery(args);
+    COMMANDS['ls'] = (args) => executeLs(args);
+    COMMANDS['cd'] = (args) => executeCd(args);
+    COMMANDS['cat'] = (args) => executeCat(args);
+    COMMANDS['mkdir'] = (args) => executeMkdir(args);
+    COMMANDS['touch'] = (args) => executeTouch(args);
+    COMMANDS['rm'] = (args) => executeRm(args);
+    COMMANDS['echo'] = (args) => executeEcho(args);
 
     function handleCommand(raw){
-        const cmd=raw.trim().toLowerCase();
-        if(!cmd)return;
-        cmdHistory.unshift(cmd);histIdx=-1;
-        appendLine(`<span style="color:var(--neon-cyan)">nexo@technologies:~$</span> ${raw}`,'cmd');
+        const trimmed = raw.trim();
+        if(!trimmed) return;
+        cmdHistory.unshift(trimmed); histIdx = -1;
+
+        const parts = trimmed.split(/\s+/);
+        const cmd = parts[0].toLowerCase();
+        const args = parts.slice(1);
+
+        appendLine(`<span style="color:var(--neon-cyan)">nexo@technologies:~$</span> ${raw}`, 'cmd');
+
         if(COMMANDS[cmd]){
-            const result=COMMANDS[cmd]();
-            if(result!==null&&result!==undefined)appendLine(result,'out');
-        }else{
-            appendLine(`Command not found: <span style="color:var(--neon-magenta)">${cmd}</span> — type <span style="color:var(--neon-cyan)">help</span>`,'err');
+            if (window.NexoAudio && cmd !== 'ping' && cmd !== 'speedtest' && cmd !== 'hack') {
+                window.NexoAudio.playClick();
+            }
+            const result = COMMANDS[cmd](args);
+            if(result !== null && result !== undefined && result !== '') {
+                appendLine(result, 'out');
+            }
+        } else {
+            if (window.NexoAudio) window.NexoAudio.playLaser();
+            appendLine(`Command not found: <span style="color:var(--neon-magenta)">${cmd}</span> — type <span style="color:var(--neon-cyan)">help</span>`, 'err');
         }
     }
 
-    termInput.addEventListener('keydown',e=>{
-        if(e.key==='Enter'){handleCommand(termInput.value);termInput.value='';}
-        else if(e.key==='ArrowUp'){if(histIdx<cmdHistory.length-1){histIdx++;termInput.value=cmdHistory[histIdx];}e.preventDefault();}
-        else if(e.key==='ArrowDown'){if(histIdx>0){histIdx--;termInput.value=cmdHistory[histIdx];}else{histIdx=-1;termInput.value='';}e.preventDefault();}
-        else if(e.key==='Tab'){e.preventDefault();const m=Object.keys(COMMANDS).find(k=>k.startsWith(termInput.value));if(m)termInput.value=m;}
+    termInput.addEventListener('keydown', e => {
+        if(e.key === 'Enter'){
+            handleCommand(termInput.value);
+            termInput.value = '';
+        } else if(e.key === 'ArrowUp'){
+            if(histIdx < cmdHistory.length - 1){ histIdx++; termInput.value = cmdHistory[histIdx]; }
+            e.preventDefault();
+        } else if(e.key === 'ArrowDown'){
+            if(histIdx > 0){ histIdx--; termInput.value = cmdHistory[histIdx]; }
+            else { histIdx = -1; termInput.value = ''; }
+            e.preventDefault();
+        } else if(e.key === 'Tab'){
+            e.preventDefault();
+            const val = termInput.value.trim().toLowerCase();
+            const allCmds = Object.keys(COMMANDS);
+            const m = allCmds.find(k => k.startsWith(val));
+            if(m) termInput.value = m;
+        } else if(e.key.length === 1 && window.NexoAudio) {
+            window.NexoAudio.playType();
+        }
     });
 
     // Boot sequence
@@ -186,22 +786,23 @@
         {text:'  ██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝',delay:400,c:'art'},
         {text:'  ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ',delay:500,c:'art'},
         {text:'',delay:600},
-        {text:'  NEXO-TECHNOLOGIES // SECURE TERMINAL SYSTEM v4.2',delay:700,c:'dim'},
-        {text:'  ─────────────────────────────────────────────────',delay:800,c:'dim'},
+        {text:'   ASTERIX-OS v1.0 // SOVEREIGN CYBER OS [COMPANY PRIDE]',delay:700,c:'dim'},
+        {text:'  ─────────────────────────────────────────────────────────────',delay:800,c:'dim'},
         {text:'',delay:900},
-        {text:'[  OK  ] Initializing NEXO kernel modules...',delay:1000,c:'success'},
-        {text:'[  OK  ] Loading cybersecurity protocols...',delay:1200,c:'success'},
-        {text:'[  OK  ] Establishing encrypted channels...',delay:1400,c:'success'},
-        {text:'[ WARN ] Unauthorized access attempts will be traced.',delay:1600,c:'warn'},
-        {text:'[  OK  ] System integrity verified. All nominal.',delay:1800,c:'success'},
+        {text:'[  OK  ] Initializing ASTERIX-OS microkernel & sovereign VFS...',delay:1000,c:'success'},
+        {text:'[  OK  ] Loading Post-Quantum CryptFS & Asterix-Anti-Attack scrubbing...',delay:1200,c:'success'},
+        {text:'[  OK  ] Cyber toolchains engaged (htop, nmap, ping, cve, decrypt)...',delay:1400,c:'success'},
+        {text:'[  OK  ] Establishing Web Audio procedural synthesis & zero-telemetry daemon...',delay:1600,c:'success'},
+        {text:'[  OK  ] Virtual shell initialized at /home/nexo. Flagship status: ONLINE.',delay:1800,c:'success'},
         {text:'',delay:2000},
-        {text:'Welcome to <span style="color:var(--neon-cyan)">NEXO-TECHNOLOGIES</span> interactive terminal.',delay:2200,c:'out'},
-        {text:'Type <span style="color:var(--neon-cyan)">help</span> for available commands.',delay:2400,c:'out'},
+        {text:'Welcome to <span style="color:var(--neon-gold)"> ASTERIX-OS v1.0</span> (NEXO-TECHNOLOGIES Company Pride).',delay:2200,c:'out'},
+        {text:'Type <span style="color:var(--neon-gold)">asterixos</span> to inspect our sovereign OS, or <span style="color:var(--neon-cyan)">projects</span> for our full cyber arsenal.',delay:2400,c:'out'},
         {text:'',delay:2500},
     ];
     boots.forEach(l=>setTimeout(()=>appendLine(l.text||'',l.c||''),l.delay));
     setTimeout(()=>termInput.focus(),2600);
     termBody.addEventListener('click',()=>termInput.focus());
+    updatePrompt();
     </script>
 </body>
 </html>

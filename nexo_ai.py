@@ -57,18 +57,36 @@ NEXO_CORPUS = {
         )
     },
 
+    "asterix_os_flagship": {
+        "title": "ASTERIX-OS — Sovereign Cyber Operating System [COMPANY PRIDE]",
+        "tags": ["os", "asterix", "asterixos", "kernel", "distro", "flagship", "pride", "operating system"],
+        "content": (
+            "[FLAGSHIP] ASTERIX-OS is the crowning achievement and company pride of NEXO-TECHNOLOGIES.\n"
+            "Classification: Hardened Microkernel Hybrid Operating System for High-Stakes Cyber Operations.\n"
+            "Key Innovations:\n"
+            "• Zero-Telemetry Architecture: 100% free of telemetry, diagnostic beacons, and corporate backdoors.\n"
+            "• Asterix-Anti-Attack: Integrated kernel-level packet scrubber that automatically intercepts and neutralizes volumetric SYN/UDP DDoS attacks.\n"
+            "• Post-Quantum CryptFS: NIST Crystals-Kyber-1024 and Dilithium-3 lattice cryptography enforcing quantum-immune memory encryption at rest and transit.\n"
+            "Official Repositories:\n"
+            "• GitHub Flagship: https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git\n"
+            "• GitLab Mirror: https://gitlab.com/nexo-technologies-group/asterix-os.git"
+        )
+    },
+
     "nexo_arsenal_overview": {
         "title": "NEXO-TECH Active Weapon Cache & Arsenal",
-        "tags": ["tools", "arsenal", "software", "demonic-bot", "demonic_tools", "ip flooder", "projects"],
+        "tags": ["tools", "arsenal", "software", "demonic-bot", "demonic_tools", "ip flooder", "projects", "asterix", "apex", "lightning", "redox", "thunder"],
         "content": (
-            "The NEXO-TECHNOLOGIES public tool arsenal comprises three primary battle-tested engines:\n"
-            "1. DEMONIC-BOT (JavaScript / Node.js / Baileys API): An intelligent multi-functional WhatsApp automation bot featuring "
-            "media conversion, automated group administration, dynamic sticker creation, custom command triggers, and neural response systems.\n"
-            "2. DEMONIC_TOOLS Suite (Python / Shell / POSIX): A complete Linux and Termux security administration toolkit equipped with "
-            "automated vulnerability scanning, wireless handshake capturing assistants, system cleanup routines, and network diagnostic utilities.\n"
-            "3. NEXO-TECH IP Flooder (Rust / Tokio / Multi-Threaded): A high-performance, low-level network stress testing and resilience "
-            "verification tool written in Rust, leveraging asynchronous socket multiplexing for authorized infrastructure load capacity auditing.\n"
-            "All tools are maintained on GitHub under the demonalexander526-alt organization repository."
+            "The NEXO-TECHNOLOGIES active systems and cyber arsenal comprises:\n"
+            "[FLAGSHIP] 1. ASTERIX-OS: Custom sovereign cyber operating system — the company pride of NEXO-TECHNOLOGIES (GitHub: NEXO-TECHNOLOGIES/ASTERIX-OS.git | GitLab: nexo-technologies-group/asterix-os.git).\n"
+            "2. Asterix-Anti-Network-Attack (Python / eBPF): Autonomous packet filtering and volumetric flood mitigation engine (https://github.com/alexhack235-code/Asterix-Anti-Network-Attack.git).\n"
+            "3. APEX-OVERDRIVE (Python): Extreme performance multi-threaded task dispatching and high-velocity compute engine (https://github.com/alexhack235-code/APEX-OVERDRIVE-.git).\n"
+            "4. LIGHTNING (Python): Ultra-fast asynchronous network probe and target port profiler (https://github.com/alexhack235-code/LIGHTNING-.git).\n"
+            "5. REDOX-PY_SCANNER (Python): Autonomous heuristic vulnerability scanner and security configuration auditor (https://github.com/alexhack235-code/REDOX-PY_SCANNER.git).\n"
+            "6. THUNDER (Python): Industrial socket stress tester and bandwidth saturation load bench (https://github.com/alexhack235-code/THUNDER.git).\n"
+            "7. DEMONIC-BOT (Node.js / Baileys API): Multi-command WhatsApp automation bot engine.\n"
+            "8. DEMONIC_TOOLS Suite (Python / Bash): Comprehensive Linux & Termux system security auditing toolkit.\n"
+            "9. NEXO-TECH IP Flooder (Rust / Tokio): High-performance network resilience and socket stress testing engine."
         )
     },
 
@@ -536,9 +554,9 @@ class NexoAPIHandler(BaseHTTPRequestHandler):
 def start_server(engine, port=8080):
     NexoAPIHandler.engine = engine
     server = HTTPServer(('0.0.0.0', port), NexoAPIHandler)
-    print(f"\n⚡ NEXO-AI REST API SERVER RUNNING ON http://localhost:{port}")
-    print(f"👉 GET endpoint:  http://localhost:{port}/api/chat?q=your_question")
-    print(f"👉 POST endpoint: http://localhost:{port}/api/chat (JSON: {{\"message\": \"...\"}})")
+    print(f"\n[FAST] NEXO-AI REST API SERVER RUNNING ON http://localhost:{port}")
+    print(f"> GET endpoint:  http://localhost:{port}/api/chat?q=your_question")
+    print(f"> POST endpoint: http://localhost:{port}/api/chat (JSON: {{\"message\": \"...\"}})")
     print("Press Ctrl+C to terminate server.\n")
     try:
         server.serve_forever()
@@ -579,7 +597,7 @@ def run_cli(engine):
     
     while True:
         try:
-            user_input = input(f"\033[96mnexo@technologies\033[0m [\033[93m{active_model}\033[0m] ➜ ").strip()
+            user_input = input(f"\033[96mnexo@technologies\033[0m [\033[93m{active_model}\033[0m] -> ").strip()
             if not user_input:
                 continue
                 

@@ -1,0 +1,266 @@
+/* =========================================================
+   NEXO-TECHNOLOGIES — Holographic Command Palette v5.0
+   Universal Quick Launcher & Action HUD (Ctrl+K / Cmd+K)
+   ========================================================= */
+
+#nexo-cmd-palette {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(2, 8, 18, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 1.5rem 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+#nexo-cmd-palette.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cmd-modal {
+  width: 100%;
+  max-width: 680px;
+  background: rgba(5, 13, 26, 0.94);
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 245, 255, 0.2);
+  overflow: hidden;
+  transform: translateY(-20px) scale(0.98);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+#nexo-cmd-palette.active .cmd-modal {
+  transform: translateY(0) scale(1);
+}
+
+.cmd-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00f5ff, #bf00ff, #00ff88, transparent);
+}
+
+.cmd-search-wrap {
+  display: flex;
+  align-items: center;
+  padding: 1.1rem 1.4rem;
+  gap: 0.9rem;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.12);
+  background: rgba(2, 8, 18, 0.6);
+}
+
+.cmd-search-icon {
+  color: var(--neon-cyan, #00f5ff);
+  font-size: 1.1rem;
+  filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.6));
+}
+
+.cmd-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e8f4fd;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.cmd-input::placeholder {
+  color: #4a6680;
+}
+
+.cmd-esc-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: #8baac9;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cmd-results {
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 0.8rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 245, 255, 0.3) transparent;
+}
+
+.cmd-results::-webkit-scrollbar {
+  width: 4px;
+}
+
+.cmd-results::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.3);
+  border-radius: 2px;
+}
+
+.cmd-group-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: #4a6680;
+  text-transform: uppercase;
+  padding: 0.6rem 0.8rem 0.3rem;
+}
+
+.cmd-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #8baac9;
+  text-decoration: none;
+}
+
+.cmd-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.cmd-item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 245, 255, 0.08);
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  color: #00f5ff;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.cmd-item-text h4 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #e8f4fd;
+  margin-bottom: 0.15rem;
+}
+
+.cmd-item-text p {
+  font-size: 0.72rem;
+  color: #4a6680;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cmd-item-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8baac9;
+}
+
+.cmd-item:hover,
+.cmd-item.selected {
+  background: rgba(0, 245, 255, 0.12);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  color: #e8f4fd;
+  transform: translateX(4px);
+}
+
+.cmd-item:hover .cmd-item-icon,
+.cmd-item.selected .cmd-item-icon {
+  background: #00f5ff;
+  color: #020812;
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.6);
+}
+
+.cmd-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.4rem;
+  background: rgba(2, 8, 18, 0.85);
+  border-top: 1px solid rgba(0, 245, 255, 0.1);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: #4a6680;
+}
+
+.cmd-footer-keys {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cmd-key-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cmd-key-hint kbd {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  color: #8baac9;
+  font-size: 0.6rem;
+}
+
+/* Quick launch badge for navbar / headers */
+.cmd-quick-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(0, 245, 255, 0.06);
+  border: 1px solid rgba(0, 245, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #8baac9;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.cmd-quick-trigger:hover {
+  background: rgba(0, 245, 255, 0.15);
+  border-color: #00f5ff;
+  color: #00f5ff;
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+}
+
+.cmd-quick-trigger kbd {
+  background: rgba(0, 245, 255, 0.1);
+  border: 1px solid rgba(0, 245, 255, 0.25);
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.65rem;
+  color: #00f5ff;
+}
+
+@media (max-width: 600px) {
+  #nexo-cmd-palette {
+    padding-top: 5vh;
+  }
+  .cmd-footer-keys {
+    display: none;
+  }
+}

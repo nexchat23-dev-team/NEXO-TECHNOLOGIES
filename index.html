@@ -6,11 +6,19 @@
     <title>NEXO-TECHNOLOGIES — Digital Command Center | Developer & Cybersecurity</title>
     <meta name="description" content="NEXO-TECHNOLOGIES — Alexander. Full-Stack Developer, Grey Hat Hacker & Linux Expert. 15+ programming languages, 50+ projects, cutting-edge cybersecurity solutions. AI-powered portfolio.">
     <meta name="theme-color" content="#020812">
+        <!-- FAVICONS & METADATA -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="services.css">
+    <link rel="stylesheet" href="cmd-palette.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ── INDEX PAGE SPECIFIC ── */
@@ -236,8 +244,30 @@
         .timeline-dot::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(0,245,255,.3);animation:ringPulse 2s ease infinite}
         .timeline-year{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--neon-cyan);letter-spacing:.1em;margin-bottom:.5rem}
         .timeline-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;margin-bottom:.5rem;color:var(--text-primary)}
-        .timeline-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.7}
-        @media(max-width:768px){.timeline::before{left:20px}.timeline-item{grid-template-columns:20px 1fr;grid-template-rows:auto auto}.timeline-empty{display:none}.timeline-dot{margin:0}}
+        /* ASTERIX-OS SUPREME SPOTLIGHT SECTION [COMPANY PRIDE] */
+        .asterix-os-section{background:radial-gradient(ellipse at center top,rgba(255,215,0,.08) 0%,transparent 60%),radial-gradient(ellipse at center bottom,rgba(0,245,255,.06) 0%,transparent 60%),var(--nexo-dark);border-top:1px solid rgba(255,215,0,.15);border-bottom:1px solid rgba(255,215,0,.15);padding:7rem 0;position:relative;overflow:hidden}
+        .asterix-os-section::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,215,0,.015) 2px,rgba(255,215,0,.015) 4px);pointer-events:none}
+        .asterix-pride-badge{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,107,0,.15));border:1px solid var(--neon-gold);color:var(--neon-gold);border-radius:999px;padding:.45rem 1.3rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:700;letter-spacing:.15em;box-shadow:0 0 25px rgba(255,215,0,.25);margin-bottom:1.5rem}
+        .asterix-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3.5rem;align-items:center}
+        .asterix-os-display{background:rgba(2,8,18,.95);border:1.5px solid rgba(255,215,0,.3);border-radius:20px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.7),0 0 40px rgba(255,215,0,.15)}
+        .asterix-terminal-top{background:rgba(10,22,40,.9);padding:.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,215,0,.2);font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--neon-gold)}
+        .asterix-terminal-body{padding:1.4rem;min-height:340px;max-height:420px;overflow-y:auto;font-family:'JetBrains Mono',monospace;font-size:.76rem;line-height:1.6;color:#a8e6ff}
+        .asterix-pill-actions{display:flex;flex-wrap:wrap;gap:.5rem;padding:.8rem 1.2rem;background:rgba(5,13,26,.95);border-top:1px solid rgba(255,255,255,.06)}
+        .asterix-pill-btn{background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.3);color:var(--neon-gold);padding:.35rem .75rem;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;gap:.4rem}
+        .asterix-pill-btn:hover{background:var(--neon-gold);color:#020812;box-shadow:0 0 15px rgba(255,215,0,.5)}
+        .asterix-feature-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.8rem 0}
+        .asterix-feat-card{background:rgba(5,13,26,.8);border:1px solid rgba(255,215,0,.15);border-radius:14px;padding:1.2rem;transition:var(--transition)}
+        .asterix-feat-card:hover{border-color:var(--neon-gold);transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.4)}
+        .asterix-feat-icon{font-size:1.4rem;color:var(--neon-gold);margin-bottom:.5rem}
+        .asterix-feat-card h4{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;color:var(--text-primary);margin-bottom:.3rem}
+        .asterix-feat-card p{font-size:.78rem;color:var(--text-secondary);line-height:1.5}
+        .asterix-repo-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
+        .asterix-repo-btn{display:inline-flex;align-items:center;gap:.6rem;padding:.75rem 1.4rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.85rem;text-decoration:none;transition:var(--transition)}
+        .repo-gh{background:linear-gradient(135deg,rgba(255,215,0,.2),rgba(255,107,0,.2));border:1px solid var(--neon-gold);color:var(--neon-gold)}
+        .repo-gh:hover{background:var(--neon-gold);color:#020812;box-shadow:0 0 25px rgba(255,215,0,.6);transform:translateY(-2px)}
+        .repo-gl{background:rgba(226,67,41,.15);border:1px solid #e24329;color:#ff6b4a}
+        .repo-gl:hover{background:#e24329;color:#fff;box-shadow:0 0 25px rgba(226,67,41,.6);transform:translateY(-2px)}
+        @media(max-width:950px){.asterix-grid{grid-template-columns:1fr}}
 
         /* PROJECTS */
         .projects{background:var(--nexo-black)}
@@ -469,6 +499,9 @@
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-actions">
+                <button class="cmd-quick-trigger" onclick="openNexoCommandPalette()" title="Universal Command HUD [Ctrl+K]">
+                    <i class="fas fa-terminal"></i> <kbd>Ctrl+K</kbd>
+                </button>
                 <button class="theme-toggle" id="themeToggle" title="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -483,12 +516,12 @@
     <section id="home" class="hero">
         <div class="hero-scanline"></div>
         <div class="hero-hud-top">
-            <span><span class="hud-dot"></span>SYS_STATUS: ONLINE // NEXO_OS_v4.2</span>
+            <span><span class="hud-dot" style="background:var(--neon-gold);box-shadow:0 0 10px var(--neon-gold)"></span><i class="fas fa-crown" style="color:var(--neon-gold);margin-right:4px"></i> FLAGSHIP CORE: ASTERIX-OS v1.0 [COMPANY PRIDE]</span>
             <span>COORD: 6.5244° N, 3.3792° E</span>
-            <span>SECURE_LINK: ACTIVE</span>
+            <span>KERNEL: HARDENED</span>
         </div>
         <div class="hero-hud-bottom">
-            <span>THREAT_LEVEL: MINIMAL</span>
+            <span>THREAT_LEVEL: ZERO-TOLERANCE</span>
             <span>UPTIME: 99.99%</span>
             <span>NEXO-TECHNOLOGIES CORP. // EST. 2021</span>
         </div>
@@ -500,9 +533,14 @@
         </div>
         <div class="container">
             <div class="hero-left">
-                <div class="hero-badge">
-                    <div class="badge-pulse"></div>
-                    AVAILABLE FOR WORK
+                <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.5rem">
+                    <div class="hero-badge">
+                        <div class="badge-pulse"></div>
+                        AVAILABLE FOR WORK
+                    </div>
+                    <div class="hero-badge" style="background:rgba(255,215,0,.12);border-color:var(--neon-gold);color:var(--neon-gold)">
+                        <i class="fas fa-crown"></i> ASTERIX-OS ACTIVE
+                    </div>
                 </div>
                 <div class="nexo-sub">// NEXO-TECHNOLOGIES PRESENTS</div>
                 <h1 class="hero-title">
@@ -517,7 +555,7 @@
                 <p class="hero-description">
                     Professional full-stack architecture with expertise in <strong>15+ programming languages</strong>,
                     specializing in system development, automation, and cutting-edge cybersecurity.
-                    Building the future, one line of code at a time.
+                    Home of <strong>ASTERIX-OS</strong> — our flagship sovereign cyber operating system.
                 </p>
                 <div class="hero-stats">
                     <div class="hero-stat">
@@ -536,8 +574,9 @@
                     </div>
                 </div>
                 <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary"><i class="fas fa-code"></i> View My Work</a>
-                    <a href="#contact" class="btn btn-secondary"><i class="fas fa-satellite-dish"></i> Get In Touch</a>
+                    <a href="#asterix-os-spotlight" class="btn btn-primary" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#020812;box-shadow:0 0 25px rgba(255,215,0,.6)"><i class="fas fa-crown"></i> ASTERIX-OS [OUR PRIDE]</a>
+                    <a href="#projects" class="btn btn-secondary"><i class="fas fa-code"></i> All Projects</a>
+                    <a href="#contact" class="btn btn-secondary"><i class="fas fa-satellite-dish"></i> Contact</a>
                 </div>
             </div>
             <div class="hero-right">
@@ -549,6 +588,106 @@
         <div class="scroll-indicator">
             <div class="scroll-wheel"></div>
             <span>SCROLL</span>
+        </div>
+    </section>
+
+    <!-- ==================== ASTERIX-OS SUPREME SPOTLIGHT [COMPANY PRIDE] ==================== -->
+    <section id="asterix-os-spotlight" class="asterix-os-section">
+        <div class="container">
+            <div style="text-align:center;margin-bottom:3.5rem">
+                <div class="asterix-pride-badge reveal">
+                    <i class="fas fa-crown"></i> COMPANY PRIDE // OUR CROWN JEWEL
+                </div>
+                <h2 class="section-title reveal" style="font-size:clamp(2.2rem,5vw,3.6rem)">
+                    ASTERIX-OS — <span>The Sovereign Cyber OS</span>
+                </h2>
+                <p style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--text-muted);letter-spacing:.15em;max-width:750px;margin:1rem auto 0" class="reveal">
+                    // CUSTOM HARDENED LINUX &amp; MICROKERNEL HYBRID // BUILT FOR HIGH-STAKES CYBER OPERATIONS
+                </p>
+                <div class="section-line" style="background:linear-gradient(90deg,var(--neon-gold),var(--neon-cyan));box-shadow:0 0 20px rgba(255,215,0,.6)"></div>
+            </div>
+
+            <div class="asterix-grid">
+                <!-- Left: OS Narrative & Architecture -->
+                <div class="reveal-left">
+                    <p style="color:var(--text-secondary);font-size:1rem;line-height:1.8;margin-bottom:1.5rem">
+                        Born out of an uncompromising mission to engineer absolute digital sovereignty, <strong style="color:var(--neon-gold)">ASTERIX-OS</strong> is the centerpiece and crowning technological achievement of <strong style="color:var(--neon-cyan)">NEXO-TECHNOLOGIES</strong>.
+                    </p>
+                    <p style="color:var(--text-secondary);font-size:.92rem;line-height:1.8;margin-bottom:1.5rem">
+                        Architected from the bare metal up for penetration testers, security researchers, and sovereign systems architects, ASTERIX-OS eliminates all corporate telemetry, bakes in real-time eBPF DDoS mitigation, and protects process memory with post-quantum lattice cryptography.
+                    </p>
+
+                    <div class="asterix-feature-cards">
+                        <div class="asterix-feat-card">
+                            <div class="asterix-feat-icon"><i class="fas fa-microchip"></i></div>
+                            <h4>Hardened Microkernel</h4>
+                            <p>Isolated user-space drivers, deterministic scheduler, zero memory leaks, and ring-0 exploit shielding.</p>
+                        </div>
+                        <div class="asterix-feat-card">
+                            <div class="asterix-feat-icon" style="color:var(--neon-green)"><i class="fas fa-shield-halved"></i></div>
+                            <h4>Asterix-Anti-Attack</h4>
+                            <p>Kernel-level DDoS mitigation, automatic SYN/UDP scrubbing, and heuristic deflection.</p>
+                        </div>
+                        <div class="asterix-feat-card">
+                            <div class="asterix-feat-icon" style="color:var(--neon-cyan)"><i class="fas fa-atom"></i></div>
+                            <h4>Post-Quantum CryptFS</h4>
+                            <p>NIST Crystals-Kyber-1024 encryption at rest and in transit across all virtual storage nodes.</p>
+                        </div>
+                        <div class="asterix-feat-card">
+                            <div class="asterix-feat-icon" style="color:var(--neon-magenta)"><i class="fas fa-eye-slash"></i></div>
+                            <h4>Zero-Telemetry Core</h4>
+                            <p>Stripped clean of all tracking daemons, analytics beaconing, and third-party commercial backdoors.</p>
+                        </div>
+                    </div>
+
+                    <!-- Git Clone Box -->
+                    <div style="background:rgba(2,8,18,.9);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:.8rem 1rem;display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem">
+                        <code style="font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#ffd700">git clone https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git</code>
+                        <button onclick="copyAsterixClone()" style="background:rgba(255,215,0,.15);border:1px solid var(--neon-gold);color:var(--neon-gold);padding:.35rem .7rem;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.72rem;cursor:pointer;transition:all .2s" id="asterix-copy-btn">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <!-- Official Repository Buttons -->
+                    <div class="asterix-repo-row">
+                        <a href="https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git" target="_blank" class="asterix-repo-btn repo-gh">
+                            <i class="fab fa-github"></i> Star on GitHub
+                        </a>
+                        <a href="https://gitlab.com/nexo-technologies-group/asterix-os.git" target="_blank" class="asterix-repo-btn repo-gl">
+                            <i class="fab fa-gitlab"></i> Inspect on GitLab
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive Live ASTERIX-OS Terminal -->
+                <div class="reveal-right">
+                    <div class="asterix-os-display">
+                        <div class="asterix-terminal-top">
+                            <div style="display:flex;align-items:center;gap:.5rem">
+                                <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span>
+                                <span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span>
+                                <span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span>
+                                <span style="margin-left:.6rem;font-weight:700">ASTERIX-OS v1.0 // LIVE CONSOLE</span>
+                            </div>
+                            <span style="color:var(--neon-green);display:flex;align-items:center;gap:.4rem">
+                                <span style="width:6px;height:6px;border-radius:50%;background:var(--neon-green);box-shadow:0 0 8px var(--neon-green)"></span>
+                                KERNEL_ACTIVE
+                            </span>
+                        </div>
+
+                        <div class="asterix-terminal-body" id="asterix-term-body">
+                            <!-- Injected via JavaScript -->
+                        </div>
+
+                        <div class="asterix-pill-actions">
+                            <button class="asterix-pill-btn" onclick="simAsterixBoot()"><i class="fas fa-power-off"></i> Boot Kernel</button>
+                            <button class="asterix-pill-btn" onclick="simAsterixAntiAttack()"><i class="fas fa-shield-halved"></i> Anti-Attack Scrub</button>
+                            <button class="asterix-pill-btn" onclick="simAsterixQuantum()"><i class="fas fa-atom"></i> Quantum Audit</button>
+                            <button class="asterix-pill-btn" onclick="simAsterixSysinfo()"><i class="fas fa-info-circle"></i> Sysinfo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -564,7 +703,7 @@
                 <div class="about-visual reveal-left">
                     <div class="about-card-wrapper">
                         <div class="about-avatar-card">
-                            <div class="avatar-icon-wrap">🔐</div>
+                            <div class="avatar-icon-wrap"><i class="fas fa-shield-halved"></i></div>
                             <div class="about-name">NEXO-TECHNOLOGIES</div>
                             <div class="about-role">Core Development & Cybersecurity Collective</div>
                             <div class="about-tags">
@@ -694,7 +833,7 @@
                 </div>
             </div>
             <div class="proficiency-section reveal">
-                <div class="proficiency-title">⚡ LANGUAGE PROFICIENCY</div>
+                <div class="proficiency-title"><i class="fas fa-bolt"></i> LANGUAGE PROFICIENCY</div>
                 <div class="prof-list">
                     <div class="prof-item"><span class="prof-name">Python</span><div class="prof-bar-track"><div class="prof-bar-fill fill-cyan" data-width="95"></div></div><span class="prof-percent">95%</span></div>
                     <div class="prof-item"><span class="prof-name">Shell Script</span><div class="prof-bar-track"><div class="prof-bar-fill fill-green" data-width="92"></div></div><span class="prof-percent">92%</span></div>
@@ -786,6 +925,125 @@
                 <div class="section-line"></div>
             </div>
             <div class="projects-grid">
+                <!-- FLAGSHIP: ASTERIX-OS [COMPANY PRIDE] -->
+                <div class="project-card reveal" style="grid-column: 1 / -1; border-color: rgba(255,215,0,.5); background: linear-gradient(135deg, rgba(255,215,0,.07), rgba(5,13,26,.95)); box-shadow: 0 0 35px rgba(255,215,0,.18);">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap" style="width:62px;height:62px;font-size:1.8rem;border-radius:16px;background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.4);color:var(--neon-gold);box-shadow:0 0 20px rgba(255,215,0,.4)">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+                            <span class="project-badge" style="background:rgba(255,215,0,.15);color:var(--neon-gold);border-color:var(--neon-gold);box-shadow:0 0 10px rgba(255,215,0,.3)"><i class="fas fa-crown"></i> COMPANY PRIDE</span>
+                            <span class="project-badge badge-green">v1.0 ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="project-title" style="font-size:1.5rem;color:var(--text-primary);display:flex;align-items:center;gap:.6rem">
+                        ASTERIX-OS — Sovereign Cyber Operating System
+                    </div>
+                    <div class="project-desc" style="font-size:.95rem;line-height:1.6;color:var(--text-secondary);max-width:900px">
+                        The ultimate flagship of NEXO-TECHNOLOGIES. An immutable microkernel-hybrid operating system built for high-threat environments, zero telemetry, integrated anti-network attack scrubbing, and quantum-resistant memory encryption.
+                    </div>
+                    <div class="project-tech-tags" style="margin:1.2rem 0">
+                        <span class="tech-tag" style="border-color:var(--neon-gold);color:var(--neon-gold)">C / Rust</span>
+                        <span class="tech-tag">Microkernel</span>
+                        <span class="tech-tag">Post-Quantum CryptFS</span>
+                        <span class="tech-tag">Asterix-Anti-Attack</span>
+                        <span class="tech-tag">Zero Telemetry</span>
+                        <span class="tech-tag">Memory Protection</span>
+                    </div>
+                    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem">
+                        <a href="https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git" class="project-link-btn" target="_blank" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#020812;font-weight:700;border:none;box-shadow:0 0 20px rgba(255,215,0,.5)">
+                            <i class="fab fa-github"></i> View Flagship on GitHub →
+                        </a>
+                        <a href="https://gitlab.com/nexo-technologies-group/asterix-os.git" class="project-link-btn" target="_blank" style="background:rgba(255,107,0,.12);border:1px solid #ff6b00;color:#ff6b00">
+                            <i class="fab fa-gitlab"></i> GitLab Mirror →
+                        </a>
+                        <a href="#asterix-os-spotlight" class="project-link-btn" style="background:rgba(0,245,255,.08);border:1px solid var(--neon-cyan);color:var(--neon-cyan)">
+                            <i class="fas fa-terminal"></i> Try Live Console ↓
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PROJECT 2: Asterix-Anti-Network-Attack -->
+                <div class="project-card reveal">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap skill-icon-green" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <span class="project-badge badge-green">Cyber Defense</span>
+                    </div>
+                    <div class="project-title">Asterix Anti-Network Attack</div>
+                    <div class="project-desc">Autonomous packet scrubbing and volumetric flood mitigation daemon. Defends systems from multi-vector DDoS attacks with real-time heuristic anomaly detection.</div>
+                    <div class="project-tech-tags">
+                        <span class="tech-tag">Python</span><span class="tech-tag">Network Security</span><span class="tech-tag">DDoS Scrubbing</span><span class="tech-tag">Heuristics</span>
+                    </div>
+                    <a href="https://github.com/alexhack235-code/Asterix-Anti-Network-Attack.git" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
+                </div>
+
+                <!-- PROJECT 3: APEX-OVERDRIVE -->
+                <div class="project-card reveal">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap skill-icon-cyan" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <span class="project-badge badge-cyan">Performance</span>
+                    </div>
+                    <div class="project-title">APEX-OVERDRIVE</div>
+                    <div class="project-desc">Extreme performance orchestration engine. Designed for ultra-high throughput multi-threaded task dispatching, memory cache bypass, and raw computation velocity.</div>
+                    <div class="project-tech-tags">
+                        <span class="tech-tag">Python</span><span class="tech-tag">High Throughput</span><span class="tech-tag">Multi-Threaded</span><span class="tech-tag">Performance</span>
+                    </div>
+                    <a href="https://github.com/alexhack235-code/APEX-OVERDRIVE-.git" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
+                </div>
+
+                <!-- PROJECT 4: LIGHTNING -->
+                <div class="project-card reveal">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap skill-icon-orange" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <span class="project-badge badge-yellow">Reconnaissance</span>
+                    </div>
+                    <div class="project-title">LIGHTNING</div>
+                    <div class="project-desc">High-velocity asynchronous network reconnaissance and port verification suite. Delivers instantaneous target profiling and service finger-printing at line speed.</div>
+                    <div class="project-tech-tags">
+                        <span class="tech-tag">Python</span><span class="tech-tag">Fast Recon</span><span class="tech-tag">Network Probe</span><span class="tech-tag">Async I/O</span>
+                    </div>
+                    <a href="https://github.com/alexhack235-code/LIGHTNING-.git" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
+                </div>
+
+                <!-- PROJECT 5: REDOX-PY_SCANNER -->
+                <div class="project-card reveal">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap skill-icon-magenta" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;">
+                            <i class="fas fa-magnifying-glass-chart"></i>
+                        </div>
+                        <span class="project-badge badge-pink">Vulnerability Audit</span>
+                    </div>
+                    <div class="project-title">REDOX-PY Scanner</div>
+                    <div class="project-desc">Intelligent Python vulnerability scanner. Features heuristic rule engines for discovering misconfigurations, outdated daemon banners, and open exposure vectors.</div>
+                    <div class="project-tech-tags">
+                        <span class="tech-tag">Python</span><span class="tech-tag">Vulnerability Audit</span><span class="tech-tag">Heuristic Scanner</span><span class="tech-tag">SecOps</span>
+                    </div>
+                    <a href="https://github.com/alexhack235-code/REDOX-PY_SCANNER.git" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
+                </div>
+
+                <!-- PROJECT 6: THUNDER -->
+                <div class="project-card reveal">
+                    <div class="project-card-top">
+                        <div class="skill-icon-wrap skill-icon-purple" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;">
+                            <i class="fas fa-cloud-bolt"></i>
+                        </div>
+                        <span class="project-badge badge-purple">Stress Framework</span>
+                    </div>
+                    <div class="project-title">THUNDER</div>
+                    <div class="project-desc">Industrial-grade network load tester and concurrent socket stress testing suite. Audits edge infrastructure tolerance against extreme volumetric saturation.</div>
+                    <div class="project-tech-tags">
+                        <span class="tech-tag">Python</span><span class="tech-tag">Stress Testing</span><span class="tech-tag">Concurrency</span><span class="tech-tag">Benchmarking</span>
+                    </div>
+                    <a href="https://github.com/alexhack235-code/THUNDER.git" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
+                </div>
+
+                <!-- PROJECT 7: DEMONIC-BOT -->
                 <div class="project-card reveal">
                     <div class="project-card-top">
                         <div class="skill-icon-wrap skill-icon-green" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;"><i class="fab fa-whatsapp"></i></div>
@@ -798,6 +1056,8 @@
                     </div>
                     <a href="https://github.com/demonalexander526-alt/DEMONIC-BOT" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
                 </div>
+
+                <!-- PROJECT 8: DEMONIC_TOOLS -->
                 <div class="project-card reveal">
                     <div class="project-card-top">
                         <div class="skill-icon-wrap skill-icon-purple" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;"><i class="fab fa-linux"></i></div>
@@ -810,6 +1070,8 @@
                     </div>
                     <a href="https://github.com/demonalexander526-alt/DEMONIC_TOOLS" class="project-link-btn" target="_blank"><i class="fab fa-github"></i> View on GitHub →</a>
                 </div>
+
+                <!-- PROJECT 9: NEXO-TECH IP Flooder -->
                 <div class="project-card reveal">
                     <div class="project-card-top">
                         <div class="skill-icon-wrap skill-icon-orange" style="width:56px;height:56px;font-size:1.5rem;border-radius:14px;"><i class="fas fa-bolt"></i></div>
@@ -930,7 +1192,7 @@
             </div>
             <div class="ai-chat-wrapper reveal">
                 <div class="ai-chat-header">
-                    <div class="ai-avatar">🤖</div>
+                    <div class="ai-avatar"><i class="fas fa-robot"></i></div>
                     <div class="ai-header-info">
                         <h3>NEXO-AI v4.2</h3>
                         <p>NEURAL AGENT // ONLINE</p>
@@ -939,7 +1201,7 @@
                 <div class="ai-chat-box">
                     <div class="chat-messages" id="chatMessages">
                         <div class="chat-msg ai">
-                            <div class="msg-avatar ai-msg-avatar">🤖</div>
+                            <div class="msg-avatar ai-msg-avatar"><i class="fas fa-robot"></i></div>
                             <div class="msg-bubble">
                                 NEXO-AI active. How can I assist with your NEXO-TECHNOLOGIES inquiries?
                                 <div class="quick-chips">
@@ -992,7 +1254,7 @@
                     </div>
                 </div>
                 <div class="contact-form-wrap reveal-right">
-                    <div class="form-title">📡 Send a Transmission</div>
+                    <div class="form-title"><i class="fas fa-paper-plane"></i> Send a Transmission</div>
                     <form class="contact-form" id="contactForm">
                         <div class="form-row">
                             <div class="form-group"><label>Name</label><input type="text" placeholder="Name" required></div>
@@ -1030,7 +1292,7 @@
     </button>
     <div id="ai-float-panel">
         <div class="float-panel-header">
-            <div class="float-panel-avatar">🤖</div>
+            <div class="float-panel-avatar"><i class="fas fa-robot"></i></div>
             <div>
                 <div class="float-panel-title">NEXO-AI ASSISTANT</div>
                 <div class="float-panel-sub">SECURE_LINK // STABLE</div>
@@ -1040,7 +1302,7 @@
         <div class="model-selector" id="floatModelSelector"></div>
         <div class="float-chat-messages" id="floatChatMessages">
             <div class="chat-msg ai">
-                <div class="msg-avatar ai-msg-avatar">🤖</div>
+                <div class="msg-avatar ai-msg-avatar"><i class="fas fa-robot"></i></div>
                 <div class="msg-bubble">
                     Hey! I'm NEXO-AI. Need a quick answer about NEXO-TECHNOLOGIES skills or pricing packages?
                 </div>
@@ -1052,6 +1314,122 @@
         </div>
     </div>
 
+    <script src="audio.js"></script>
+    <script src="cmd-palette.js"></script>
     <script src="script.js"></script>
+
+    <!-- ASTERIX-OS LIVE CONSOLE INTERACTION SCRIPT -->
+    <script>
+        function playSfx(type) {
+            if (window.NexoAudio) {
+                if (type === 'click') window.NexoAudio.playClick();
+                else if (type === 'scan') window.NexoAudio.playScan();
+                else if (type === 'access') window.NexoAudio.playAccessGranted();
+                else if (type === 'keystroke') window.NexoAudio.playKeystroke();
+            }
+        }
+
+        function copyAsterixClone() {
+            playSfx('click');
+            const cloneCmd = 'git clone https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git';
+            navigator.clipboard.writeText(cloneCmd).then(() => {
+                const btn = document.getElementById('asterix-copy-btn');
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    btn.style.color = 'var(--neon-green)';
+                    btn.style.borderColor = 'var(--neon-green)';
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="far fa-copy"></i> Copy';
+                        btn.style.color = 'var(--neon-gold)';
+                        btn.style.borderColor = 'var(--neon-gold)';
+                    }, 2500);
+                }
+                if (window.NexoAudio) window.NexoAudio.playAccessGranted();
+            });
+        }
+
+        function renderTermLines(lines, finalPrompt = true) {
+            const body = document.getElementById('asterix-term-body');
+            if (!body) return;
+            body.innerHTML = '';
+            let idx = 0;
+            function nextLine() {
+                if (idx < lines.length) {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.style.marginBottom = '0.35rem';
+                    lineDiv.innerHTML = lines[idx];
+                    body.appendChild(lineDiv);
+                    body.scrollTop = body.scrollHeight;
+                    playSfx('keystroke');
+                    idx++;
+                    setTimeout(nextLine, 70);
+                } else if (finalPrompt) {
+                    const promptDiv = document.createElement('div');
+                    promptDiv.style.marginTop = '0.5rem';
+                    promptDiv.innerHTML = '<span style="color:#ffd700">root@asterix-os</span>:<span style="color:var(--neon-cyan)">~</span># <span style="display:inline-block;width:8px;height:14px;background:#ffd700;animation:blink 1s step-end infinite;vertical-align:middle"></span>';
+                    body.appendChild(promptDiv);
+                    body.scrollTop = body.scrollHeight;
+                }
+            }
+            nextLine();
+        }
+
+        function simAsterixBoot() {
+            playSfx('scan');
+            renderTermLines([
+                '<span style="color:var(--neon-gold);font-weight:700">>>> INITIALIZING ASTERIX-OS v1.0 [COMPANY PRIDE FLAGSHIP]...</span>',
+                '<span style="color:var(--text-muted)">[ 0.000000]</span> Microkernel ELF x86_64 loaded at 0x7FFF00000000',
+                '<span style="color:var(--text-muted)">[ 0.001840]</span> <span style="color:var(--neon-cyan)">POST-QUANTUM CRYPTFS</span>: Kyber-1024 / Dilithium-3 initialized.',
+                '<span style="color:var(--text-muted)">[ 0.003410]</span> <span style="color:var(--neon-green)">ASTERIX-ANTI-ATTACK</span>: Kernel packet filter loaded in ring-0.',
+                '<span style="color:var(--text-muted)">[ 0.005120]</span> <span style="color:var(--neon-magenta)">ZERO-TELEMETRY</span>: Audit clean — 0 tracking daemons allowed.',
+                '<span style="color:var(--text-muted)">[ 0.007800]</span> <span style="color:var(--neon-orange)">MEMORY SHIELD</span>: ASLR + Shadow Stack + Heap Canopy verified.',
+                '<span style="color:var(--text-muted)">[ 0.010450]</span> Synchronizing with NEXO-TECHNOLOGIES Core Nexus... OK',
+                '<span style="color:var(--neon-gold);font-weight:700">[ SUCCESS ] ASTERIX-OS ready in 10.45ms. Supreme system status: ALL SHIELDS NOMINAL.</span>'
+            ]);
+        }
+
+        function simAsterixAntiAttack() {
+            playSfx('scan');
+            renderTermLines([
+                '<span style="color:#ffd700">root@asterix-os</span>:~# <span style="color:var(--neon-green)">asterix-anti-attack --scrub --realtime</span>',
+                '<span style="color:var(--neon-cyan)">[*] Listening on dynamic interfaces [eth0, wlan0, tun0]...</span>',
+                '<span style="color:#ff1744;font-weight:700">[ALERT] Detected 4.8M pps volumetric SYN flood on port 443!</span>',
+                '<span style="color:var(--neon-gold)">[+] Asterix eBPF packet-filter triggered in Ring-0</span>',
+                '<span style="color:var(--neon-green)">[OK] Scrubbed 4,800,000 anomalous packets in 0.028s. Ingress sanitized.</span>',
+                '<span style="color:var(--text-secondary)">[STATUS] Zero packet loss for verified connections. Attacker pool blackholed.</span>'
+            ]);
+        }
+
+        function simAsterixQuantum() {
+            playSfx('scan');
+            renderTermLines([
+                '<span style="color:#ffd700">root@asterix-os</span>:~# <span style="color:var(--neon-cyan)">asterix-crypt --audit-quantum</span>',
+                '<span style="color:var(--text-muted)">[*] NIST Post-Quantum Cryptographic Benchmark starting...</span>',
+                '<span style="color:var(--neon-gold)">[+] Lattice-based Crystals-Kyber-1024:</span> <span style="color:var(--neon-green)">ACTIVE (Level 5 Security)</span>',
+                '<span style="color:var(--neon-gold)">[+] Dilithium-3 Digital Signature Engine:</span> <span style="color:var(--neon-green)">VERIFIED</span>',
+                '<span style="color:var(--neon-gold)">[+] Quantum Shor Algorithm Vulnerability:</span> <span style="color:var(--neon-green)">0.00% (IMMUNE)</span>',
+                '<span style="color:var(--neon-cyan)">[OK] All active disk sectors &amp; socket payloads quantum-secured.</span>'
+            ]);
+        }
+
+        function simAsterixSysinfo() {
+            playSfx('scan');
+            renderTermLines([
+                '<span style="color:#ffd700">root@asterix-os</span>:~# <span style="color:var(--neon-gold)">sysinfo</span>',
+                '<span style="color:var(--neon-gold);font-weight:700">--------------------------------------------------</span>',
+                '<span style="color:var(--neon-gold)">OS:</span>        ASTERIX-OS v1.0 [COMPANY PRIDE // SOVEREIGN CYBER OS]',
+                '<span style="color:var(--neon-cyan)">Kernel:</span>    Microkernel Hybrid v1.0.0-hardened-x86_64',
+                '<span style="color:var(--neon-green)">Security:</span>  Asterix-Anti-Attack + Crystals-Kyber-1024',
+                '<span style="color:var(--neon-magenta)">Telemetry:</span> ZERO (Clean Architecture)',
+                '<span style="color:var(--neon-gold)">GitHub:</span>    https://github.com/NEXO-TECHNOLOGIES/ASTERIX-OS.git',
+                '<span style="color:#ff6b00">GitLab:</span>    https://gitlab.com/nexo-technologies-group/asterix-os.git',
+                '<span style="color:var(--neon-gold);font-weight:700">--------------------------------------------------</span>'
+            ]);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(simAsterixBoot, 1200);
+        });
+    </script>
 </body>
 </html>

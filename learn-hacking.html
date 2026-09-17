@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>Learn Ethical Hacking — NEXO-TECHNOLOGIES Academy</title>
     <meta name="description" content="Master Cybersecurity & Ethical Hacking skills with NEXO-TECHNOLOGIES. Tutorials, CLI command guides, Metasploit, Nmap, Wireshark, Fernet cryptography and training packages.">
+        <!-- FAVICONS & METADATA -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cmd-palette.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -116,6 +124,55 @@
         .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
         .reveal.visible{opacity:1;transform:none}
 
+        /* ── CTF CHALLENGES & WIRESHARK DISSECTOR STYLES ── */
+        .academy-interactive-card{background:rgba(5,13,26,.92);border:1px solid rgba(0,245,255,.2);border-radius:24px;padding:2.5rem;box-shadow:0 25px 60px rgba(0,0,0,.6),0 0 30px rgba(0,245,255,.1);backdrop-filter:blur(15px);margin-bottom:3.5rem;position:relative;overflow:hidden}
+        .ai-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.8rem;border-bottom:1px solid rgba(0,245,255,.12);padding-bottom:1.2rem}
+        .ai-header-left{display:flex;align-items:center;gap:1rem}
+        .ai-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+        .ai-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;color:var(--text-primary)}
+        .ai-sub{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);letter-spacing:.1em}
+        
+        /* CTF Scoreboard */
+        .ctf-scoreboard{display:flex;align-items:center;gap:1.5rem;background:rgba(2,8,18,.8);border:1px solid rgba(0,245,255,.15);border-radius:14px;padding:.8rem 1.4rem;margin-bottom:2rem}
+        .ctf-score-num{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:var(--neon-green);text-shadow:var(--glow-green)}
+        .ctf-score-lbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);text-transform:uppercase}
+        .ctf-rank-badge{margin-left:auto;padding:.3rem .9rem;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;background:rgba(0,245,255,.1);border:1px solid var(--neon-cyan);color:var(--neon-cyan)}
+
+        .ctf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+        .ctf-card{background:rgba(2,8,18,.85);border:1px solid rgba(0,245,255,.15);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;justify-content:space-between;transition:var(--transition)}
+        .ctf-card:hover{border-color:var(--neon-cyan);transform:translateY(-4px);box-shadow:0 15px 35px rgba(0,0,0,.5),var(--glow-cyan)}
+        .ctf-card.solved{border-color:var(--neon-green);box-shadow:0 0 20px rgba(0,255,136,.25)}
+        .ctf-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+        .ctf-lvl{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--neon-gold);font-weight:700}
+        .ctf-pts{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.15rem .55rem;border-radius:6px;background:rgba(0,255,136,.1);border:1px solid var(--neon-green);color:var(--neon-green)}
+        .ctf-card h4{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text-primary);margin-bottom:.5rem}
+        .ctf-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.6;margin-bottom:1rem}
+        .ctf-code-clue{background:rgba(0,0,0,.6);border:1px solid rgba(0,245,255,.1);padding:.6rem .8rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:#a8e6ff;margin-bottom:1.2rem;word-break:break-all}
+        .ctf-submit-row{display:flex;gap:.5rem}
+        .ctf-input{flex:1;background:rgba(10,22,40,.8);border:1px solid rgba(0,245,255,.2);border-radius:8px;padding:.5rem .7rem;color:#e8f4fd;font-family:'JetBrains Mono',monospace;font-size:.78rem;outline:none}
+        .ctf-input:focus{border-color:var(--neon-cyan)}
+        .ctf-btn{background:rgba(0,245,255,.12);border:1px solid var(--neon-cyan);color:var(--neon-cyan);border-radius:8px;padding:.5rem .9rem;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;transition:var(--transition)}
+        .ctf-btn:hover{background:var(--neon-cyan);color:#020812;box-shadow:var(--glow-cyan)}
+
+        /* Wireshark Packet Dissector */
+        .ws-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:1.5rem}
+        .ws-packet-list{background:rgba(2,8,18,.95);border:1px solid rgba(0,245,255,.15);border-radius:14px;overflow-x:auto;max-height:360px;overflow-y:auto;font-family:'JetBrains Mono',monospace;font-size:.75rem}
+        .ws-packet-row{display:grid;grid-template-columns:35px 75px 120px 120px 70px 1fr;gap:.5rem;padding:.5rem .8rem;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:var(--transition);white-space:nowrap}
+        .ws-packet-row:hover,.ws-packet-row.selected{background:rgba(0,245,255,.12);color:#fff}
+        .ws-proto-tcp{color:var(--neon-cyan)}
+        .ws-proto-tls{color:var(--neon-purple)}
+        .ws-proto-dns{color:var(--neon-gold)}
+        .ws-proto-http{color:var(--neon-green)}
+        .ws-tree-view{background:rgba(2,8,18,.95);border:1px solid rgba(0,245,255,.15);border-radius:14px;padding:1rem;height:360px;overflow-y:auto;font-family:'JetBrains Mono',monospace;font-size:.74rem;line-height:1.7;color:#a8e6ff}
+        .ws-tree-title{font-size:.78rem;font-weight:700;color:var(--neon-cyan);margin-bottom:.8rem;border-bottom:1px solid rgba(0,245,255,.1);padding-bottom:4px}
+        .ws-layer{margin-bottom:.6rem}
+        .ws-layer-head{color:var(--text-primary);font-weight:600;display:flex;align-items:center;gap:.4rem}
+        .ws-layer-body{padding-left:1.2rem;color:var(--text-muted);font-size:.7rem}
+
+        @media(max-width:850px){
+            .ws-grid{grid-template-columns:1fr}
+        }
+
         /* LIGHT THEME */
         :root[data-theme='light']{--nexo-black:#f0f4f8;--nexo-dark:#e2e8f0;--nexo-darker:#d1d9e3;--text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;--border-card:1px solid rgba(0,100,200,.12)}
     </style>
@@ -142,6 +199,9 @@
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-actions">
+                <button class="cmd-quick-trigger" onclick="openNexoCommandPalette()" title="Universal Command HUD [Ctrl+K]">
+                    <i class="fas fa-terminal"></i> <kbd>Ctrl+K</kbd>
+                </button>
                 <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
                 <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
             </div>
@@ -355,6 +415,125 @@
 
             </div>
 
+            <!-- LIVE CTF CHALLENGE ARENA -->
+            <div class="interactive-sandbox reveal" id="ctf-section">
+                <div class="sandbox-header">
+                    <div class="sandbox-title">
+                        <div class="sandbox-badge"><i class="fas fa-flag"></i> NEXO CTF ARENA</div>
+                        <span style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700">Hands-On Cyber CTF Challenges</span>
+                    </div>
+                    <div class="sandbox-status">
+                        <span class="status-indicator"></span>
+                        <span style="color:var(--neon-green)">CHALLENGE SERVER ONLINE</span>
+                    </div>
+                </div>
+
+                <div class="ctf-scoreboard">
+                    <div class="ctf-score-box">
+                        <div class="ctf-score-num" id="ctf-score">0 / 600</div>
+                        <div class="ctf-score-lbl">Accumulated Points</div>
+                    </div>
+                    <div class="ctf-score-box">
+                        <div class="ctf-score-num" id="ctf-solved-count" style="color:var(--neon-cyan)">0 / 3</div>
+                        <div class="ctf-score-lbl">Challenges Cleared</div>
+                    </div>
+                    <div class="ctf-rank-badge" id="ctf-rank-display">RANK: RECON RECRUIT</div>
+                </div>
+
+                <div class="ctf-grid">
+                    <!-- CHALLENGE 1 -->
+                    <div class="ctf-card" id="ctf-card-1">
+                        <div>
+                            <div class="ctf-card-top">
+                                <span class="ctf-lvl">// LEVEL 1 — CRYPTOGRAPHY</span>
+                                <span class="ctf-pts">+100 PTS</span>
+                            </div>
+                            <h4>Firmware Hex Cipher</h4>
+                            <p class="ctf-desc">An intercepted encrypted serial token was recovered from an air-gapped IoT base station. Decode the hexadecimal string to recover the root flag.</p>
+                            <div class="ctf-code-clue">4e45584f7b6331706833725f6d34737433727d</div>
+                        </div>
+                        <div>
+                            <div class="ctf-submit-row">
+                                <input type="text" class="ctf-input" id="ctf-input-1" placeholder="NEXO{...} or flag" autocomplete="off">
+                                <button class="ctf-btn" onclick="submitCtfFlag(1)">SUBMIT</button>
+                            </div>
+                            <div id="ctf-feedback-1" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;margin-top:.4rem;min-height:1rem"></div>
+                        </div>
+                    </div>
+
+                    <!-- CHALLENGE 2 -->
+                    <div class="ctf-card" id="ctf-card-2">
+                        <div>
+                            <div class="ctf-card-top">
+                                <span class="ctf-lvl">// LEVEL 2 — WEB EXPLOITATION</span>
+                                <span class="ctf-pts">+200 PTS</span>
+                            </div>
+                            <h4>SQL Injection Auth Bypass</h4>
+                            <p class="ctf-desc">A legacy administrative portal constructs raw database queries using: <code>SELECT * FROM users WHERE user='$u' AND pass='$p'</code>. Provide a classic SQL injection payload to bypass authentication.</p>
+                            <div class="ctf-code-clue">' OR '1'='1' --  (or enter flag: NEXO{sql_1nj3ct10n_pwnd})</div>
+                        </div>
+                        <div>
+                            <div class="ctf-submit-row">
+                                <input type="text" class="ctf-input" id="ctf-input-2" placeholder="' OR ... or flag" autocomplete="off">
+                                <button class="ctf-btn" onclick="submitCtfFlag(2)">SUBMIT</button>
+                            </div>
+                            <div id="ctf-feedback-2" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;margin-top:.4rem;min-height:1rem"></div>
+                        </div>
+                    </div>
+
+                    <!-- CHALLENGE 3 -->
+                    <div class="ctf-card" id="ctf-card-3">
+                        <div>
+                            <div class="ctf-card-top">
+                                <span class="ctf-lvl">// LEVEL 3 — REVERSE & HASHES</span>
+                                <span class="ctf-pts">+300 PTS</span>
+                            </div>
+                            <h4>MD5 Rainbow Hash Cracker</h4>
+                            <p class="ctf-desc">We extracted this MD5 password hash from an exposed staging environment. Crack the hash to find the plain text password (or submit the flag format).</p>
+                            <div class="ctf-code-clue">5f4dcc3b5aa765d61d8327deb882cf99</div>
+                        </div>
+                        <div>
+                            <div class="ctf-submit-row">
+                                <input type="text" class="ctf-input" id="ctf-input-3" placeholder="Cracked password or flag" autocomplete="off">
+                                <button class="ctf-btn" onclick="submitCtfFlag(3)">SUBMIT</button>
+                            </div>
+                            <div id="ctf-feedback-3" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;margin-top:.4rem;min-height:1rem"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIVE WIRESHARK PACKET DISSECTOR -->
+            <div class="interactive-sandbox reveal" id="wireshark-section" style="margin-top:2.5rem">
+                <div class="sandbox-header">
+                    <div class="sandbox-title">
+                        <div class="sandbox-badge" style="background:rgba(180,77,255,.1);border-color:var(--neon-purple);color:var(--neon-purple)"><i class="fas fa-network-wired"></i> WIRESHARK DISSECTOR</div>
+                        <span style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700">Interactive Packet Forensics Studio</span>
+                    </div>
+                    <div class="sandbox-status">
+                        <span class="status-indicator" style="background:var(--neon-purple);box-shadow:0 0 8px var(--neon-purple)"></span>
+                        <span style="color:var(--neon-purple)">CAPTURE STREAM ACTIVE [4 PACKETS]</span>
+                    </div>
+                </div>
+
+                <div class="ws-grid">
+                    <div>
+                        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);margin-bottom:.5rem;display:flex;justify-content:space-between">
+                            <span>// CLICK A PACKET TO INSPECT OSI LAYERS & HEX DUMP</span>
+                            <span>FILTER: tcp || tls || dns || http</span>
+                        </div>
+                        <div class="ws-packet-list" id="ws-packet-list">
+                            <!-- Packets injected via JS -->
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ws-tree-view" id="ws-tree-view">
+                            <!-- Tree details injected via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- APPLY / CTA SECTION -->
             <div class="apply-section reveal">
                 <h3>Ready to Accelerate Your Cybersecurity Career?</h3>
@@ -442,6 +621,218 @@
         </div>
     </footer>
 
+    <script src="audio.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script>
+        // --- CTF CHALLENGE LOGIC ---
+        const CTF_CHALLENGES = {
+            1: {
+                answers: ['nexo{c1ph3r_m4st3r}', 'c1ph3r_m4st3r'],
+                pts: 100,
+                solved: false
+            },
+            2: {
+                answers: ["' or '1'='1' --", "' or 1=1 --", "admin' --", "' or '1'='1", "nexo{sql_1nj3ct10n_pwnd}", "sql_1nj3ct10n_pwnd"],
+                pts: 200,
+                solved: false
+            },
+            3: {
+                answers: ['password', 'nexo{md5_r41nb0w_cr4ck3d}', 'md5_r41nb0w_cr4ck3d'],
+                pts: 300,
+                solved: false
+            }
+        };
+
+        let ctfScore = 0;
+        let ctfSolved = 0;
+
+        function submitCtfFlag(id) {
+            if (!CTF_CHALLENGES[id]) return;
+            const ch = CTF_CHALLENGES[id];
+            const input = document.getElementById('ctf-input-' + id);
+            const feedback = document.getElementById('ctf-feedback-' + id);
+            const card = document.getElementById('ctf-card-' + id);
+            if (!input || !feedback) return;
+
+            if (ch.solved) {
+                feedback.innerHTML = '<span style="color:var(--neon-green)">[SOLVED] Already solved! Points awarded.</span>';
+                return;
+            }
+
+            const val = input.value.trim().toLowerCase();
+            const isCorrect = ch.answers.some(a => a.toLowerCase() === val || a.toLowerCase() === val.replace(/\s+/g, ' '));
+
+            if (isCorrect) {
+                ch.solved = true;
+                ctfScore += ch.pts;
+                ctfSolved += 1;
+                card.classList.add('solved');
+                feedback.innerHTML = '<span style="color:var(--neon-green)">[SUCCESS] FLAG CAPTURED! +' + ch.pts + ' PTS</span>';
+                input.disabled = true;
+                
+                const scoreEl = document.getElementById('ctf-score');
+                const countEl = document.getElementById('ctf-solved-count');
+                const rankEl = document.getElementById('ctf-rank-display');
+                if (scoreEl) scoreEl.textContent = ctfScore + ' / 600';
+                if (countEl) countEl.textContent = ctfSolved + ' / 3';
+
+                if (ctfSolved === 1) {
+                    if (rankEl) rankEl.textContent = 'RANK: PENTEST NOVICE';
+                } else if (ctfSolved === 2) {
+                    if (rankEl) rankEl.textContent = 'RANK: EXPLOIT OPERATIVE';
+                } else if (ctfSolved === 3) {
+                    if (rankEl) {
+                        rankEl.textContent = 'RANK: CYBER ARCHITECT <i class="fas fa-award" style="color:var(--neon-gold)"></i>';
+                        rankEl.style.color = 'var(--neon-gold)';
+                        rankEl.style.borderColor = 'var(--neon-gold)';
+                        rankEl.style.background = 'rgba(255,215,0,0.15)';
+                    }
+                }
+
+                if (window.NexoAudio) window.NexoAudio.playSuccess();
+            } else {
+                feedback.innerHTML = '<span style="color:var(--neon-red)">[ERROR] INVALID FLAG. ANALYZE CLUE AND RETRY.</span>';
+                if (window.NexoAudio) window.NexoAudio.playLaser();
+            }
+        }
+
+        // --- WIRESHARK DISSECTOR DATA & LOGIC ---
+        const WIRESHARK_PACKETS = [
+            {
+                num: 1,
+                time: "0.000000",
+                src: "192.168.1.45",
+                dst: "10.0.0.1",
+                proto: "TCP",
+                cls: "ws-proto-tcp",
+                info: "54228 → 443 [SYN] Seq=0 Win=64240 Len=0 MSS=1460",
+                details: {
+                    frame: "Frame 1: 66 bytes on wire (528 bits), 66 bytes captured on interface eth0",
+                    eth: "Ethernet II, Src: Micro-Star_9b:1a:4c (00:d8:61:9b:1a:4c), Dst: Cisco_01:44:aa (00:1c:0f:01:44:aa)",
+                    ip: "Internet Protocol Version 4, Src: 192.168.1.45, Dst: 10.0.0.1 | TTL: 64, Protocol: TCP (6)",
+                    trans: "Transmission Control Protocol, Src Port: 54228, Dst Port: 443, Seq: 0, Len: 0, Flags: [SYN]",
+                    payload: "TCP Options: (MSS 1460 bytes, SACK permitted, Timestamps, Window scale 7)",
+                    hex: "00 1c 0f 01 44 aa 00 d8 61 9b 1a 4c 08 00 45 00\\n00 34 8a d1 40 00 40 06 c8 fa c0 a8 01 2d 0a 00\\n00 01 d3 d4 01 bb 00 00 00 00 a0 02 fa f0 b2 ec"
+                }
+            },
+            {
+                num: 2,
+                time: "0.014210",
+                src: "192.168.1.45",
+                dst: "104.26.12.31",
+                proto: "TLSv1.3",
+                cls: "ws-proto-tls",
+                info: "Client Hello (SNI=api.nexo-tech.internal) Cipher Suites (17)",
+                details: {
+                    frame: "Frame 2: 517 bytes on wire, 517 bytes captured on interface eth0",
+                    eth: "Ethernet II, Src: 00:d8:61:9b:1a:4c, Dst: 00:1c:0f:01:44:aa",
+                    ip: "Internet Protocol Version 4, Src: 192.168.1.45, Dst: 104.26.12.31 | TTL: 64, Protocol: TCP (6)",
+                    trans: "Transmission Control Protocol, Src Port: 54230, Dst Port: 443, Seq: 1, Ack: 1",
+                    payload: "Transport Layer Security: TLSv1.3 Handshake Protocol: Client Hello\\n  - Extension: server_name (len=24) -> api.nexo-tech.internal\\n  - Supported Elliptic Curves: x25519, secp256r1\\n  - Cipher Suite: TLS_AES_256_GCM_SHA384 (0x1302)",
+                    hex: "16 03 01 02 00 01 00 01 fc 03 03 8f 3a c2 44 91\\n11 e4 e0 87 23 f8 99 c1 04 ab fa 4e 45 58 4f 2d\\n54 45 43 48 2e 49 4e 54 45 52 4e 41 4c 00 23 00"
+                }
+            },
+            {
+                num: 3,
+                time: "0.021900",
+                src: "192.168.1.45",
+                dst: "8.8.8.8",
+                proto: "DNS",
+                cls: "ws-proto-dns",
+                info: "Standard query 0x2b4a A vault.nexo-tech.corp",
+                details: {
+                    frame: "Frame 3: 84 bytes on wire, 84 bytes captured on eth0",
+                    eth: "Ethernet II, Src: 00:d8:61:9b:1a:4c, Dst: 00:1c:0f:01:44:aa",
+                    ip: "Internet Protocol Version 4, Src: 192.168.1.45, Dst: 8.8.8.8 | TTL: 64, Protocol: UDP (17)",
+                    trans: "User Datagram Protocol, Src Port: 60124, Dst Port: 53, Len: 44",
+                    payload: "Domain Name System (query)\\n  - Transaction ID: 0x2b4a\\n  - Flags: 0x0100 Standard query\\n  - Queries: vault.nexo-tech.corp: type A, class IN",
+                    hex: "2b 4a 01 00 00 01 00 00 00 00 00 00 05 76 61 75\\n6c 74 09 6e 65 78 6f 2d 74 65 63 68 04 63 6f 72\\n70 00 00 01 00 01"
+                }
+            },
+            {
+                num: 4,
+                time: "0.053120",
+                src: "192.168.1.45",
+                dst: "192.168.1.254",
+                proto: "HTTP",
+                cls: "ws-proto-http",
+                info: "POST /api/v2/auth/login HTTP/1.1 (application/json)",
+                details: {
+                    frame: "Frame 4: 242 bytes on wire, 242 bytes captured on eth0",
+                    eth: "Ethernet II, Src: 00:d8:61:9b:1a:4c, Dst: 00:1c:0f:01:44:aa",
+                    ip: "Internet Protocol Version 4, Src: 192.168.1.45, Dst: 192.168.1.254 | TTL: 64, Protocol: TCP (6)",
+                    trans: "Transmission Control Protocol, Src Port: 49812, Dst Port: 80",
+                    payload: "Hypertext Transfer Protocol:\\n  POST /api/v2/auth/login HTTP/1.1\\r\\n  Host: 192.168.1.254\\r\\n  Content-Type: application/json\\r\\n  Payload: {\\\"user\\\":\\\"admin\\\",\\\"token\\\":\\\"0x9F4C2\\\"}",
+                    hex: "50 4f 53 54 20 2f 61 70 69 2f 76 32 2f 61 75 74\\n68 2f 6c 6f 67 69 6e 20 48 54 54 50 2f 31 2e 31\\n7b 22 75 73 65 72 22 3a 22 61 64 6d 69 6e 22 7d"
+                }
+            }
+        ];
+
+        function selectWsPacket(idx) {
+            const listEl = document.getElementById('ws-packet-list');
+            const treeEl = document.getElementById('ws-tree-view');
+            if (!listEl || !treeEl) return;
+
+            const rows = listEl.querySelectorAll('.ws-packet-row');
+            rows.forEach((r, i) => {
+                if (i === idx) r.classList.add('selected');
+                else r.classList.remove('selected');
+            });
+
+            const p = WIRESHARK_PACKETS[idx];
+            if (!p) return;
+
+            if (window.NexoAudio) window.NexoAudio.playClick();
+
+            treeEl.innerHTML = `
+                <div class="ws-tree-title">// PACKET #${p.num} INSPECTION TREE — [${p.proto}]</div>
+                <div class="ws-layer">
+                    <div class="ws-layer-head"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--neon-cyan)"></i> 1. Frame Layer (Physical)</div>
+                    <div class="ws-layer-body">${p.details.frame}</div>
+                </div>
+                <div class="ws-layer">
+                    <div class="ws-layer-head"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--neon-cyan)"></i> 2. Data Link Layer (Ethernet II)</div>
+                    <div class="ws-layer-body">${p.details.eth}</div>
+                </div>
+                <div class="ws-layer">
+                    <div class="ws-layer-head"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--neon-cyan)"></i> 3. Network Layer (IPv4)</div>
+                    <div class="ws-layer-body">${p.details.ip}</div>
+                </div>
+                <div class="ws-layer">
+                    <div class="ws-layer-head"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--neon-cyan)"></i> 4. Transport Layer (${p.proto === 'DNS' ? 'UDP' : 'TCP'})</div>
+                    <div class="ws-layer-body">${p.details.trans}</div>
+                </div>
+                <div class="ws-layer">
+                    <div class="ws-layer-head"><i class="fas fa-chevron-right" style="font-size:.65rem;color:var(--neon-cyan)"></i> 5. Application / Payload Data</div>
+                    <div class="ws-layer-body" style="white-space:pre-wrap;color:#80e0a7">${p.details.payload}</div>
+                </div>
+                <div class="ws-layer" style="margin-top:.8rem">
+                    <div class="ws-layer-head" style="color:var(--neon-gold)"><i class="fas fa-microchip"></i> Hexadecimal Dump</div>
+                    <pre style="background:rgba(0,0,0,0.6);border:1px solid rgba(255,215,0,0.2);border-radius:6px;padding:.5rem;margin-top:.3rem;color:#ffd700;font-size:.68rem;line-height:1.4">${p.details.hex}</pre>
+                </div>
+            `;
+        }
+
+        function initWiresharkDissector() {
+            const listEl = document.getElementById('ws-packet-list');
+            if (!listEl) return;
+            listEl.innerHTML = WIRESHARK_PACKETS.map((p, idx) => `
+                <div class="ws-packet-row ${idx === 0 ? 'selected' : ''}" onclick="selectWsPacket(${idx})">
+                    <span>${p.num}</span>
+                    <span>${p.time}</span>
+                    <span>${p.src}</span>
+                    <span>${p.dst}</span>
+                    <span class="${p.cls}">${p.proto}</span>
+                    <span style="color:var(--text-secondary)">${p.info}</span>
+                </div>
+            `).join('');
+            selectWsPacket(0);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initWiresharkDissector();
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
